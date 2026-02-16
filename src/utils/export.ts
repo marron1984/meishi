@@ -1,7 +1,8 @@
 import type { CardData } from '../types';
 import { CARD_WIDTH, CARD_HEIGHT, BLEED } from '../types';
-import { renderToStaticMarkup } from 'react-dom/server';
+import { createRoot } from 'react-dom/client';
 import { createElement } from 'react';
+import { flushSync } from 'react-dom';
 
 type RenderFn = (data: CardData) => React.ReactNode;
 
@@ -14,8 +15,20 @@ function renderToSVGString(
   offsetY: number = 0,
   includeBleed: boolean = false,
 ): string {
+  // Render React content to a temporary DOM SVG element
+  const tmpSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  const container = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  tmpSvg.appendChild(container);
+  document.body.appendChild(tmpSvg);
+
   const content = renderFn(data);
-  const inner = renderToStaticMarkup(createElement('g', null, content));
+  const root = createRoot(container);
+  flushSync(() => {
+    root.render(createElement('g', null, content));
+  });
+  const inner = container.innerHTML;
+  root.unmount();
+  document.body.removeChild(tmpSvg);
 
   const trimMarks = includeBleed
     ? `
