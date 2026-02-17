@@ -61,6 +61,16 @@ body {
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  flex-shrink: 0;
+}
+
+.logo-text {
   font-family: 'Noto Sans JP', sans-serif;
   font-weight: 900;
   font-size: 1.5rem;
@@ -73,7 +83,6 @@ body {
   font-weight: 200;
   font-size: 0.85rem;
   letter-spacing: 0.3em;
-  margin-left: 8px;
   color: var(--text-muted);
 }
 
