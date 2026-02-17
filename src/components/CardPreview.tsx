@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useCallback, createElement } from 'react';
 import type { CardData, TemplateDefinition } from '../types';
 import { CARD_WIDTH, CARD_HEIGHT, BLEED } from '../types';
 import { exportSVG, exportSVGWithBleed } from '../utils/export';
@@ -13,16 +13,38 @@ interface Props {
 export default function CardPreview({ template, data, side, onFlip }: Props) {
   const svgRef = useRef<SVGSVGElement>(null);
 
+  const wrapRenderWithLogo = useCallback(
+    (renderFn: (d: CardData) => React.ReactNode) => {
+      return (d: CardData) =>
+        createElement(
+          'g',
+          null,
+          renderFn(d),
+          d.logo && side === 'back'
+            ? createElement('image', {
+                href: d.logo,
+                x: 5,
+                y: 5,
+                width: 12,
+                height: 12,
+                preserveAspectRatio: 'xMidYMid meet',
+              })
+            : null,
+        );
+    },
+    [side],
+  );
+
   const handleExport = () => {
     if (!svgRef.current) return;
     const render = side === 'front' ? template.renderFront : template.renderBack;
-    exportSVG(render, data, `meishi-${template.id}-${side}`);
+    exportSVG(wrapRenderWithLogo(render), data, `meishi-${template.id}-${side}`);
   };
 
   const handleExportWithBleed = () => {
     if (!svgRef.current) return;
     const render = side === 'front' ? template.renderFront : template.renderBack;
-    exportSVGWithBleed(render, data, `meishi-${template.id}-${side}-bleed`);
+    exportSVGWithBleed(wrapRenderWithLogo(render), data, `meishi-${template.id}-${side}-bleed`);
   };
 
   return (
@@ -49,6 +71,16 @@ export default function CardPreview({ template, data, side, onFlip }: Props) {
             className="card-svg"
           >
             {side === 'front' ? template.renderFront(data) : template.renderBack(data)}
+            {data.logo && side === 'back' && (
+              <image
+                href={data.logo}
+                x="5"
+                y="5"
+                width="12"
+                height="12"
+                preserveAspectRatio="xMidYMid meet"
+              />
+            )}
           </svg>
         </div>
         <div className="preview-dimensions">

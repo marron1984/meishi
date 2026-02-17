@@ -11,6 +11,7 @@ export interface CardData {
   addressJa: string;
   addressEn: string;
   zipCode: string;
+  logo: string;
 }
 
 export interface TemplateCategory {
@@ -101,4 +102,5 @@ export const defaultCardData: CardData = {
   addressJa: '東京都渋谷区神宮前 3-21-5',
   addressEn: '3-21-5 Jingumae, Shibuya-ku, Tokyo',
   zipCode: '150-0001',
+  logo: '',
 };

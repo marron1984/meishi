@@ -320,6 +320,62 @@ body {
   color: var(--text-dim);
 }
 
+.logo-upload-area {
+  margin-top: 2px;
+}
+
+.logo-upload-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--bg);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.logo-upload-btn:hover {
+  border-color: var(--text-muted);
+  color: var(--text);
+}
+
+.logo-preview-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-thumb {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 2px;
+}
+
+.logo-remove-btn {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.logo-remove-btn:hover {
+  color: #e63946;
+  border-color: #e63946;
+}
+
 /* ---- Preview Area ---- */
 
 .preview-area {
