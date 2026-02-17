@@ -13,16 +13,36 @@ export interface CardData {
   zipCode: string;
 }
 
+export interface TemplateCategory {
+  id: string;
+  name: string;
+  nameJa: string;
+}
+
 export interface TemplateDefinition {
   id: string;
   name: string;
   nameJa: string;
+  category: string;
   designer: string;
   description: string;
   accentColor: string;
   renderFront: (data: CardData) => React.ReactNode;
   renderBack: (data: CardData) => React.ReactNode;
 }
+
+export const categories: TemplateCategory[] = [
+  { id: 'minimal', name: 'MINIMAL', nameJa: 'ミニマル' },
+  { id: 'geometric', name: 'GEOMETRIC', nameJa: '幾何学' },
+  { id: 'japanese', name: 'JAPANESE', nameJa: '和' },
+  { id: 'typography', name: 'TYPOGRAPHY', nameJa: 'タイポ' },
+  { id: 'avantgarde', name: 'AVANT-GARDE', nameJa: '前衛' },
+  { id: 'swiss', name: 'SWISS', nameJa: 'スイス' },
+  { id: 'corporate', name: 'CORPORATE', nameJa: '企業' },
+  { id: 'tech', name: 'TECH', nameJa: 'テック' },
+  { id: 'artistic', name: 'ARTISTIC', nameJa: '芸術' },
+  { id: 'experimental', name: 'EXPERIMENTAL', nameJa: '実験' },
+];
 
 export const CARD_WIDTH = 91;
 export const CARD_HEIGHT = 55;

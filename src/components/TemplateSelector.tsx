@@ -1,24 +1,57 @@
-import { templates } from '../templates';
-import type { TemplateDefinition, CardData } from '../types';
+import type { TemplateDefinition, TemplateCategory, CardData } from '../types';
 import { CARD_WIDTH, CARD_HEIGHT } from '../types';
 
 interface Props {
   selected: string;
   onSelect: (id: string) => void;
   cardData: CardData;
+  categories: TemplateCategory[];
+  categoryFilter: string | null;
+  onCategoryChange: (category: string | null) => void;
+  filteredTemplates: TemplateDefinition[];
 }
 
-export default function TemplateSelector({ selected, onSelect, cardData }: Props) {
+export default function TemplateSelector({
+  selected,
+  onSelect,
+  cardData,
+  categories,
+  categoryFilter,
+  onCategoryChange,
+  filteredTemplates,
+}: Props) {
   return (
     <div className="template-selector">
-      <h3 className="section-title">STYLE</h3>
+      <h3 className="section-title">
+        STYLE
+        <span className="template-count">{filteredTemplates.length}</span>
+      </h3>
+
+      <div className="category-pills">
+        <button
+          className={`category-pill ${categoryFilter === null ? 'active' : ''}`}
+          onClick={() => onCategoryChange(null)}
+        >
+          ALL
+        </button>
+        {categories.map((cat) => (
+          <button
+            key={cat.id}
+            className={`category-pill ${categoryFilter === cat.id ? 'active' : ''}`}
+            onClick={() => onCategoryChange(cat.id)}
+          >
+            {cat.nameJa}
+          </button>
+        ))}
+      </div>
+
       <div className="template-grid">
-        {templates.map((t: TemplateDefinition) => (
+        {filteredTemplates.map((t: TemplateDefinition) => (
           <button
             key={t.id}
             className={`template-card ${selected === t.id ? 'active' : ''}`}
             onClick={() => onSelect(t.id)}
-            style={{ '--accent': t.accentColor } as React.CSSProperties}
+            title={`${t.name} — ${t.designer}\n${t.description}`}
           >
             <div className="template-thumb">
               <svg
@@ -32,7 +65,6 @@ export default function TemplateSelector({ selected, onSelect, cardData }: Props
               <span className="template-name">{t.name}</span>
               <span className="template-name-ja">{t.nameJa}</span>
             </div>
-            <div className="template-designer">{t.designer}</div>
           </button>
         ))}
       </div>
