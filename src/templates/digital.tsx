@@ -14,187 +14,117 @@ const binaryTemplate: TemplateDefinition = {
   accentColor: '#00FF41',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#0A0E17" />
+      <defs>
+        <filter id="digital-binary-scanline">
+          <feTurbulence type="fractalNoise" baseFrequency="0.01,0.8" numOctaves="1" stitchTiles="stitch" result="scan" />
+          <feColorMatrix type="saturate" values="0" in="scan" result="gray" />
+          <feBlend mode="multiply" in="SourceGraphic" in2="gray" />
+        </filter>
+        <filter id="digital-binary-shadow">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.4" />
+          <feOffset dx="0" dy="0.2" />
+          <feFlood floodColor="#00FF41" floodOpacity="0.25" />
+          <feComposite operator="in" />
+          <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <filter id="digital-binary-glow">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="0.6" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <linearGradient id="digital-binary-bg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#0A0E17" />
+          <stop offset="40%" stopColor="#0C1220" />
+          <stop offset="100%" stopColor="#060A12" />
+        </linearGradient>
+        <radialGradient id="digital-binary-pulse" cx="0.5" cy="0.4" r="0.5">
+          <stop offset="0%" stopColor="#00FF41" stopOpacity="0.04" />
+          <stop offset="100%" stopColor="#00FF41" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <rect width="91" height="55" fill="url(#digital-binary-bg)" />
+      <rect width="91" height="55" fill="url(#digital-binary-pulse)" />
+      <rect width="91" height="55" fill="transparent" filter="url(#digital-binary-scanline)" opacity="0.12" />
       {/* Binary rain columns */}
       <text fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#00FF41" opacity="0.08">
-        <tspan x="5" y="5">01101001</tspan>
-        <tspan x="5" y="8">11010010</tspan>
-        <tspan x="5" y="11">00101101</tspan>
-        <tspan x="5" y="14">10110100</tspan>
-        <tspan x="5" y="17">01001011</tspan>
-        <tspan x="5" y="20">11100110</tspan>
-        <tspan x="5" y="23">00011001</tspan>
-        <tspan x="5" y="26">10100111</tspan>
-        <tspan x="5" y="29">01110010</tspan>
-        <tspan x="5" y="32">11001100</tspan>
-        <tspan x="5" y="35">00110011</tspan>
-        <tspan x="5" y="38">10011010</tspan>
-        <tspan x="5" y="41">01100101</tspan>
-        <tspan x="5" y="44">11011011</tspan>
-        <tspan x="5" y="47">00100100</tspan>
-        <tspan x="5" y="50">10111000</tspan>
-        <tspan x="5" y="53">01000111</tspan>
+        <tspan x="5" y="5">01101001</tspan><tspan x="5" y="8">11010010</tspan><tspan x="5" y="11">00101101</tspan>
+        <tspan x="5" y="14">10110100</tspan><tspan x="5" y="17">01001011</tspan><tspan x="5" y="20">11100110</tspan>
+        <tspan x="5" y="23">00011001</tspan><tspan x="5" y="26">10100111</tspan><tspan x="5" y="29">01110010</tspan>
+        <tspan x="5" y="32">11001100</tspan><tspan x="5" y="35">00110011</tspan><tspan x="5" y="38">10011010</tspan>
+        <tspan x="5" y="41">01100101</tspan><tspan x="5" y="44">11011011</tspan><tspan x="5" y="47">00100100</tspan>
+        <tspan x="5" y="50">10111000</tspan><tspan x="5" y="53">01000111</tspan>
       </text>
       <text fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#00FF41" opacity="0.06">
-        <tspan x="70" y="5">10110010</tspan>
-        <tspan x="70" y="8">01001101</tspan>
-        <tspan x="70" y="11">11010110</tspan>
-        <tspan x="70" y="14">00101001</tspan>
-        <tspan x="70" y="17">10010100</tspan>
-        <tspan x="70" y="20">01101011</tspan>
-        <tspan x="70" y="23">11000110</tspan>
-        <tspan x="70" y="26">00111001</tspan>
-        <tspan x="70" y="29">10100100</tspan>
-        <tspan x="70" y="32">01011011</tspan>
-        <tspan x="70" y="35">11110000</tspan>
-        <tspan x="70" y="38">00001111</tspan>
-        <tspan x="70" y="41">10101010</tspan>
-        <tspan x="70" y="44">01010101</tspan>
-        <tspan x="70" y="47">11001001</tspan>
-        <tspan x="70" y="50">00110110</tspan>
-        <tspan x="70" y="53">10011101</tspan>
+        <tspan x="70" y="5">10110010</tspan><tspan x="70" y="8">01001101</tspan><tspan x="70" y="11">11010110</tspan>
+        <tspan x="70" y="14">00101001</tspan><tspan x="70" y="17">10010100</tspan><tspan x="70" y="20">01101011</tspan>
+        <tspan x="70" y="23">11000110</tspan><tspan x="70" y="26">00111001</tspan><tspan x="70" y="29">10100100</tspan>
+        <tspan x="70" y="32">01011011</tspan><tspan x="70" y="35">11110000</tspan><tspan x="70" y="38">00001111</tspan>
+        <tspan x="70" y="41">10101010</tspan><tspan x="70" y="44">01010101</tspan><tspan x="70" y="47">11001001</tspan>
+        <tspan x="70" y="50">00110110</tspan><tspan x="70" y="53">10011101</tspan>
       </text>
-      {/* Glowing name */}
-      <text
-        x="45.5"
-        y="22"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="600"
-        fontSize="6"
-        letterSpacing="0.8"
-        fill="#00FF41"
-      >
-        {data.nameJa}
-      </text>
-      <text
-        x="45.5"
-        y="28"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', monospace"
-        fontWeight="400"
-        fontSize="2"
-        letterSpacing="0.3"
-        fill="#00CC33"
-      >
-        {data.nameEn.toUpperCase()}
-      </text>
-      {/* Underline glow */}
+      {/* Glowing cursor line */}
+      <line x1="5" y1="53.5" x2="15" y2="53.5" stroke="#00FF41" strokeWidth="0.2" opacity="0.6" />
+      {/* Digital circuit nodes */}
+      <circle cx="25" cy="6" r="0.4" fill="#00FF41" opacity="0.3" />
+      <line x1="25" y1="6" x2="30" y2="6" stroke="#00FF41" strokeWidth="0.06" opacity="0.2" />
+      <circle cx="60" cy="48" r="0.3" fill="#00FF41" opacity="0.25" />
+      {data.logo && <image href={data.logo} x="74" y="40" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
+      <g filter="url(#digital-binary-shadow)">
+        <text x="45.5" y="22" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="600" fontSize="6" letterSpacing="0.8" fill="#00FF41">{data.nameJa}</text>
+      </g>
+      <text x="45.5" y="28" textAnchor="middle" fontFamily="'Space Grotesk', monospace" fontWeight="400" fontSize="2" letterSpacing="0.3" fill="#00CC33">{data.nameEn.toUpperCase()}</text>
       <line x1="25" y1="31" x2="66" y2="31" stroke="#00FF41" strokeWidth="0.15" opacity="0.4" />
-      <text
-        x="45.5"
-        y="37"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.5"
-        fill="#00AA2A"
-      >
-        {data.titleJa}
-      </text>
-      <text
-        x="45.5"
-        y="43"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.5"
-        fill="#00AA2A"
-      >
-        {data.companyJa}
-      </text>
+      <text x="45.5" y="37" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.5" fill="#00AA2A">{data.titleJa}</text>
+      <text x="45.5" y="43" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.5" fill="#00AA2A">{data.companyJa}</text>
     </g>
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#0A0E17" />
+      <defs>
+        <filter id="digital-binary-scanline-b">
+          <feTurbulence type="fractalNoise" baseFrequency="0.01,0.8" numOctaves="1" stitchTiles="stitch" result="scan" />
+          <feColorMatrix type="saturate" values="0" in="scan" result="gray" />
+          <feBlend mode="multiply" in="SourceGraphic" in2="gray" />
+        </filter>
+        <filter id="digital-binary-shadow-b">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.3" />
+          <feOffset dx="0" dy="0.15" />
+          <feFlood floodColor="#00FF41" floodOpacity="0.15" />
+          <feComposite operator="in" />
+          <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <linearGradient id="digital-binary-bg-b" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#0A0E17" />
+          <stop offset="100%" stopColor="#060A12" />
+        </linearGradient>
+      </defs>
+      <rect width="91" height="55" fill="url(#digital-binary-bg-b)" />
+      <rect width="91" height="55" fill="transparent" filter="url(#digital-binary-scanline-b)" opacity="0.1" />
       {/* Faint binary background */}
       <text fontFamily="'Space Grotesk', monospace" fontSize="1" fill="#00FF41" opacity="0.04">
         <tspan x="3" y="4">0110100101101001011010010110100101101001011010010110100101101001011010010110100101</tspan>
         <tspan x="3" y="7">1101001011010010110100101101001011010010110100101101001011010010110100101101001011</tspan>
-        <tspan x="3" y="10">0010110100101101001011010010110100101101001011010010110100101101001011010010110100</tspan>
         <tspan x="3" y="49">1010010110100101101001011010010110100101101001011010010110100101101001011010010110</tspan>
         <tspan x="3" y="52">0101101001011010010110100101101001011010010110100101101001011010010110100101101001</tspan>
       </text>
-      <text
-        x="45.5"
-        y="13"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="500"
-        fontSize="2.2"
-        fill="#00FF41"
-      >
-        {data.companyJa}
-      </text>
-      <text
-        x="45.5"
-        y="17"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', monospace"
-        fontWeight="400"
-        fontSize="1.4"
-        fill="#00CC33"
-      >
-        {data.companyEn}
-      </text>
-      <line x1="15" y1="21" x2="76" y2="21" stroke="#00FF41" strokeWidth="0.1" opacity="0.3" />
-      <text
-        x="45.5"
-        y="27"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', monospace"
-        fontWeight="400"
-        fontSize="1.4"
-        fill="#00CC33"
-      >
-        {data.tel}
-      </text>
-      <text
-        x="45.5"
-        y="31"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', monospace"
-        fontWeight="400"
-        fontSize="1.4"
-        fill="#00CC33"
-      >
-        {data.email}
-      </text>
-      <text
-        x="45.5"
-        y="35"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', monospace"
-        fontWeight="400"
-        fontSize="1.4"
-        fill="#00CC33"
-      >
-        {data.website}
-      </text>
-      <line x1="15" y1="39" x2="76" y2="39" stroke="#00FF41" strokeWidth="0.1" opacity="0.3" />
-      <text
-        x="45.5"
-        y="44"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.2"
-        fill="#00AA2A"
-      >
-        〒{data.zipCode}
-      </text>
-      <text
-        x="45.5"
-        y="47.5"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.2"
-        fill="#00AA2A"
-      >
-        {data.addressJa}
-      </text>
+      {/* Circuit traces */}
+      <line x1="5" y1="5" x2="12" y2="5" stroke="#00FF41" strokeWidth="0.06" opacity="0.15" />
+      <line x1="12" y1="5" x2="12" y2="8" stroke="#00FF41" strokeWidth="0.06" opacity="0.15" />
+      <circle cx="12" cy="8" r="0.3" fill="#00FF41" opacity="0.2" />
+      <line x1="79" y1="50" x2="86" y2="50" stroke="#00FF41" strokeWidth="0.06" opacity="0.15" />
+      <circle cx="79" cy="50" r="0.3" fill="#00FF41" opacity="0.2" />
+      {data.logo && <image href={data.logo} x="41.5" y="4" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
+      <g filter="url(#digital-binary-shadow-b)">
+        <text x="45.5" y="17" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="500" fontSize="2.2" fill="#00FF41">{data.companyJa}</text>
+      </g>
+      <text x="45.5" y="21" textAnchor="middle" fontFamily="'Space Grotesk', monospace" fontWeight="400" fontSize="1.4" fill="#00CC33">{data.companyEn}</text>
+      <text x="45.5" y="25" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.4" fill="#00AA2A">{data.titleJa}</text>
+      <line x1="15" y1="28" x2="76" y2="28" stroke="#00FF41" strokeWidth="0.1" opacity="0.3" />
+      <text x="45.5" y="33" textAnchor="middle" fontFamily="'Space Grotesk', monospace" fontWeight="400" fontSize="1.5" fill="#00CC33">{data.tel}</text>
+      <text x="45.5" y="37" textAnchor="middle" fontFamily="'Space Grotesk', monospace" fontWeight="400" fontSize="1.5" fill="#00CC33">{data.email}</text>
+      <text x="45.5" y="41" textAnchor="middle" fontFamily="'Space Grotesk', monospace" fontWeight="400" fontSize="1.5" fill="#00CC33">{data.website}</text>
+      <line x1="15" y1="44" x2="76" y2="44" stroke="#00FF41" strokeWidth="0.1" opacity="0.3" />
+      <text x="45.5" y="48" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.2" fill="#00AA2A">〒{data.zipCode}</text>
+      <text x="45.5" y="51.5" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.2" fill="#00AA2A">{data.addressJa}</text>
     </g>
   ),
 };
@@ -213,15 +143,34 @@ const vectorTemplate: TemplateDefinition = {
   accentColor: '#00D4FF',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#0A0E17" />
+      <defs>
+        <filter id="digital-vector-pixel">
+          <feTurbulence type="fractalNoise" baseFrequency="0.02,0.6" numOctaves="2" stitchTiles="stitch" result="scan" />
+          <feColorMatrix type="saturate" values="0" in="scan" result="gray" />
+          <feBlend mode="overlay" in="SourceGraphic" in2="gray" />
+        </filter>
+        <filter id="digital-vector-shadow">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.35" />
+          <feOffset dx="0.08" dy="0.12" />
+          <feFlood floodColor="#00D4FF" floodOpacity="0.2" />
+          <feComposite operator="in" />
+          <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <linearGradient id="digital-vector-bg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#0A0E17" />
+          <stop offset="50%" stopColor="#0E1420" />
+          <stop offset="100%" stopColor="#0A1018" />
+        </linearGradient>
+        <radialGradient id="digital-vector-glow" cx="0.3" cy="0.5" r="0.6">
+          <stop offset="0%" stopColor="#00D4FF" stopOpacity="0.03" />
+          <stop offset="100%" stopColor="#00D4FF" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <rect width="91" height="55" fill="url(#digital-vector-bg)" />
+      <rect width="91" height="55" fill="url(#digital-vector-glow)" />
+      <rect width="91" height="55" fill="transparent" filter="url(#digital-vector-pixel)" opacity="0.08" />
       {/* Vector path with control handles */}
-      <path
-        d="M10,40 C20,10 40,45 55,20 S80,35 85,15"
-        fill="none"
-        stroke="#00D4FF"
-        strokeWidth="0.3"
-        opacity="0.3"
-      />
+      <path d="M10,40 C20,10 40,45 55,20 S80,35 85,15" fill="none" stroke="#00D4FF" strokeWidth="0.3" opacity="0.3" />
       {/* Control point handles */}
       <line x1="10" y1="40" x2="20" y2="10" stroke="#00D4FF" strokeWidth="0.08" opacity="0.2" strokeDasharray="0.5,0.5" />
       <line x1="55" y1="20" x2="40" y2="45" stroke="#00D4FF" strokeWidth="0.08" opacity="0.2" strokeDasharray="0.5,0.5" />
@@ -233,137 +182,60 @@ const vectorTemplate: TemplateDefinition = {
       {/* Control handle dots */}
       <circle cx="20" cy="10" r="0.5" fill="none" stroke="#00D4FF" strokeWidth="0.15" opacity="0.4" />
       <circle cx="40" cy="45" r="0.5" fill="none" stroke="#00D4FF" strokeWidth="0.15" opacity="0.4" />
-      <text
-        x="12"
-        y="24"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="500"
-        fontSize="5.5"
-        letterSpacing="0.5"
-        fill="#FFFFFF"
-      >
-        {data.nameJa}
-      </text>
-      <text
-        x="12"
-        y="30"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.8"
-        letterSpacing="0.3"
-        fill="#00D4FF"
-      >
-        {data.nameEn}
-      </text>
-      <text
-        x="12"
-        y="36"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.5"
-        fill="#5599AA"
-      >
-        {data.titleJa}
-      </text>
+      {/* Grid dots */}
+      {[15, 30, 45, 60, 75].map((x, i) => (
+        <circle key={`digital-vector-gd-${i}`} cx={x} cy="48" r="0.15" fill="#00D4FF" opacity={0.1 + i * 0.02} />
+      ))}
+      {data.logo && <image href={data.logo} x="74" y="38" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
+      <g filter="url(#digital-vector-shadow)">
+        <text x="12" y="24" fontFamily="'Noto Sans JP', sans-serif" fontWeight="500" fontSize="5.5" letterSpacing="0.5" fill="#FFFFFF">{data.nameJa}</text>
+      </g>
+      <text x="12" y="30" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.8" letterSpacing="0.3" fill="#00D4FF">{data.nameEn}</text>
+      <text x="12" y="36" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.5" fill="#5599AA">{data.titleJa}</text>
+      <text x="12" y="42" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.5" fill="#5599AA">{data.companyJa}</text>
     </g>
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#0A0E17" />
+      <defs>
+        <filter id="digital-vector-pixel-b">
+          <feTurbulence type="fractalNoise" baseFrequency="0.02,0.6" numOctaves="2" stitchTiles="stitch" result="scan" />
+          <feColorMatrix type="saturate" values="0" in="scan" result="gray" />
+          <feBlend mode="overlay" in="SourceGraphic" in2="gray" />
+        </filter>
+        <filter id="digital-vector-shadow-b">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.3" />
+          <feOffset dx="0.08" dy="0.12" />
+          <feFlood floodColor="#00D4FF" floodOpacity="0.12" />
+          <feComposite operator="in" />
+          <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <linearGradient id="digital-vector-bg-b" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#0A0E17" />
+          <stop offset="100%" stopColor="#0E1420" />
+        </linearGradient>
+      </defs>
+      <rect width="91" height="55" fill="url(#digital-vector-bg-b)" />
+      <rect width="91" height="55" fill="transparent" filter="url(#digital-vector-pixel-b)" opacity="0.06" />
       {/* Background vector paths */}
-      <path
-        d="M5,45 C15,30 30,50 50,25 S75,40 88,20"
-        fill="none"
-        stroke="#00D4FF"
-        strokeWidth="0.15"
-        opacity="0.12"
-      />
-      <path
-        d="M3,15 C20,30 35,5 50,30 S70,10 90,25"
-        fill="none"
-        stroke="#00D4FF"
-        strokeWidth="0.15"
-        opacity="0.08"
-      />
-      <text
-        x="45.5"
-        y="12"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="500"
-        fontSize="2.2"
-        fill="#FFFFFF"
-      >
-        {data.companyJa}
-      </text>
-      <text
-        x="45.5"
-        y="16"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#00D4FF"
-      >
-        {data.companyEn}
-      </text>
-      <line x1="20" y1="20" x2="71" y2="20" stroke="#00D4FF" strokeWidth="0.1" opacity="0.2" />
-      <text
-        x="45.5"
-        y="26"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#00AACC"
-      >
-        {data.tel}
-      </text>
-      <text
-        x="45.5"
-        y="30"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#00AACC"
-      >
-        {data.email}
-      </text>
-      <text
-        x="45.5"
-        y="34"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#00AACC"
-      >
-        {data.website}
-      </text>
-      <line x1="20" y1="38" x2="71" y2="38" stroke="#00D4FF" strokeWidth="0.1" opacity="0.2" />
-      <text
-        x="45.5"
-        y="43"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.2"
-        fill="#5599AA"
-      >
-        〒{data.zipCode}
-      </text>
-      <text
-        x="45.5"
-        y="46.5"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.2"
-        fill="#5599AA"
-      >
-        {data.addressJa}
-      </text>
+      <path d="M5,45 C15,30 30,50 50,25 S75,40 88,20" fill="none" stroke="#00D4FF" strokeWidth="0.15" opacity="0.12" />
+      <path d="M3,15 C20,30 35,5 50,30 S70,10 90,25" fill="none" stroke="#00D4FF" strokeWidth="0.15" opacity="0.08" />
+      {/* Anchor markers */}
+      <rect x="4.3" y="44.3" width="1" height="1" fill="#00D4FF" opacity="0.15" />
+      <rect x="87.3" y="19.3" width="1" height="1" fill="#00D4FF" opacity="0.15" />
+      {data.logo && <image href={data.logo} x="41.5" y="3" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
+      <g filter="url(#digital-vector-shadow-b)">
+        <text x="45.5" y="16" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="500" fontSize="2.2" fill="#FFFFFF">{data.companyJa}</text>
+      </g>
+      <text x="45.5" y="20" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.4" fill="#00D4FF">{data.companyEn}</text>
+      <text x="45.5" y="24" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.4" fill="#5599AA">{data.titleJa}</text>
+      <line x1="20" y1="27" x2="71" y2="27" stroke="#00D4FF" strokeWidth="0.1" opacity="0.2" />
+      <text x="45.5" y="32" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.5" fill="#00AACC">{data.tel}</text>
+      <text x="45.5" y="36" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.5" fill="#00AACC">{data.email}</text>
+      <text x="45.5" y="40" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.5" fill="#00AACC">{data.website}</text>
+      <line x1="20" y1="43" x2="71" y2="43" stroke="#00D4FF" strokeWidth="0.1" opacity="0.2" />
+      <text x="45.5" y="47.5" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.2" fill="#5599AA">〒{data.zipCode}</text>
+      <text x="45.5" y="51" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.2" fill="#5599AA">{data.addressJa}</text>
     </g>
   ),
 };
@@ -382,14 +254,37 @@ const renderTemplate: TemplateDefinition = {
   accentColor: '#FFB000',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#0A0E17" />
+      <defs>
+        <filter id="digital-render-scanline">
+          <feTurbulence type="fractalNoise" baseFrequency="0.015,0.7" numOctaves="1" stitchTiles="stitch" result="scan" />
+          <feColorMatrix type="saturate" values="0" in="scan" result="gray" />
+          <feBlend mode="multiply" in="SourceGraphic" in2="gray" />
+        </filter>
+        <filter id="digital-render-shadow">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.35" />
+          <feOffset dx="0.1" dy="0.15" />
+          <feFlood floodColor="#FFB000" floodOpacity="0.18" />
+          <feComposite operator="in" />
+          <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <linearGradient id="digital-render-bg" x1="0" y1="0" x2="0.2" y2="1">
+          <stop offset="0%" stopColor="#0A0E17" />
+          <stop offset="50%" stopColor="#0D1219" />
+          <stop offset="100%" stopColor="#080C14" />
+        </linearGradient>
+        <radialGradient id="digital-render-ao" cx="0.7" cy="0.3" r="0.5">
+          <stop offset="0%" stopColor="#FFB000" stopOpacity="0.03" />
+          <stop offset="100%" stopColor="#FFB000" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <rect width="91" height="55" fill="url(#digital-render-bg)" />
+      <rect width="91" height="55" fill="url(#digital-render-ao)" />
+      <rect width="91" height="55" fill="transparent" filter="url(#digital-render-scanline)" opacity="0.1" />
       {/* Viewport border */}
       <rect x="2" y="2" width="87" height="51" fill="none" stroke="#FFB000" strokeWidth="0.1" opacity="0.3" />
       {/* Viewport label */}
-      <text x="4" y="5" fontFamily="'Space Grotesk', monospace" fontSize="1" fill="#FFB000" opacity="0.4">
-        PERSPECTIVE_FRONT
-      </text>
-      {/* 3D wireframe cube in background */}
+      <text x="4" y="5" fontFamily="'Space Grotesk', monospace" fontSize="1" fill="#FFB000" opacity="0.4">PERSPECTIVE_FRONT</text>
+      {/* 3D wireframe cube */}
       <polygon points="62,8 78,12 78,28 62,24" fill="none" stroke="#FFB000" strokeWidth="0.1" opacity="0.15" />
       <polygon points="62,8 70,5 86,9 78,12" fill="none" stroke="#FFB000" strokeWidth="0.1" opacity="0.15" />
       <polygon points="78,12 86,9 86,25 78,28" fill="none" stroke="#FFB000" strokeWidth="0.1" opacity="0.15" />
@@ -399,140 +294,60 @@ const renderTemplate: TemplateDefinition = {
       {[15, 25, 35, 45, 55, 65, 75].map((x, i) => (
         <line key={`digital-render-gl-${i}`} x1={x} y1="45" x2={x - 5} y2="52" stroke="#FFB000" strokeWidth="0.04" opacity="0.06" />
       ))}
-      <text
-        x="8"
-        y="22"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="600"
-        fontSize="5.5"
-        letterSpacing="0.5"
-        fill="#FFFFFF"
-      >
-        {data.nameJa}
-      </text>
-      <text
-        x="8"
-        y="28"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="400"
-        fontSize="2"
-        letterSpacing="0.3"
-        fill="#FFB000"
-      >
-        {data.nameEn}
-      </text>
-      <text
-        x="8"
-        y="35"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.5"
-        fill="#AA7700"
-      >
-        {data.titleJa}
-      </text>
-      <text
-        x="8"
-        y="41"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.5"
-        fill="#AA7700"
-      >
-        {data.companyJa}
-      </text>
+      {/* Vertex markers */}
+      <circle cx="62" cy="8" r="0.3" fill="#FFB000" opacity="0.3" />
+      <circle cx="78" cy="12" r="0.3" fill="#FFB000" opacity="0.3" />
+      <circle cx="86" cy="9" r="0.3" fill="#FFB000" opacity="0.3" />
+      {data.logo && <image href={data.logo} x="73" y="35" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
+      <g filter="url(#digital-render-shadow)">
+        <text x="8" y="22" fontFamily="'Noto Sans JP', sans-serif" fontWeight="600" fontSize="5.5" letterSpacing="0.5" fill="#FFFFFF">{data.nameJa}</text>
+      </g>
+      <text x="8" y="28" fontFamily="'Space Grotesk', sans-serif" fontWeight="400" fontSize="2" letterSpacing="0.3" fill="#FFB000">{data.nameEn}</text>
+      <text x="8" y="35" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.5" fill="#AA7700">{data.titleJa}</text>
+      <text x="8" y="41" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.5" fill="#AA7700">{data.companyJa}</text>
     </g>
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#0A0E17" />
+      <defs>
+        <filter id="digital-render-scanline-b">
+          <feTurbulence type="fractalNoise" baseFrequency="0.015,0.7" numOctaves="1" stitchTiles="stitch" result="scan" />
+          <feColorMatrix type="saturate" values="0" in="scan" result="gray" />
+          <feBlend mode="multiply" in="SourceGraphic" in2="gray" />
+        </filter>
+        <filter id="digital-render-shadow-b">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.3" />
+          <feOffset dx="0.08" dy="0.12" />
+          <feFlood floodColor="#FFB000" floodOpacity="0.12" />
+          <feComposite operator="in" />
+          <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <linearGradient id="digital-render-bg-b" x1="0" y1="0" x2="0.2" y2="1">
+          <stop offset="0%" stopColor="#0A0E17" />
+          <stop offset="100%" stopColor="#080C14" />
+        </linearGradient>
+      </defs>
+      <rect width="91" height="55" fill="url(#digital-render-bg-b)" />
+      <rect width="91" height="55" fill="transparent" filter="url(#digital-render-scanline-b)" opacity="0.08" />
       <rect x="2" y="2" width="87" height="51" fill="none" stroke="#FFB000" strokeWidth="0.1" opacity="0.3" />
-      <text x="4" y="5" fontFamily="'Space Grotesk', monospace" fontSize="1" fill="#FFB000" opacity="0.4">
-        PERSPECTIVE_BACK
-      </text>
-      {/* Subtle wireframe sphere */}
+      <text x="4" y="5" fontFamily="'Space Grotesk', monospace" fontSize="1" fill="#FFB000" opacity="0.4">PERSPECTIVE_BACK</text>
+      {/* Wireframe sphere */}
       <circle cx="72" cy="38" r="8" fill="none" stroke="#FFB000" strokeWidth="0.05" opacity="0.1" />
       <ellipse cx="72" cy="38" rx="8" ry="3" fill="none" stroke="#FFB000" strokeWidth="0.05" opacity="0.1" />
       <ellipse cx="72" cy="38" rx="3" ry="8" fill="none" stroke="#FFB000" strokeWidth="0.05" opacity="0.1" />
-      <text
-        x="45.5"
-        y="13"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="500"
-        fontSize="2.2"
-        fill="#FFFFFF"
-      >
-        {data.companyJa}
-      </text>
-      <text
-        x="45.5"
-        y="17"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#FFB000"
-      >
-        {data.companyEn}
-      </text>
-      <line x1="15" y1="21" x2="76" y2="21" stroke="#FFB000" strokeWidth="0.08" opacity="0.2" />
-      <text
-        x="45.5"
-        y="27"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#DDAA00"
-      >
-        {data.tel}
-      </text>
-      <text
-        x="45.5"
-        y="31"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#DDAA00"
-      >
-        {data.email}
-      </text>
-      <text
-        x="45.5"
-        y="35"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#DDAA00"
-      >
-        {data.website}
-      </text>
-      <line x1="15" y1="39" x2="76" y2="39" stroke="#FFB000" strokeWidth="0.08" opacity="0.2" />
-      <text
-        x="45.5"
-        y="44"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.2"
-        fill="#AA7700"
-      >
-        〒{data.zipCode}
-      </text>
-      <text
-        x="45.5"
-        y="47.5"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.2"
-        fill="#AA7700"
-      >
-        {data.addressJa}
-      </text>
+      {data.logo && <image href={data.logo} x="41.5" y="3" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
+      <g filter="url(#digital-render-shadow-b)">
+        <text x="45.5" y="16" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="500" fontSize="2.2" fill="#FFFFFF">{data.companyJa}</text>
+      </g>
+      <text x="45.5" y="20" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.4" fill="#FFB000">{data.companyEn}</text>
+      <text x="45.5" y="24" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.4" fill="#AA7700">{data.titleJa}</text>
+      <line x1="15" y1="27" x2="76" y2="27" stroke="#FFB000" strokeWidth="0.08" opacity="0.2" />
+      <text x="45.5" y="32" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.5" fill="#DDAA00">{data.tel}</text>
+      <text x="45.5" y="36" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.5" fill="#DDAA00">{data.email}</text>
+      <text x="45.5" y="40" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.5" fill="#DDAA00">{data.website}</text>
+      <line x1="15" y1="43" x2="76" y2="43" stroke="#FFB000" strokeWidth="0.08" opacity="0.2" />
+      <text x="45.5" y="47.5" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.2" fill="#AA7700">〒{data.zipCode}</text>
+      <text x="45.5" y="51" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.2" fill="#AA7700">{data.addressJa}</text>
     </g>
   ),
 };
@@ -551,96 +366,96 @@ const codeTemplate: TemplateDefinition = {
   accentColor: '#00FF41',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#0D1117" />
+      <defs>
+        <filter id="digital-code-glitch">
+          <feTurbulence type="fractalNoise" baseFrequency="0.02,0.5" numOctaves="2" stitchTiles="stitch" result="scan" />
+          <feColorMatrix type="saturate" values="0" in="scan" result="gray" />
+          <feBlend mode="multiply" in="SourceGraphic" in2="gray" />
+        </filter>
+        <filter id="digital-code-shadow">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.3" />
+          <feOffset dx="0.08" dy="0.12" />
+          <feFlood floodColor="#79C0FF" floodOpacity="0.15" />
+          <feComposite operator="in" />
+          <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <linearGradient id="digital-code-bg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#0D1117" />
+          <stop offset="50%" stopColor="#0F141C" />
+          <stop offset="100%" stopColor="#0D1117" />
+        </linearGradient>
+      </defs>
+      <rect width="91" height="55" fill="url(#digital-code-bg)" />
+      <rect width="91" height="55" fill="transparent" filter="url(#digital-code-glitch)" opacity="0.08" />
       {/* Title bar */}
       <rect x="0" y="0" width="91" height="4" fill="#161B22" />
       <circle cx="4" cy="2" r="0.7" fill="#FF5F56" />
       <circle cx="7" cy="2" r="0.7" fill="#FFBD2E" />
       <circle cx="10" cy="2" r="0.7" fill="#27C93F" />
-      <text x="20" y="2.6" fontFamily="'Space Grotesk', monospace" fontSize="1.1" fill="#8B949E">
-        meishi.tsx
-      </text>
+      <text x="20" y="2.6" fontFamily="'Space Grotesk', monospace" fontSize="1.1" fill="#8B949E">meishi.tsx</text>
       {/* Line numbers */}
       <text fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#484F58">
-        <tspan x="3" y="9">1</tspan>
-        <tspan x="3" y="12">2</tspan>
-        <tspan x="3" y="15">3</tspan>
-        <tspan x="3" y="18">4</tspan>
-        <tspan x="3" y="21">5</tspan>
-        <tspan x="3" y="24">6</tspan>
-        <tspan x="3" y="27">7</tspan>
-        <tspan x="3" y="30">8</tspan>
-        <tspan x="3" y="33">9</tspan>
-        <tspan x="3" y="36">10</tspan>
-        <tspan x="3" y="39">11</tspan>
-        <tspan x="3" y="42">12</tspan>
-        <tspan x="3" y="45">13</tspan>
-        <tspan x="3" y="48">14</tspan>
-        <tspan x="3" y="51">15</tspan>
+        <tspan x="3" y="9">1</tspan><tspan x="3" y="12">2</tspan><tspan x="3" y="15">3</tspan>
+        <tspan x="3" y="18">4</tspan><tspan x="3" y="21">5</tspan><tspan x="3" y="24">6</tspan>
+        <tspan x="3" y="27">7</tspan><tspan x="3" y="30">8</tspan><tspan x="3" y="33">9</tspan>
+        <tspan x="3" y="36">10</tspan><tspan x="3" y="39">11</tspan><tspan x="3" y="42">12</tspan>
+        <tspan x="3" y="45">13</tspan><tspan x="3" y="48">14</tspan><tspan x="3" y="51">15</tspan>
       </text>
       {/* Vertical separator */}
       <line x1="8" y1="5" x2="8" y2="55" stroke="#21262D" strokeWidth="0.15" />
-      {/* Code-styled name display */}
+      {/* Syntax keyword */}
       <text x="10" y="9" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#FF7B72">const </text>
       <text x="18" y="9" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#79C0FF">person</text>
       <text x="27" y="9" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#C9D1D9"> = {'{'}</text>
-      {/* Name in large styled text */}
-      <text
-        x="12"
-        y="20"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="600"
-        fontSize="5.5"
-        letterSpacing="0.5"
-        fill="#E6EDF3"
-      >
-        {data.nameJa}
-      </text>
-      <text
-        x="12"
-        y="26"
-        fontFamily="'Space Grotesk', monospace"
-        fontWeight="400"
-        fontSize="1.8"
-        letterSpacing="0.2"
-        fill="#79C0FF"
-      >
-        {data.nameEn}
-      </text>
-      <text x="10" y="33" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#8B949E">
-        {'  // '}{data.titleJa}
-      </text>
-      <text x="10" y="39" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#8B949E">
-        {'  // '}{data.companyJa}
-      </text>
+      {/* Active line highlight */}
+      <rect x="8" y="16" width="83" height="7" fill="#161B22" opacity="0.4" />
+      {data.logo && <image href={data.logo} x="74" y="7" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
+      <g filter="url(#digital-code-shadow)">
+        <text x="12" y="20" fontFamily="'Noto Sans JP', sans-serif" fontWeight="600" fontSize="5.5" letterSpacing="0.5" fill="#E6EDF3">{data.nameJa}</text>
+      </g>
+      <text x="12" y="26" fontFamily="'Space Grotesk', monospace" fontWeight="400" fontSize="1.8" letterSpacing="0.2" fill="#79C0FF">{data.nameEn}</text>
+      <text x="10" y="33" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#8B949E">{'  // '}{data.titleJa}</text>
+      <text x="10" y="39" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#8B949E">{'  // '}{data.companyJa}</text>
       <text x="10" y="45" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#C9D1D9">{'};'}</text>
     </g>
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#0D1117" />
+      <defs>
+        <filter id="digital-code-glitch-b">
+          <feTurbulence type="fractalNoise" baseFrequency="0.02,0.5" numOctaves="2" stitchTiles="stitch" result="scan" />
+          <feColorMatrix type="saturate" values="0" in="scan" result="gray" />
+          <feBlend mode="multiply" in="SourceGraphic" in2="gray" />
+        </filter>
+        <filter id="digital-code-shadow-b">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.25" />
+          <feOffset dx="0.05" dy="0.1" />
+          <feFlood floodColor="#79C0FF" floodOpacity="0.1" />
+          <feComposite operator="in" />
+          <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <linearGradient id="digital-code-bg-b" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#0D1117" />
+          <stop offset="100%" stopColor="#0F141C" />
+        </linearGradient>
+      </defs>
+      <rect width="91" height="55" fill="url(#digital-code-bg-b)" />
+      <rect width="91" height="55" fill="transparent" filter="url(#digital-code-glitch-b)" opacity="0.06" />
       <rect x="0" y="0" width="91" height="4" fill="#161B22" />
       <circle cx="4" cy="2" r="0.7" fill="#FF5F56" />
       <circle cx="7" cy="2" r="0.7" fill="#FFBD2E" />
       <circle cx="10" cy="2" r="0.7" fill="#27C93F" />
-      <text x="20" y="2.6" fontFamily="'Space Grotesk', monospace" fontSize="1.1" fill="#8B949E">
-        contact.json
-      </text>
+      <text x="20" y="2.6" fontFamily="'Space Grotesk', monospace" fontSize="1.1" fill="#8B949E">contact.json</text>
       <line x1="8" y1="5" x2="8" y2="55" stroke="#21262D" strokeWidth="0.15" />
-      {/* JSON-style contact info */}
+      {/* Line numbers */}
       <text fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#484F58">
-        <tspan x="3" y="9">1</tspan>
-        <tspan x="3" y="12">2</tspan>
-        <tspan x="3" y="15">3</tspan>
-        <tspan x="3" y="18">4</tspan>
-        <tspan x="3" y="21">5</tspan>
-        <tspan x="3" y="24">6</tspan>
-        <tspan x="3" y="27">7</tspan>
-        <tspan x="3" y="30">8</tspan>
-        <tspan x="3" y="33">9</tspan>
-        <tspan x="3" y="36">10</tspan>
-        <tspan x="3" y="39">11</tspan>
+        <tspan x="3" y="9">1</tspan><tspan x="3" y="12">2</tspan><tspan x="3" y="15">3</tspan>
+        <tspan x="3" y="18">4</tspan><tspan x="3" y="21">5</tspan><tspan x="3" y="24">6</tspan>
+        <tspan x="3" y="27">7</tspan><tspan x="3" y="30">8</tspan><tspan x="3" y="33">9</tspan>
+        <tspan x="3" y="36">10</tspan><tspan x="3" y="39">11</tspan><tspan x="3" y="42">12</tspan>
       </text>
+      {data.logo && <image href={data.logo} x="74" y="7" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
+      {/* JSON-style contact info */}
       <text x="10" y="9" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#C9D1D9">{'{'}</text>
       <text x="10" y="12" fontFamily="'Space Grotesk', monospace" fontSize="1.2">
         <tspan fill="#79C0FF">  "company"</tspan><tspan fill="#C9D1D9">: </tspan><tspan fill="#A5D6FF">"{data.companyJa}"</tspan>
@@ -649,21 +464,24 @@ const codeTemplate: TemplateDefinition = {
         <tspan fill="#79C0FF">  "companyEn"</tspan><tspan fill="#C9D1D9">: </tspan><tspan fill="#A5D6FF">"{data.companyEn}"</tspan>
       </text>
       <text x="10" y="18" fontFamily="'Space Grotesk', monospace" fontSize="1.2">
-        <tspan fill="#79C0FF">  "tel"</tspan><tspan fill="#C9D1D9">: </tspan><tspan fill="#A5D6FF">"{data.tel}"</tspan>
+        <tspan fill="#79C0FF">  "title"</tspan><tspan fill="#C9D1D9">: </tspan><tspan fill="#A5D6FF">"{data.titleJa}"</tspan>
       </text>
       <text x="10" y="21" fontFamily="'Space Grotesk', monospace" fontSize="1.2">
-        <tspan fill="#79C0FF">  "email"</tspan><tspan fill="#C9D1D9">: </tspan><tspan fill="#A5D6FF">"{data.email}"</tspan>
+        <tspan fill="#79C0FF">  "tel"</tspan><tspan fill="#C9D1D9">: </tspan><tspan fill="#A5D6FF">"{data.tel}"</tspan>
       </text>
       <text x="10" y="24" fontFamily="'Space Grotesk', monospace" fontSize="1.2">
-        <tspan fill="#79C0FF">  "web"</tspan><tspan fill="#C9D1D9">: </tspan><tspan fill="#A5D6FF">"{data.website}"</tspan>
+        <tspan fill="#79C0FF">  "email"</tspan><tspan fill="#C9D1D9">: </tspan><tspan fill="#A5D6FF">"{data.email}"</tspan>
       </text>
       <text x="10" y="27" fontFamily="'Space Grotesk', monospace" fontSize="1.2">
-        <tspan fill="#79C0FF">  "zip"</tspan><tspan fill="#C9D1D9">: </tspan><tspan fill="#A5D6FF">"{data.zipCode}"</tspan>
+        <tspan fill="#79C0FF">  "web"</tspan><tspan fill="#C9D1D9">: </tspan><tspan fill="#A5D6FF">"{data.website}"</tspan>
       </text>
       <text x="10" y="30" fontFamily="'Space Grotesk', monospace" fontSize="1.2">
+        <tspan fill="#79C0FF">  "zip"</tspan><tspan fill="#C9D1D9">: </tspan><tspan fill="#A5D6FF">"{data.zipCode}"</tspan>
+      </text>
+      <text x="10" y="33" fontFamily="'Space Grotesk', monospace" fontSize="1.2">
         <tspan fill="#79C0FF">  "address"</tspan><tspan fill="#C9D1D9">: </tspan><tspan fill="#A5D6FF">"{data.addressJa}"</tspan>
       </text>
-      <text x="10" y="33" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#C9D1D9">{'}'}</text>
+      <text x="10" y="36" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#C9D1D9">{'}'}</text>
     </g>
   ),
 };
@@ -683,14 +501,31 @@ const cloudTemplate: TemplateDefinition = {
   renderFront: (data: CardData) => (
     <g>
       <defs>
-        <radialGradient id="digital-cloud-glow" cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0%" stopColor="#00D4FF" stopOpacity="0.15" />
+        <filter id="digital-cloud-scanline">
+          <feTurbulence type="fractalNoise" baseFrequency="0.01,0.6" numOctaves="2" stitchTiles="stitch" result="scan" />
+          <feColorMatrix type="saturate" values="0" in="scan" result="gray" />
+          <feBlend mode="multiply" in="SourceGraphic" in2="gray" />
+        </filter>
+        <filter id="digital-cloud-shadow">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.35" />
+          <feOffset dx="0.08" dy="0.12" />
+          <feFlood floodColor="#00D4FF" floodOpacity="0.18" />
+          <feComposite operator="in" />
+          <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <linearGradient id="digital-cloud-bg" x1="0" y1="0" x2="0.3" y2="1">
+          <stop offset="0%" stopColor="#0A0E17" />
+          <stop offset="40%" stopColor="#0C1220" />
+          <stop offset="100%" stopColor="#0A1018" />
+        </linearGradient>
+        <radialGradient id="digital-cloud-glow" cx="0.75" cy="0.3" r="0.4">
+          <stop offset="0%" stopColor="#00D4FF" stopOpacity="0.12" />
           <stop offset="100%" stopColor="#00D4FF" stopOpacity="0" />
         </radialGradient>
       </defs>
-      <rect width="91" height="55" fill="#0A0E17" />
-      {/* Cloud glow */}
-      <ellipse cx="70" cy="15" rx="15" ry="10" fill="url(#digital-cloud-glow)" />
+      <rect width="91" height="55" fill="url(#digital-cloud-bg)" />
+      <rect width="91" height="55" fill="url(#digital-cloud-glow)" />
+      <rect width="91" height="55" fill="transparent" filter="url(#digital-cloud-scanline)" opacity="0.08" />
       {/* Floating nodes */}
       <circle cx="65" cy="10" r="0.8" fill="#00D4FF" opacity="0.4" />
       <circle cx="72" cy="8" r="0.6" fill="#00D4FF" opacity="0.3" />
@@ -705,136 +540,61 @@ const cloudTemplate: TemplateDefinition = {
       <line x1="68" y1="16" x2="65" y2="10" stroke="#00D4FF" strokeWidth="0.06" opacity="0.2" />
       <line x1="68" y1="16" x2="75" y2="18" stroke="#00D4FF" strokeWidth="0.06" opacity="0.2" />
       <line x1="72" y1="8" x2="80" y2="8" stroke="#00D4FF" strokeWidth="0.06" opacity="0.15" />
-      <text
-        x="10"
-        y="24"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="500"
-        fontSize="5.5"
-        letterSpacing="0.5"
-        fill="#E0F0FF"
-      >
-        {data.nameJa}
-      </text>
-      <text
-        x="10"
-        y="30"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.8"
-        letterSpacing="0.3"
-        fill="#00D4FF"
-      >
-        {data.nameEn}
-      </text>
-      <text
-        x="10"
-        y="37"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.5"
-        fill="#4488AA"
-      >
-        {data.titleJa}
-      </text>
-      <text
-        x="10"
-        y="43"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.5"
-        fill="#4488AA"
-      >
-        {data.companyJa}
-      </text>
+      {/* Pulse ring around main node */}
+      <circle cx="75" cy="18" r="2" fill="none" stroke="#00D4FF" strokeWidth="0.05" opacity="0.15" />
+      <circle cx="75" cy="18" r="3.5" fill="none" stroke="#00D4FF" strokeWidth="0.03" opacity="0.08" />
+      {data.logo && <image href={data.logo} x="74" y="40" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
+      <g filter="url(#digital-cloud-shadow)">
+        <text x="10" y="24" fontFamily="'Noto Sans JP', sans-serif" fontWeight="500" fontSize="5.5" letterSpacing="0.5" fill="#E0F0FF">{data.nameJa}</text>
+      </g>
+      <text x="10" y="30" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.8" letterSpacing="0.3" fill="#00D4FF">{data.nameEn}</text>
+      <text x="10" y="37" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.5" fill="#4488AA">{data.titleJa}</text>
+      <text x="10" y="43" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.5" fill="#4488AA">{data.companyJa}</text>
     </g>
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#0A0E17" />
+      <defs>
+        <filter id="digital-cloud-scanline-b">
+          <feTurbulence type="fractalNoise" baseFrequency="0.01,0.6" numOctaves="2" stitchTiles="stitch" result="scan" />
+          <feColorMatrix type="saturate" values="0" in="scan" result="gray" />
+          <feBlend mode="multiply" in="SourceGraphic" in2="gray" />
+        </filter>
+        <filter id="digital-cloud-shadow-b">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.25" />
+          <feOffset dx="0.05" dy="0.1" />
+          <feFlood floodColor="#00D4FF" floodOpacity="0.12" />
+          <feComposite operator="in" />
+          <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <linearGradient id="digital-cloud-bg-b" x1="0" y1="0" x2="0.3" y2="1">
+          <stop offset="0%" stopColor="#0A0E17" />
+          <stop offset="100%" stopColor="#0A1018" />
+        </linearGradient>
+      </defs>
+      <rect width="91" height="55" fill="url(#digital-cloud-bg-b)" />
+      <rect width="91" height="55" fill="transparent" filter="url(#digital-cloud-scanline-b)" opacity="0.06" />
       {/* Scattered cloud nodes background */}
       {[{cx: 15, cy: 42}, {cx: 20, cy: 45}, {cx: 25, cy: 40}, {cx: 18, cy: 38}, {cx: 70, cy: 44}, {cx: 75, cy: 41}, {cx: 78, cy: 46}].map((n, i) => (
         <circle key={`digital-cloud-bn-${i}`} cx={n.cx} cy={n.cy} r={0.4 + (i % 3) * 0.2} fill="#00D4FF" opacity={0.1 + (i % 3) * 0.05} />
       ))}
-      <text
-        x="45.5"
-        y="12"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="500"
-        fontSize="2.2"
-        fill="#E0F0FF"
-      >
-        {data.companyJa}
-      </text>
-      <text
-        x="45.5"
-        y="16"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#00D4FF"
-      >
-        {data.companyEn}
-      </text>
-      <line x1="15" y1="20" x2="76" y2="20" stroke="#00D4FF" strokeWidth="0.08" opacity="0.2" />
-      <text
-        x="45.5"
-        y="26"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#00AACC"
-      >
-        {data.tel}
-      </text>
-      <text
-        x="45.5"
-        y="30"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#00AACC"
-      >
-        {data.email}
-      </text>
-      <text
-        x="45.5"
-        y="34"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#00AACC"
-      >
-        {data.website}
-      </text>
-      <line x1="15" y1="38" x2="76" y2="38" stroke="#00D4FF" strokeWidth="0.08" opacity="0.2" />
-      <text
-        x="45.5"
-        y="43"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.2"
-        fill="#4488AA"
-      >
-        〒{data.zipCode}
-      </text>
-      <text
-        x="45.5"
-        y="46.5"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.2"
-        fill="#4488AA"
-      >
-        {data.addressJa}
-      </text>
+      {/* Connection lines between back nodes */}
+      <line x1="15" y1="42" x2="20" y2="45" stroke="#00D4FF" strokeWidth="0.04" opacity="0.08" />
+      <line x1="20" y1="45" x2="25" y2="40" stroke="#00D4FF" strokeWidth="0.04" opacity="0.08" />
+      <line x1="70" y1="44" x2="75" y2="41" stroke="#00D4FF" strokeWidth="0.04" opacity="0.08" />
+      {data.logo && <image href={data.logo} x="41.5" y="3" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
+      <g filter="url(#digital-cloud-shadow-b)">
+        <text x="45.5" y="16" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="500" fontSize="2.2" fill="#E0F0FF">{data.companyJa}</text>
+      </g>
+      <text x="45.5" y="20" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.4" fill="#00D4FF">{data.companyEn}</text>
+      <text x="45.5" y="24" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.4" fill="#4488AA">{data.titleJa}</text>
+      <line x1="15" y1="27" x2="76" y2="27" stroke="#00D4FF" strokeWidth="0.08" opacity="0.2" />
+      <text x="45.5" y="32" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.5" fill="#00AACC">{data.tel}</text>
+      <text x="45.5" y="36" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.5" fill="#00AACC">{data.email}</text>
+      <text x="45.5" y="40" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.5" fill="#00AACC">{data.website}</text>
+      <line x1="15" y1="43" x2="76" y2="43" stroke="#00D4FF" strokeWidth="0.08" opacity="0.2" />
+      <text x="45.5" y="47.5" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.2" fill="#4488AA">〒{data.zipCode}</text>
+      <text x="45.5" y="51" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.2" fill="#4488AA">{data.addressJa}</text>
     </g>
   ),
 };
@@ -853,9 +613,33 @@ const nodeTemplate: TemplateDefinition = {
   accentColor: '#00FF41',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#0A0E17" />
-      {/* Network nodes and edges */}
-      {/* Edges first (behind nodes) */}
+      <defs>
+        <filter id="digital-node-scanline">
+          <feTurbulence type="fractalNoise" baseFrequency="0.01,0.9" numOctaves="1" stitchTiles="stitch" result="scan" />
+          <feColorMatrix type="saturate" values="0" in="scan" result="gray" />
+          <feBlend mode="multiply" in="SourceGraphic" in2="gray" />
+        </filter>
+        <filter id="digital-node-shadow">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.35" />
+          <feOffset dx="0" dy="0.15" />
+          <feFlood floodColor="#00FF41" floodOpacity="0.2" />
+          <feComposite operator="in" />
+          <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <linearGradient id="digital-node-bg" x1="0" y1="0" x2="0.5" y2="1">
+          <stop offset="0%" stopColor="#0A0E17" />
+          <stop offset="50%" stopColor="#0C1220" />
+          <stop offset="100%" stopColor="#080C14" />
+        </linearGradient>
+        <radialGradient id="digital-node-pulse" cx="0.3" cy="0.5" r="0.5">
+          <stop offset="0%" stopColor="#00FF41" stopOpacity="0.03" />
+          <stop offset="100%" stopColor="#00FF41" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <rect width="91" height="55" fill="url(#digital-node-bg)" />
+      <rect width="91" height="55" fill="url(#digital-node-pulse)" />
+      <rect width="91" height="55" fill="transparent" filter="url(#digital-node-scanline)" opacity="0.1" />
+      {/* Network edges */}
       <line x1="8" y1="8" x2="25" y2="12" stroke="#00FF41" strokeWidth="0.08" opacity="0.2" />
       <line x1="25" y1="12" x2="40" y2="6" stroke="#00FF41" strokeWidth="0.08" opacity="0.2" />
       <line x1="25" y1="12" x2="30" y2="20" stroke="#00FF41" strokeWidth="0.08" opacity="0.15" />
@@ -868,7 +652,7 @@ const nodeTemplate: TemplateDefinition = {
       <line x1="28" y1="45" x2="45" y2="50" stroke="#00FF41" strokeWidth="0.08" opacity="0.15" />
       <line x1="65" y1="47" x2="80" y2="42" stroke="#00FF41" strokeWidth="0.08" opacity="0.15" />
       <line x1="80" y1="42" x2="88" y2="48" stroke="#00FF41" strokeWidth="0.08" opacity="0.15" />
-      {/* Node dots */}
+      {/* Node dots with glow */}
       <circle cx="8" cy="8" r="0.6" fill="#00FF41" opacity="0.5" />
       <circle cx="25" cy="12" r="0.8" fill="#00FF41" opacity="0.6" />
       <circle cx="40" cy="6" r="0.5" fill="#00FF41" opacity="0.4" />
@@ -879,43 +663,38 @@ const nodeTemplate: TemplateDefinition = {
       <circle cx="28" cy="45" r="0.6" fill="#00FF41" opacity="0.3" />
       <circle cx="65" cy="47" r="0.5" fill="#00FF41" opacity="0.3" />
       <circle cx="80" cy="42" r="0.6" fill="#00FF41" opacity="0.3" />
-      <text
-        x="10"
-        y="26"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="500"
-        fontSize="5.5"
-        letterSpacing="0.5"
-        fill="#E0FFE6"
-      >
-        {data.nameJa}
-      </text>
-      <text
-        x="10"
-        y="32"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.8"
-        letterSpacing="0.3"
-        fill="#00FF41"
-      >
-        {data.nameEn}
-      </text>
-      <text
-        x="10"
-        y="38"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.5"
-        fill="#00AA2A"
-      >
-        {data.titleJa}
-      </text>
+      {/* Hub ring */}
+      <circle cx="25" cy="12" r="2" fill="none" stroke="#00FF41" strokeWidth="0.04" opacity="0.15" />
+      {data.logo && <image href={data.logo} x="74" y="20" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
+      <g filter="url(#digital-node-shadow)">
+        <text x="10" y="26" fontFamily="'Noto Sans JP', sans-serif" fontWeight="500" fontSize="5.5" letterSpacing="0.5" fill="#E0FFE6">{data.nameJa}</text>
+      </g>
+      <text x="10" y="32" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.8" letterSpacing="0.3" fill="#00FF41">{data.nameEn}</text>
+      <text x="10" y="38" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.5" fill="#00AA2A">{data.titleJa}</text>
     </g>
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#0A0E17" />
+      <defs>
+        <filter id="digital-node-scanline-b">
+          <feTurbulence type="fractalNoise" baseFrequency="0.01,0.9" numOctaves="1" stitchTiles="stitch" result="scan" />
+          <feColorMatrix type="saturate" values="0" in="scan" result="gray" />
+          <feBlend mode="multiply" in="SourceGraphic" in2="gray" />
+        </filter>
+        <filter id="digital-node-shadow-b">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.25" />
+          <feOffset dx="0" dy="0.1" />
+          <feFlood floodColor="#00FF41" floodOpacity="0.12" />
+          <feComposite operator="in" />
+          <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <linearGradient id="digital-node-bg-b" x1="0" y1="0" x2="0.5" y2="1">
+          <stop offset="0%" stopColor="#0A0E17" />
+          <stop offset="100%" stopColor="#080C14" />
+        </linearGradient>
+      </defs>
+      <rect width="91" height="55" fill="url(#digital-node-bg-b)" />
+      <rect width="91" height="55" fill="transparent" filter="url(#digital-node-scanline-b)" opacity="0.08" />
       {/* Background network */}
       <line x1="5" y1="5" x2="20" y2="10" stroke="#00FF41" strokeWidth="0.06" opacity="0.1" />
       <line x1="20" y1="10" x2="35" y2="5" stroke="#00FF41" strokeWidth="0.06" opacity="0.1" />
@@ -927,85 +706,19 @@ const nodeTemplate: TemplateDefinition = {
       <circle cx="55" cy="48" r="0.4" fill="#00FF41" opacity="0.2" />
       <circle cx="70" cy="45" r="0.5" fill="#00FF41" opacity="0.2" />
       <circle cx="85" cy="50" r="0.4" fill="#00FF41" opacity="0.2" />
-      <text
-        x="45.5"
-        y="13"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="500"
-        fontSize="2.2"
-        fill="#E0FFE6"
-      >
-        {data.companyJa}
-      </text>
-      <text
-        x="45.5"
-        y="17"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#00FF41"
-      >
-        {data.companyEn}
-      </text>
-      <line x1="15" y1="21" x2="76" y2="21" stroke="#00FF41" strokeWidth="0.08" opacity="0.2" />
-      <text
-        x="45.5"
-        y="27"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#00CC33"
-      >
-        {data.tel}
-      </text>
-      <text
-        x="45.5"
-        y="31"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#00CC33"
-      >
-        {data.email}
-      </text>
-      <text
-        x="45.5"
-        y="35"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#00CC33"
-      >
-        {data.website}
-      </text>
-      <line x1="15" y1="39" x2="76" y2="39" stroke="#00FF41" strokeWidth="0.08" opacity="0.2" />
-      <text
-        x="45.5"
-        y="44"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.2"
-        fill="#00AA2A"
-      >
-        〒{data.zipCode}
-      </text>
-      <text
-        x="45.5"
-        y="47.5"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.2"
-        fill="#00AA2A"
-      >
-        {data.addressJa}
-      </text>
+      {data.logo && <image href={data.logo} x="41.5" y="3" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
+      <g filter="url(#digital-node-shadow-b)">
+        <text x="45.5" y="17" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="500" fontSize="2.2" fill="#E0FFE6">{data.companyJa}</text>
+      </g>
+      <text x="45.5" y="21" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.4" fill="#00FF41">{data.companyEn}</text>
+      <text x="45.5" y="25" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.4" fill="#00AA2A">{data.titleJa}</text>
+      <line x1="15" y1="28" x2="76" y2="28" stroke="#00FF41" strokeWidth="0.08" opacity="0.2" />
+      <text x="45.5" y="33" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.5" fill="#00CC33">{data.tel}</text>
+      <text x="45.5" y="37" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.5" fill="#00CC33">{data.email}</text>
+      <text x="45.5" y="41" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.5" fill="#00CC33">{data.website}</text>
+      <line x1="15" y1="44" x2="76" y2="44" stroke="#00FF41" strokeWidth="0.08" opacity="0.2" />
+      <text x="45.5" y="48" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.2" fill="#00AA2A">〒{data.zipCode}</text>
+      <text x="45.5" y="51.5" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.2" fill="#00AA2A">{data.addressJa}</text>
     </g>
   ),
 };
@@ -1024,14 +737,33 @@ const pixelTemplate: TemplateDefinition = {
   accentColor: '#00FF41',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#0A0E17" />
-      {/* Pixel grid pattern */}
-      {[0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54].map((y, i) => (
-        <line key={`digital-pixel-gh-${i}`} x1="0" y1={y} x2="91" y2={y} stroke="#111822" strokeWidth="0.05" />
-      ))}
-      {[0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90].map((x, i) => (
-        <line key={`digital-pixel-gv-${i}`} x1={x} y1="0" x2={x} y2="55" stroke="#111822" strokeWidth="0.05" />
-      ))}
+      <defs>
+        <filter id="digital-pixel-crt">
+          <feTurbulence type="fractalNoise" baseFrequency="0.01,1.5" numOctaves="1" stitchTiles="stitch" result="scan" />
+          <feColorMatrix type="saturate" values="0" in="scan" result="gray" />
+          <feBlend mode="multiply" in="SourceGraphic" in2="gray" />
+        </filter>
+        <filter id="digital-pixel-shadow">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.3" />
+          <feOffset dx="0.1" dy="0.15" />
+          <feFlood floodColor="#00FF41" floodOpacity="0.2" />
+          <feComposite operator="in" />
+          <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <linearGradient id="digital-pixel-bg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#0A0E17" />
+          <stop offset="50%" stopColor="#0C1020" />
+          <stop offset="100%" stopColor="#080C14" />
+        </linearGradient>
+        <pattern id="digital-pixel-grid" width="2" height="2" patternUnits="userSpaceOnUse">
+          <rect width="2" height="2" fill="transparent" />
+          <line x1="0" y1="2" x2="2" y2="2" stroke="#111822" strokeWidth="0.05" />
+          <line x1="2" y1="0" x2="2" y2="2" stroke="#111822" strokeWidth="0.05" />
+        </pattern>
+      </defs>
+      <rect width="91" height="55" fill="url(#digital-pixel-bg)" />
+      <rect width="91" height="55" fill="url(#digital-pixel-grid)" />
+      <rect width="91" height="55" fill="transparent" filter="url(#digital-pixel-crt)" opacity="0.15" />
       {/* Random lit pixels as stars */}
       <rect x="4" y="4" width="1.8" height="1.8" fill="#00FF41" opacity="0.15" />
       <rect x="20" y="6" width="1.8" height="1.8" fill="#00FF41" opacity="0.1" />
@@ -1040,139 +772,58 @@ const pixelTemplate: TemplateDefinition = {
       <rect x="60" y="42" width="1.8" height="1.8" fill="#00FF41" opacity="0.1" />
       <rect x="78" y="46" width="1.8" height="1.8" fill="#00D4FF" opacity="0.1" />
       <rect x="8" y="44" width="1.8" height="1.8" fill="#00FF41" opacity="0.08" />
-      <text
-        x="10"
-        y="24"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="700"
-        fontSize="6"
-        letterSpacing="0.5"
-        fill="#00FF41"
-      >
-        {data.nameJa}
-      </text>
-      <text
-        x="10"
-        y="30"
-        fontFamily="'Space Grotesk', monospace"
-        fontWeight="500"
-        fontSize="2"
-        letterSpacing="0.3"
-        fill="#00CC33"
-      >
-        {data.nameEn.toUpperCase()}
-      </text>
-      <text
-        x="10"
-        y="37"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="400"
-        fontSize="1.5"
-        fill="#008822"
-      >
-        {data.titleJa}
-      </text>
-      <text
-        x="10"
-        y="43"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="400"
-        fontSize="1.5"
-        fill="#008822"
-      >
-        {data.companyJa}
-      </text>
+      {/* Pixel art decorative element */}
+      <rect x="70" y="36" width="1.8" height="1.8" fill="#00FF41" opacity="0.2" />
+      <rect x="72" y="36" width="1.8" height="1.8" fill="#00FF41" opacity="0.15" />
+      <rect x="70" y="38" width="1.8" height="1.8" fill="#00FF41" opacity="0.15" />
+      {data.logo && <image href={data.logo} x="74" y="40" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
+      <g filter="url(#digital-pixel-shadow)">
+        <text x="10" y="24" fontFamily="'Noto Sans JP', sans-serif" fontWeight="700" fontSize="6" letterSpacing="0.5" fill="#00FF41">{data.nameJa}</text>
+      </g>
+      <text x="10" y="30" fontFamily="'Space Grotesk', monospace" fontWeight="500" fontSize="2" letterSpacing="0.3" fill="#00CC33">{data.nameEn.toUpperCase()}</text>
+      <text x="10" y="37" fontFamily="'Noto Sans JP', sans-serif" fontWeight="400" fontSize="1.5" fill="#008822">{data.titleJa}</text>
+      <text x="10" y="43" fontFamily="'Noto Sans JP', sans-serif" fontWeight="400" fontSize="1.5" fill="#008822">{data.companyJa}</text>
     </g>
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#0A0E17" />
-      {/* Pixel grid - lighter */}
-      {[0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52].map((y, i) => (
-        <line key={`digital-pixel-bh-${i}`} x1="0" y1={y} x2="91" y2={y} stroke="#111822" strokeWidth="0.05" />
-      ))}
+      <defs>
+        <filter id="digital-pixel-crt-b">
+          <feTurbulence type="fractalNoise" baseFrequency="0.01,1.5" numOctaves="1" stitchTiles="stitch" result="scan" />
+          <feColorMatrix type="saturate" values="0" in="scan" result="gray" />
+          <feBlend mode="multiply" in="SourceGraphic" in2="gray" />
+        </filter>
+        <filter id="digital-pixel-shadow-b">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.25" />
+          <feOffset dx="0.08" dy="0.12" />
+          <feFlood floodColor="#00FF41" floodOpacity="0.12" />
+          <feComposite operator="in" />
+          <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <linearGradient id="digital-pixel-bg-b" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#0A0E17" />
+          <stop offset="100%" stopColor="#080C14" />
+        </linearGradient>
+      </defs>
+      <rect width="91" height="55" fill="url(#digital-pixel-bg-b)" />
+      <rect width="91" height="55" fill="transparent" filter="url(#digital-pixel-crt-b)" opacity="0.12" />
       {/* Scattered pixels */}
       <rect x="6" y="8" width="1.8" height="1.8" fill="#00FF41" opacity="0.08" />
       <rect x="82" y="44" width="1.8" height="1.8" fill="#00FF41" opacity="0.08" />
-      <text
-        x="45.5"
-        y="13"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="600"
-        fontSize="2.2"
-        fill="#00FF41"
-      >
-        {data.companyJa}
-      </text>
-      <text
-        x="45.5"
-        y="17"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', monospace"
-        fontWeight="400"
-        fontSize="1.4"
-        fill="#00CC33"
-      >
-        {data.companyEn}
-      </text>
-      <line x1="15" y1="21" x2="76" y2="21" stroke="#00FF41" strokeWidth="0.1" opacity="0.2" />
-      <text
-        x="45.5"
-        y="27"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', monospace"
-        fontWeight="400"
-        fontSize="1.4"
-        fill="#00CC33"
-      >
-        {data.tel}
-      </text>
-      <text
-        x="45.5"
-        y="31"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', monospace"
-        fontWeight="400"
-        fontSize="1.4"
-        fill="#00CC33"
-      >
-        {data.email}
-      </text>
-      <text
-        x="45.5"
-        y="35"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', monospace"
-        fontWeight="400"
-        fontSize="1.4"
-        fill="#00CC33"
-      >
-        {data.website}
-      </text>
-      <line x1="15" y1="39" x2="76" y2="39" stroke="#00FF41" strokeWidth="0.1" opacity="0.2" />
-      <text
-        x="45.5"
-        y="44"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.2"
-        fill="#008822"
-      >
-        〒{data.zipCode}
-      </text>
-      <text
-        x="45.5"
-        y="47.5"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.2"
-        fill="#008822"
-      >
-        {data.addressJa}
-      </text>
+      <rect x="12" y="46" width="1.8" height="1.8" fill="#00D4FF" opacity="0.06" />
+      {data.logo && <image href={data.logo} x="41.5" y="3" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
+      <g filter="url(#digital-pixel-shadow-b)">
+        <text x="45.5" y="17" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="600" fontSize="2.2" fill="#00FF41">{data.companyJa}</text>
+      </g>
+      <text x="45.5" y="21" textAnchor="middle" fontFamily="'Space Grotesk', monospace" fontWeight="400" fontSize="1.4" fill="#00CC33">{data.companyEn}</text>
+      <text x="45.5" y="25" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.4" fill="#008822">{data.titleJa}</text>
+      <line x1="15" y1="28" x2="76" y2="28" stroke="#00FF41" strokeWidth="0.1" opacity="0.2" />
+      <text x="45.5" y="33" textAnchor="middle" fontFamily="'Space Grotesk', monospace" fontWeight="400" fontSize="1.5" fill="#00CC33">{data.tel}</text>
+      <text x="45.5" y="37" textAnchor="middle" fontFamily="'Space Grotesk', monospace" fontWeight="400" fontSize="1.5" fill="#00CC33">{data.email}</text>
+      <text x="45.5" y="41" textAnchor="middle" fontFamily="'Space Grotesk', monospace" fontWeight="400" fontSize="1.5" fill="#00CC33">{data.website}</text>
+      <line x1="15" y1="44" x2="76" y2="44" stroke="#00FF41" strokeWidth="0.1" opacity="0.2" />
+      <text x="45.5" y="48" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.2" fill="#008822">〒{data.zipCode}</text>
+      <text x="45.5" y="51.5" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.2" fill="#008822">{data.addressJa}</text>
     </g>
   ),
 };
@@ -1191,12 +842,35 @@ const byteTemplate: TemplateDefinition = {
   accentColor: '#FFB000',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#0A0E17" />
+      <defs>
+        <filter id="digital-byte-scanline">
+          <feTurbulence type="fractalNoise" baseFrequency="0.01,0.8" numOctaves="1" stitchTiles="stitch" result="scan" />
+          <feColorMatrix type="saturate" values="0" in="scan" result="gray" />
+          <feBlend mode="multiply" in="SourceGraphic" in2="gray" />
+        </filter>
+        <filter id="digital-byte-shadow">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.35" />
+          <feOffset dx="0" dy="0.15" />
+          <feFlood floodColor="#FFB000" floodOpacity="0.2" />
+          <feComposite operator="in" />
+          <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <linearGradient id="digital-byte-bg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#0A0E17" />
+          <stop offset="30%" stopColor="#0F1520" />
+          <stop offset="100%" stopColor="#080C14" />
+        </linearGradient>
+        <radialGradient id="digital-byte-glow" cx="0.5" cy="0.4" r="0.5">
+          <stop offset="0%" stopColor="#FFB000" stopOpacity="0.03" />
+          <stop offset="100%" stopColor="#FFB000" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <rect width="91" height="55" fill="url(#digital-byte-bg)" />
+      <rect width="91" height="55" fill="url(#digital-byte-glow)" />
+      <rect width="91" height="55" fill="transparent" filter="url(#digital-byte-scanline)" opacity="0.1" />
       {/* Hex dump header */}
       <rect x="0" y="0" width="91" height="5" fill="#0F1520" />
-      <text x="4" y="3.5" fontFamily="'Space Grotesk', monospace" fontSize="1" fill="#FFB000" opacity="0.5">
-        OFFSET  00 01 02 03 04 05 06 07  08 09 0A 0B 0C 0D 0E 0F
-      </text>
+      <text x="4" y="3.5" fontFamily="'Space Grotesk', monospace" fontSize="1" fill="#FFB000" opacity="0.5">OFFSET  00 01 02 03 04 05 06 07  08 09 0A 0B 0C 0D 0E 0F</text>
       {/* Hex data rows */}
       <text fontFamily="'Space Grotesk', monospace" fontSize="0.9" fill="#FFB000" opacity="0.12">
         <tspan x="4" y="8">0x0000  4D 45 49 53 48 49 20 43  41 52 44 20 44 41 54 41</tspan>
@@ -1207,114 +881,65 @@ const byteTemplate: TemplateDefinition = {
         <tspan x="4" y="48">0x0100  30 33 2D 31 32 33 34 2D  35 36 37 38 00 00 00 00</tspan>
         <tspan x="4" y="50.5">0x0110  31 35 30 2D 30 30 30 31  00 00 00 00 00 00 00 FF</tspan>
       </text>
-      {/* Name overlay */}
-      <text
-        x="45.5"
-        y="22"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="600"
-        fontSize="5.5"
-        letterSpacing="0.5"
-        fill="#FFB000"
-      >
-        {data.nameJa}
-      </text>
-      <text
-        x="45.5"
-        y="28"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', monospace"
-        fontWeight="400"
-        fontSize="1.8"
-        letterSpacing="0.2"
-        fill="#CC8800"
-      >
-        {data.nameEn.toUpperCase()}
-      </text>
-      <text
-        x="45.5"
-        y="35"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.5"
-        fill="#997700"
-      >
-        {data.titleJa}
-      </text>
-      <text
-        x="45.5"
-        y="40"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.5"
-        fill="#997700"
-      >
-        {data.companyJa}
-      </text>
+      {/* Memory block indicator */}
+      <rect x="3" y="6.5" width="0.5" height="7" fill="#FFB000" opacity="0.15" rx="0.1" />
+      {data.logo && <image href={data.logo} x="74" y="38" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
+      <g filter="url(#digital-byte-shadow)">
+        <text x="45.5" y="22" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="600" fontSize="5.5" letterSpacing="0.5" fill="#FFB000">{data.nameJa}</text>
+      </g>
+      <text x="45.5" y="28" textAnchor="middle" fontFamily="'Space Grotesk', monospace" fontWeight="400" fontSize="1.8" letterSpacing="0.2" fill="#CC8800">{data.nameEn.toUpperCase()}</text>
+      <text x="45.5" y="35" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.5" fill="#997700">{data.titleJa}</text>
+      <text x="45.5" y="40" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.5" fill="#997700">{data.companyJa}</text>
     </g>
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#0A0E17" />
+      <defs>
+        <filter id="digital-byte-scanline-b">
+          <feTurbulence type="fractalNoise" baseFrequency="0.01,0.8" numOctaves="1" stitchTiles="stitch" result="scan" />
+          <feColorMatrix type="saturate" values="0" in="scan" result="gray" />
+          <feBlend mode="multiply" in="SourceGraphic" in2="gray" />
+        </filter>
+        <filter id="digital-byte-shadow-b">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.25" />
+          <feOffset dx="0" dy="0.1" />
+          <feFlood floodColor="#FFB000" floodOpacity="0.12" />
+          <feComposite operator="in" />
+          <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <linearGradient id="digital-byte-bg-b" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#0A0E17" />
+          <stop offset="100%" stopColor="#080C14" />
+        </linearGradient>
+      </defs>
+      <rect width="91" height="55" fill="url(#digital-byte-bg-b)" />
+      <rect width="91" height="55" fill="transparent" filter="url(#digital-byte-scanline-b)" opacity="0.08" />
       <rect x="0" y="0" width="91" height="5" fill="#0F1520" />
-      <text x="4" y="3.5" fontFamily="'Space Grotesk', monospace" fontSize="1" fill="#FFB000" opacity="0.5">
-        CONTACT DATA BLOCK — READ ONLY
-      </text>
+      <text x="4" y="3.5" fontFamily="'Space Grotesk', monospace" fontSize="1" fill="#FFB000" opacity="0.5">CONTACT DATA BLOCK — READ ONLY</text>
+      {/* Memory block indicators */}
+      <rect x="3" y="10" width="0.5" height="38" fill="#FFB000" opacity="0.08" rx="0.1" />
+      {data.logo && <image href={data.logo} x="41.5" y="6" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
       {/* Memory address styled contact */}
-      <text x="8" y="12" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#FFB000" opacity="0.4">
-        0x00:
-      </text>
-      <text
-        x="20"
-        y="12"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="500"
-        fontSize="2"
-        fill="#FFB000"
-      >
-        {data.companyJa}
-      </text>
-      <text x="8" y="16" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#FFB000" opacity="0.4">
-        0x01:
-      </text>
-      <text x="20" y="16" fontFamily="'Space Grotesk', monospace" fontSize="1.3" fill="#CC8800">
-        {data.companyEn}
-      </text>
-      <line x1="8" y1="20" x2="83" y2="20" stroke="#FFB000" strokeWidth="0.08" opacity="0.2" />
-      <text x="8" y="25" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#FFB000" opacity="0.4">
-        0x10:
-      </text>
-      <text x="20" y="25" fontFamily="'Space Grotesk', monospace" fontSize="1.3" fill="#CC8800">
-        TEL {data.tel}
-      </text>
-      <text x="8" y="29" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#FFB000" opacity="0.4">
-        0x20:
-      </text>
-      <text x="20" y="29" fontFamily="'Space Grotesk', monospace" fontSize="1.3" fill="#CC8800">
-        {data.email}
-      </text>
-      <text x="8" y="33" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#FFB000" opacity="0.4">
-        0x30:
-      </text>
-      <text x="20" y="33" fontFamily="'Space Grotesk', monospace" fontSize="1.3" fill="#CC8800">
-        {data.website}
-      </text>
-      <line x1="8" y1="37" x2="83" y2="37" stroke="#FFB000" strokeWidth="0.08" opacity="0.2" />
-      <text x="8" y="42" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#FFB000" opacity="0.4">
-        0x40:
-      </text>
-      <text x="20" y="42" fontFamily="'Noto Sans JP', sans-serif" fontSize="1.2" fill="#997700">
-        〒{data.zipCode}
-      </text>
-      <text x="8" y="46" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#FFB000" opacity="0.4">
-        0x50:
-      </text>
-      <text x="20" y="46" fontFamily="'Noto Sans JP', sans-serif" fontSize="1.2" fill="#997700">
-        {data.addressJa}
-      </text>
+      <text x="8" y="12" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#FFB000" opacity="0.4">0x00:</text>
+      <g filter="url(#digital-byte-shadow-b)">
+        <text x="20" y="12" fontFamily="'Noto Sans JP', sans-serif" fontWeight="500" fontSize="2" fill="#FFB000">{data.companyJa}</text>
+      </g>
+      <text x="8" y="16" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#FFB000" opacity="0.4">0x01:</text>
+      <text x="20" y="16" fontFamily="'Space Grotesk', monospace" fontSize="1.3" fill="#CC8800">{data.companyEn}</text>
+      <text x="8" y="20" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#FFB000" opacity="0.4">0x02:</text>
+      <text x="20" y="20" fontFamily="'Noto Sans JP', sans-serif" fontSize="1.3" fill="#CC8800">{data.titleJa}</text>
+      <line x1="8" y1="23" x2="83" y2="23" stroke="#FFB000" strokeWidth="0.08" opacity="0.2" />
+      <text x="8" y="27" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#FFB000" opacity="0.4">0x10:</text>
+      <text x="20" y="27" fontFamily="'Space Grotesk', monospace" fontSize="1.3" fill="#CC8800">TEL {data.tel}</text>
+      <text x="8" y="31" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#FFB000" opacity="0.4">0x20:</text>
+      <text x="20" y="31" fontFamily="'Space Grotesk', monospace" fontSize="1.3" fill="#CC8800">{data.email}</text>
+      <text x="8" y="35" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#FFB000" opacity="0.4">0x30:</text>
+      <text x="20" y="35" fontFamily="'Space Grotesk', monospace" fontSize="1.3" fill="#CC8800">{data.website}</text>
+      <line x1="8" y1="38" x2="83" y2="38" stroke="#FFB000" strokeWidth="0.08" opacity="0.2" />
+      <text x="8" y="42" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#FFB000" opacity="0.4">0x40:</text>
+      <text x="20" y="42" fontFamily="'Noto Sans JP', sans-serif" fontSize="1.2" fill="#997700">〒{data.zipCode}</text>
+      <text x="8" y="46" fontFamily="'Space Grotesk', monospace" fontSize="1.2" fill="#FFB000" opacity="0.4">0x50:</text>
+      <text x="20" y="46" fontFamily="'Noto Sans JP', sans-serif" fontSize="1.2" fill="#997700">{data.addressJa}</text>
     </g>
   ),
 };
@@ -1333,14 +958,40 @@ const streamTemplate: TemplateDefinition = {
   accentColor: '#00D4FF',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#0A0E17" />
+      <defs>
+        <filter id="digital-stream-scanline">
+          <feTurbulence type="fractalNoise" baseFrequency="0.01,0.7" numOctaves="2" stitchTiles="stitch" result="scan" />
+          <feColorMatrix type="saturate" values="0" in="scan" result="gray" />
+          <feBlend mode="multiply" in="SourceGraphic" in2="gray" />
+        </filter>
+        <filter id="digital-stream-shadow">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.35" />
+          <feOffset dx="0.08" dy="0.12" />
+          <feFlood floodColor="#00D4FF" floodOpacity="0.2" />
+          <feComposite operator="in" />
+          <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <linearGradient id="digital-stream-bg" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#0A0E17" />
+          <stop offset="50%" stopColor="#0C1220" />
+          <stop offset="100%" stopColor="#0A1018" />
+        </linearGradient>
+        <linearGradient id="digital-stream-flow" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#00D4FF" stopOpacity="0" />
+          <stop offset="30%" stopColor="#00D4FF" stopOpacity="0.08" />
+          <stop offset="100%" stopColor="#00D4FF" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <rect width="91" height="55" fill="url(#digital-stream-bg)" />
+      <rect x="0" y="6" width="91" height="8" fill="url(#digital-stream-flow)" />
+      <rect width="91" height="55" fill="transparent" filter="url(#digital-stream-scanline)" opacity="0.1" />
       {/* Streaming data lines */}
       <line x1="0" y1="8" x2="30" y2="8" stroke="#00D4FF" strokeWidth="0.3" opacity="0.08" />
       <line x1="5" y1="10" x2="45" y2="10" stroke="#00D4FF" strokeWidth="0.2" opacity="0.06" />
       <line x1="0" y1="12" x2="20" y2="12" stroke="#00D4FF" strokeWidth="0.15" opacity="0.1" />
       <line x1="60" y1="8" x2="91" y2="8" stroke="#00D4FF" strokeWidth="0.2" opacity="0.06" />
       <line x1="70" y1="10" x2="91" y2="10" stroke="#00D4FF" strokeWidth="0.3" opacity="0.08" />
-      {/* Streaming arrows */}
+      {/* Bottom streaming */}
       <line x1="0" y1="44" x2="25" y2="44" stroke="#00D4FF" strokeWidth="0.15" opacity="0.06" />
       <line x1="0" y1="46" x2="35" y2="46" stroke="#00D4FF" strokeWidth="0.2" opacity="0.08" />
       <line x1="0" y1="48" x2="15" y2="48" stroke="#00D4FF" strokeWidth="0.15" opacity="0.05" />
@@ -1349,140 +1000,57 @@ const streamTemplate: TemplateDefinition = {
       <line x1="75" y1="48" x2="91" y2="48" stroke="#00D4FF" strokeWidth="0.2" opacity="0.06" />
       {/* Live indicator */}
       <circle cx="84" cy="5" r="0.8" fill="#FF3333" opacity="0.7" />
-      <text x="78" y="5.6" fontFamily="'Space Grotesk', monospace" fontSize="1" fill="#FF3333" opacity="0.5">
-        LIVE
-      </text>
-      <text
-        x="10"
-        y="24"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="500"
-        fontSize="5.5"
-        letterSpacing="0.5"
-        fill="#E0F8FF"
-      >
-        {data.nameJa}
-      </text>
-      <text
-        x="10"
-        y="30"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.8"
-        letterSpacing="0.3"
-        fill="#00D4FF"
-      >
-        {data.nameEn}
-      </text>
-      <text
-        x="10"
-        y="37"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.5"
-        fill="#0088AA"
-      >
-        {data.titleJa}
-      </text>
-      <text
-        x="10"
-        y="42"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.5"
-        fill="#0088AA"
-      >
-        {data.companyJa}
-      </text>
+      <circle cx="84" cy="5" r="1.5" fill="none" stroke="#FF3333" strokeWidth="0.06" opacity="0.3" />
+      <text x="78" y="5.6" fontFamily="'Space Grotesk', monospace" fontSize="1" fill="#FF3333" opacity="0.5">LIVE</text>
+      {data.logo && <image href={data.logo} x="74" y="38" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
+      <g filter="url(#digital-stream-shadow)">
+        <text x="10" y="24" fontFamily="'Noto Sans JP', sans-serif" fontWeight="500" fontSize="5.5" letterSpacing="0.5" fill="#E0F8FF">{data.nameJa}</text>
+      </g>
+      <text x="10" y="30" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.8" letterSpacing="0.3" fill="#00D4FF">{data.nameEn}</text>
+      <text x="10" y="37" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.5" fill="#0088AA">{data.titleJa}</text>
+      <text x="10" y="42" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.5" fill="#0088AA">{data.companyJa}</text>
     </g>
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#0A0E17" />
+      <defs>
+        <filter id="digital-stream-scanline-b">
+          <feTurbulence type="fractalNoise" baseFrequency="0.01,0.7" numOctaves="2" stitchTiles="stitch" result="scan" />
+          <feColorMatrix type="saturate" values="0" in="scan" result="gray" />
+          <feBlend mode="multiply" in="SourceGraphic" in2="gray" />
+        </filter>
+        <filter id="digital-stream-shadow-b">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.25" />
+          <feOffset dx="0.05" dy="0.1" />
+          <feFlood floodColor="#00D4FF" floodOpacity="0.12" />
+          <feComposite operator="in" />
+          <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <linearGradient id="digital-stream-bg-b" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#0A0E17" />
+          <stop offset="100%" stopColor="#0A1018" />
+        </linearGradient>
+      </defs>
+      <rect width="91" height="55" fill="url(#digital-stream-bg-b)" />
+      <rect width="91" height="55" fill="transparent" filter="url(#digital-stream-scanline-b)" opacity="0.07" />
       {/* Streaming lines background */}
       <line x1="0" y1="5" x2="20" y2="5" stroke="#00D4FF" strokeWidth="0.2" opacity="0.05" />
       <line x1="0" y1="7" x2="35" y2="7" stroke="#00D4FF" strokeWidth="0.15" opacity="0.04" />
       <line x1="55" y1="50" x2="91" y2="50" stroke="#00D4FF" strokeWidth="0.2" opacity="0.05" />
       <line x1="65" y1="48" x2="91" y2="48" stroke="#00D4FF" strokeWidth="0.15" opacity="0.04" />
-      <text
-        x="45.5"
-        y="12"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="500"
-        fontSize="2.2"
-        fill="#E0F8FF"
-      >
-        {data.companyJa}
-      </text>
-      <text
-        x="45.5"
-        y="16"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#00D4FF"
-      >
-        {data.companyEn}
-      </text>
-      <line x1="15" y1="20" x2="76" y2="20" stroke="#00D4FF" strokeWidth="0.08" opacity="0.2" />
-      <text
-        x="45.5"
-        y="26"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#00AACC"
-      >
-        {data.tel}
-      </text>
-      <text
-        x="45.5"
-        y="30"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#00AACC"
-      >
-        {data.email}
-      </text>
-      <text
-        x="45.5"
-        y="34"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#00AACC"
-      >
-        {data.website}
-      </text>
-      <line x1="15" y1="38" x2="76" y2="38" stroke="#00D4FF" strokeWidth="0.08" opacity="0.2" />
-      <text
-        x="45.5"
-        y="43"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.2"
-        fill="#0088AA"
-      >
-        〒{data.zipCode}
-      </text>
-      <text
-        x="45.5"
-        y="46.5"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.2"
-        fill="#0088AA"
-      >
-        {data.addressJa}
-      </text>
+      {data.logo && <image href={data.logo} x="41.5" y="3" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
+      <g filter="url(#digital-stream-shadow-b)">
+        <text x="45.5" y="16" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="500" fontSize="2.2" fill="#E0F8FF">{data.companyJa}</text>
+      </g>
+      <text x="45.5" y="20" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.4" fill="#00D4FF">{data.companyEn}</text>
+      <text x="45.5" y="24" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.4" fill="#0088AA">{data.titleJa}</text>
+      <line x1="15" y1="27" x2="76" y2="27" stroke="#00D4FF" strokeWidth="0.08" opacity="0.2" />
+      <text x="45.5" y="32" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.5" fill="#00AACC">{data.tel}</text>
+      <text x="45.5" y="36" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.5" fill="#00AACC">{data.email}</text>
+      <text x="45.5" y="40" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.5" fill="#00AACC">{data.website}</text>
+      <line x1="15" y1="43" x2="76" y2="43" stroke="#00D4FF" strokeWidth="0.08" opacity="0.2" />
+      <text x="45.5" y="47.5" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.2" fill="#0088AA">〒{data.zipCode}</text>
+      <text x="45.5" y="51" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.2" fill="#0088AA">{data.addressJa}</text>
     </g>
   ),
 };
@@ -1501,14 +1069,36 @@ const algoTemplate: TemplateDefinition = {
   accentColor: '#00FF41',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#0A0E17" />
+      <defs>
+        <filter id="digital-algo-scanline">
+          <feTurbulence type="fractalNoise" baseFrequency="0.01,0.8" numOctaves="1" stitchTiles="stitch" result="scan" />
+          <feColorMatrix type="saturate" values="0" in="scan" result="gray" />
+          <feBlend mode="multiply" in="SourceGraphic" in2="gray" />
+        </filter>
+        <filter id="digital-algo-shadow">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.35" />
+          <feOffset dx="0" dy="0.15" />
+          <feFlood floodColor="#00FF41" floodOpacity="0.2" />
+          <feComposite operator="in" />
+          <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <linearGradient id="digital-algo-bg" x1="0" y1="0" x2="0.2" y2="1">
+          <stop offset="0%" stopColor="#0A0E17" />
+          <stop offset="50%" stopColor="#0C1220" />
+          <stop offset="100%" stopColor="#080C14" />
+        </linearGradient>
+        <radialGradient id="digital-algo-glow" cx="0.8" cy="0.5" r="0.4">
+          <stop offset="0%" stopColor="#00FF41" stopOpacity="0.03" />
+          <stop offset="100%" stopColor="#00FF41" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <rect width="91" height="55" fill="url(#digital-algo-bg)" />
+      <rect width="91" height="55" fill="url(#digital-algo-glow)" />
+      <rect width="91" height="55" fill="transparent" filter="url(#digital-algo-scanline)" opacity="0.1" />
       {/* Flowchart elements in background */}
-      {/* Decision diamond */}
       <polygon points="75,8 80,12 75,16 70,12" fill="none" stroke="#00FF41" strokeWidth="0.12" opacity="0.2" />
-      {/* Process boxes */}
       <rect x="68" y="20" width="14" height="5" fill="none" stroke="#00FF41" strokeWidth="0.12" opacity="0.2" rx="0.3" />
       <rect x="68" y="30" width="14" height="5" fill="none" stroke="#00FF41" strokeWidth="0.12" opacity="0.15" rx="0.3" />
-      {/* Start/end oval */}
       <ellipse cx="75" cy="42" rx="7" ry="3" fill="none" stroke="#00FF41" strokeWidth="0.12" opacity="0.15" />
       {/* Connectors */}
       <line x1="75" y1="16" x2="75" y2="20" stroke="#00FF41" strokeWidth="0.08" opacity="0.15" />
@@ -1517,137 +1107,58 @@ const algoTemplate: TemplateDefinition = {
       {/* Arrow heads */}
       <polygon points="74,20 75,19 76,20" fill="#00FF41" opacity="0.15" />
       <polygon points="74,30 75,29 76,30" fill="#00FF41" opacity="0.15" />
-      <text
-        x="10"
-        y="22"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="600"
-        fontSize="5.5"
-        letterSpacing="0.5"
-        fill="#E0FFE6"
-      >
-        {data.nameJa}
-      </text>
-      <text
-        x="10"
-        y="28"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="400"
-        fontSize="1.8"
-        letterSpacing="0.3"
-        fill="#00FF41"
-      >
-        {data.nameEn}
-      </text>
-      <text
-        x="10"
-        y="36"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.5"
-        fill="#00AA2A"
-      >
-        {data.titleJa}
-      </text>
-      <text
-        x="10"
-        y="42"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.5"
-        fill="#00AA2A"
-      >
-        {data.companyJa}
-      </text>
+      {/* Yes/No labels */}
+      <text x="81" y="13" fontFamily="'Space Grotesk', monospace" fontSize="0.8" fill="#00FF41" opacity="0.2">Y</text>
+      <text x="68" y="13" fontFamily="'Space Grotesk', monospace" fontSize="0.8" fill="#00FF41" opacity="0.2">N</text>
+      {data.logo && <image href={data.logo} x="74" y="45" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
+      <g filter="url(#digital-algo-shadow)">
+        <text x="10" y="22" fontFamily="'Noto Sans JP', sans-serif" fontWeight="600" fontSize="5.5" letterSpacing="0.5" fill="#E0FFE6">{data.nameJa}</text>
+      </g>
+      <text x="10" y="28" fontFamily="'Space Grotesk', sans-serif" fontWeight="400" fontSize="1.8" letterSpacing="0.3" fill="#00FF41">{data.nameEn}</text>
+      <text x="10" y="36" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.5" fill="#00AA2A">{data.titleJa}</text>
+      <text x="10" y="42" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.5" fill="#00AA2A">{data.companyJa}</text>
     </g>
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#0A0E17" />
+      <defs>
+        <filter id="digital-algo-scanline-b">
+          <feTurbulence type="fractalNoise" baseFrequency="0.01,0.8" numOctaves="1" stitchTiles="stitch" result="scan" />
+          <feColorMatrix type="saturate" values="0" in="scan" result="gray" />
+          <feBlend mode="multiply" in="SourceGraphic" in2="gray" />
+        </filter>
+        <filter id="digital-algo-shadow-b">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.25" />
+          <feOffset dx="0" dy="0.1" />
+          <feFlood floodColor="#00FF41" floodOpacity="0.12" />
+          <feComposite operator="in" />
+          <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <linearGradient id="digital-algo-bg-b" x1="0" y1="0" x2="0.2" y2="1">
+          <stop offset="0%" stopColor="#0A0E17" />
+          <stop offset="100%" stopColor="#080C14" />
+        </linearGradient>
+      </defs>
+      <rect width="91" height="55" fill="url(#digital-algo-bg-b)" />
+      <rect width="91" height="55" fill="transparent" filter="url(#digital-algo-scanline-b)" opacity="0.07" />
       {/* Background flowchart elements */}
       <polygon points="12,5 16,8 12,11 8,8" fill="none" stroke="#00FF41" strokeWidth="0.08" opacity="0.1" />
       <rect x="6" y="13" width="12" height="4" fill="none" stroke="#00FF41" strokeWidth="0.08" opacity="0.1" rx="0.3" />
       <line x1="12" y1="11" x2="12" y2="13" stroke="#00FF41" strokeWidth="0.06" opacity="0.1" />
       <ellipse cx="80" cy="45" rx="5" ry="2.5" fill="none" stroke="#00FF41" strokeWidth="0.08" opacity="0.08" />
-      <text
-        x="45.5"
-        y="12"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="500"
-        fontSize="2.2"
-        fill="#E0FFE6"
-      >
-        {data.companyJa}
-      </text>
-      <text
-        x="45.5"
-        y="16"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#00FF41"
-      >
-        {data.companyEn}
-      </text>
-      <line x1="15" y1="20" x2="76" y2="20" stroke="#00FF41" strokeWidth="0.08" opacity="0.2" />
-      <text
-        x="45.5"
-        y="26"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#00CC33"
-      >
-        {data.tel}
-      </text>
-      <text
-        x="45.5"
-        y="30"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#00CC33"
-      >
-        {data.email}
-      </text>
-      <text
-        x="45.5"
-        y="34"
-        textAnchor="middle"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#00CC33"
-      >
-        {data.website}
-      </text>
-      <line x1="15" y1="38" x2="76" y2="38" stroke="#00FF41" strokeWidth="0.08" opacity="0.2" />
-      <text
-        x="45.5"
-        y="43"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.2"
-        fill="#00AA2A"
-      >
-        〒{data.zipCode}
-      </text>
-      <text
-        x="45.5"
-        y="46.5"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.2"
-        fill="#00AA2A"
-      >
-        {data.addressJa}
-      </text>
+      {data.logo && <image href={data.logo} x="41.5" y="3" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
+      <g filter="url(#digital-algo-shadow-b)">
+        <text x="45.5" y="16" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="500" fontSize="2.2" fill="#E0FFE6">{data.companyJa}</text>
+      </g>
+      <text x="45.5" y="20" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.4" fill="#00FF41">{data.companyEn}</text>
+      <text x="45.5" y="24" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.4" fill="#00AA2A">{data.titleJa}</text>
+      <line x1="15" y1="27" x2="76" y2="27" stroke="#00FF41" strokeWidth="0.08" opacity="0.2" />
+      <text x="45.5" y="32" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.5" fill="#00CC33">{data.tel}</text>
+      <text x="45.5" y="36" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.5" fill="#00CC33">{data.email}</text>
+      <text x="45.5" y="40" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="300" fontSize="1.5" fill="#00CC33">{data.website}</text>
+      <line x1="15" y1="43" x2="76" y2="43" stroke="#00FF41" strokeWidth="0.08" opacity="0.2" />
+      <text x="45.5" y="47.5" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.2" fill="#00AA2A">〒{data.zipCode}</text>
+      <text x="45.5" y="51" textAnchor="middle" fontFamily="'Noto Sans JP', sans-serif" fontWeight="300" fontSize="1.2" fill="#00AA2A">{data.addressJa}</text>
     </g>
   ),
 };

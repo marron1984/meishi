@@ -1,5 +1,8 @@
 import type { CardData, TemplateDefinition } from '../types';
 
+const EN = "'Inter', sans-serif";
+const JA = "'Noto Sans JP', sans-serif";
+
 // ============================================================
 // 1. BAUHAUS (造) — Walter Gropius inspired
 // Primary colors, geometric shapes, functional typography
@@ -14,163 +17,58 @@ const bauhausTemplate: TemplateDefinition = {
   accentColor: '#E60012',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#F5F0E8" />
-      {/* Primary color geometric blocks */}
-      <rect x="0" y="0" width="28" height="18" fill="#E60012" />
+      <defs>
+        <filter id="art-bauhaus-paper"><feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="4" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="gray"/><feBlend mode="multiply" in="SourceGraphic" in2="gray"/></filter>
+        <filter id="art-bauhaus-shadow"><feGaussianBlur in="SourceAlpha" stdDeviation="0.3" result="blur"/><feOffset dx="0.1" dy="0.15" result="shifted"/><feFlood floodColor="#000" floodOpacity="0.08" result="color"/><feComposite in="color" in2="shifted" operator="in" result="shadow"/><feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <linearGradient id="art-bauhaus-red" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#E60012"/><stop offset="100%" stopColor="#CC000E"/></linearGradient>
+      </defs>
+      <rect width="91" height="55" fill="#F5F0E8" filter="url(#art-bauhaus-paper)" />
+      <rect x="0" y="0" width="28" height="18" fill="url(#art-bauhaus-red)" />
       <rect x="28" y="0" width="14" height="18" fill="#FFD700" />
-      <circle cx="78" cy="12" r="9" fill="#0057B8" />
-      <rect x="0" y="18" width="6" height="37" fill="#1A1A1A" />
-      {/* Horizontal rule */}
-      <line x1="10" y1="32" x2="68" y2="32" stroke="#1A1A1A" strokeWidth="0.6" />
-      {/* Name */}
-      <text
-        x="10"
-        y="28"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="700"
-        fontSize="6.5"
-        fill="#1A1A1A"
-      >
-        {data.nameJa}
-      </text>
-      <text
-        x="10"
-        y="38"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="600"
-        fontSize="2.2"
-        letterSpacing="0.4"
-        fill="#1A1A1A"
-      >
-        {data.nameEn.toUpperCase()}
-      </text>
-      <text
-        x="10"
-        y="43"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="400"
-        fontSize="1.8"
-        fill="#555555"
-      >
-        {data.titleJa}
-      </text>
-      {/* Small yellow triangle accent */}
-      <polygon points="75,45 83,45 79,39" fill="#FFD700" />
+      <circle cx="78" cy="12" r="9" fill="#0057B8" opacity="0.85" />
+      <rect x="0" y="18" width="5" height="37" fill="#1A1A1A" />
+      <line x1="10" y1="32" x2="65" y2="32" stroke="#1A1A1A" strokeWidth="0.5" />
+      <polygon points="74,46 82,46 78,40" fill="#FFD700" opacity="0.7" />
+      <circle cx="65" cy="8" r="0.5" fill="#1A1A1A" opacity="0.2" />
+      <text x="10" y="28" fontFamily={JA} fontWeight="700" fontSize="6.5" fill="#1A1A1A" filter="url(#art-bauhaus-shadow)">{data.nameJa}</text>
+      <text x="10" y="38" fontFamily={EN} fontWeight="600" fontSize="2.2" letterSpacing="0.4" fill="#1A1A1A">{data.nameEn.toUpperCase()}</text>
+      <text x="10" y="43" fontFamily={JA} fontWeight="400" fontSize="1.8" fill="#555555">{data.titleJa}</text>
+      <text x="10" y="47" fontFamily={EN} fontWeight="300" fontSize="1.4" fill="#777777">{data.titleEn}</text>
+      <text x="10" y="52" fontFamily={JA} fontWeight="400" fontSize="1.3" fill="#888888">{data.companyJa}</text>
+      {data.logo && <image href={data.logo} x="76" y="40" width="7" height="7" preserveAspectRatio="xMidYMid meet" opacity="0.5" />}
     </g>
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#F5F0E8" />
-      {/* Geometric composition */}
+      <defs>
+        <filter id="art-bauhaus-paper-b"><feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="4" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="gray"/><feBlend mode="multiply" in="SourceGraphic" in2="gray"/></filter>
+      </defs>
+      <rect width="91" height="55" fill="#F5F0E8" filter="url(#art-bauhaus-paper-b)" />
       <rect x="0" y="0" width="91" height="8" fill="#1A1A1A" />
-      <rect x="0" y="8" width="30" height="4" fill="#E60012" />
-      <rect x="30" y="8" width="20" height="4" fill="#FFD700" />
-      <rect x="50" y="8" width="41" height="4" fill="#0057B8" />
-      {/* Company */}
-      <text
-        x="8"
-        y="5.5"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="700"
-        fontSize="3"
-        fill="#FFFFFF"
-      >
-        {data.companyJa}
-      </text>
-      <text
-        x="83"
-        y="5.5"
-        textAnchor="end"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="600"
-        fontSize="1.8"
-        fill="#FFD700"
-      >
-        {data.companyEn}
-      </text>
-      {/* Contact info */}
-      <text
-        x="8"
-        y="22"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="500"
-        fontSize="1.6"
-        fill="#1A1A1A"
-      >
-        TEL
-      </text>
-      <text
-        x="20"
-        y="22"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="400"
-        fontSize="1.6"
-        fill="#333333"
-      >
-        {data.tel}
-      </text>
-      <text
-        x="8"
-        y="26"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="500"
-        fontSize="1.6"
-        fill="#1A1A1A"
-      >
-        MAIL
-      </text>
-      <text
-        x="20"
-        y="26"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="400"
-        fontSize="1.6"
-        fill="#333333"
-      >
-        {data.email}
-      </text>
-      <text
-        x="8"
-        y="30"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="500"
-        fontSize="1.6"
-        fill="#1A1A1A"
-      >
-        WEB
-      </text>
-      <text
-        x="20"
-        y="30"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="400"
-        fontSize="1.6"
-        fill="#333333"
-      >
-        {data.website}
-      </text>
-      {/* Address */}
-      <line x1="8" y1="34" x2="83" y2="34" stroke="#1A1A1A" strokeWidth="0.3" />
-      <text
-        x="8"
-        y="39"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.4"
-        fill="#555555"
-      >
-        〒{data.zipCode} {data.addressJa}
-      </text>
-      {/* Bottom geometric accent */}
-      <rect x="0" y="47" width="91" height="8" fill="#1A1A1A" />
-      <circle cx="45.5" cy="51" r="2.5" fill="#E60012" />
+      <rect x="0" y="8" width="30" height="3.5" fill="#E60012" />
+      <rect x="30" y="8" width="20" height="3.5" fill="#FFD700" />
+      <rect x="50" y="8" width="41" height="3.5" fill="#0057B8" />
+      <circle cx="84" cy="48" r="3" fill="#E60012" opacity="0.15" />
+      <rect x="80" y="42" width="0.3" height="8" fill="#1A1A1A" opacity="0.1" />
+      <text x="8" y="5.5" fontFamily={JA} fontWeight="700" fontSize="2.8" fill="#FFFFFF">{data.companyJa}</text>
+      <text x="8" y="17" fontFamily={EN} fontWeight="600" fontSize="2" letterSpacing="0.4" fill="#1A1A1A">{data.companyEn.toUpperCase()}</text>
+      <text x="8" y="21" fontFamily={JA} fontWeight="300" fontSize="1.5" fill="#888888">{data.titleJa}</text>
+      <line x1="8" y1="24" x2="83" y2="24" stroke="#1A1A1A" strokeWidth="0.3" />
+      <text x="8" y="29" fontFamily={EN} fontWeight="400" fontSize="1.5" fill="#333333">TEL {data.tel}</text>
+      <text x="8" y="33" fontFamily={EN} fontWeight="400" fontSize="1.5" fill="#333333">{data.email}</text>
+      <text x="8" y="37" fontFamily={EN} fontWeight="400" fontSize="1.5" fill="#333333">{data.website}</text>
+      <line x1="8" y1="40" x2="60" y2="40" stroke="#E60012" strokeWidth="0.2" />
+      <text x="8" y="44.5" fontFamily={JA} fontWeight="300" fontSize="1.2" fill="#666666">〒{data.zipCode}</text>
+      <text x="8" y="48" fontFamily={JA} fontWeight="300" fontSize="1.2" fill="#666666">{data.addressJa}</text>
+      <text x="8" y="51.5" fontFamily={EN} fontWeight="300" fontSize="1.1" fill="#999999">{data.addressEn}</text>
+      {data.logo && <image href={data.logo} x="72" y="14" width="7" height="7" preserveAspectRatio="xMidYMid meet" opacity="0.4" />}
     </g>
   ),
 };
 
 // ============================================================
 // 2. DADA (壊) — Hannah Höch inspired
-// Collage-like overlapping rectangles, tilted text, chaos
+// Collage aesthetic, overlapping rotated elements, chaos
 // ============================================================
 const dadaTemplate: TemplateDefinition = {
   id: 'artistic-dada',
@@ -182,135 +80,54 @@ const dadaTemplate: TemplateDefinition = {
   accentColor: '#D4380D',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#F2EDE4" />
-      {/* Collage-like overlapping rectangles */}
-      <rect x="5" y="3" width="25" height="14" fill="#D4380D" opacity="0.85" />
-      <rect x="18" y="10" width="30" height="10" fill="#2B2B2B" opacity="0.7" />
-      <rect x="55" y="2" width="18" height="22" fill="#C4A35A" opacity="0.6" />
-      <rect x="62" y="30" width="24" height="15" fill="#3D6B50" opacity="0.5" />
-      <rect x="3" y="38" width="20" height="12" fill="#8B4513" opacity="0.4" />
-      {/* Tilted name */}
-      <text
-        x="45"
-        y="30"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="900"
-        fontSize="8"
-        fill="#1A1A1A"
-        transform="rotate(-3, 45, 30)"
-      >
-        {data.nameJa}
-      </text>
-      {/* English name at different angle */}
-      <text
-        x="30"
-        y="42"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="700"
-        fontSize="2.5"
-        letterSpacing="0.3"
-        fill="#D4380D"
-        transform="rotate(2, 30, 42)"
-      >
-        {data.nameEn.toUpperCase()}
-      </text>
-      {/* Small tilted title */}
-      <text
-        x="12"
-        y="8"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="800"
-        fontSize="1.6"
-        fill="#FFFFFF"
-        transform="rotate(-1, 12, 8)"
-      >
-        DADA
-      </text>
-      <text
-        x="50"
-        y="50"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.6"
-        fill="#666666"
-        transform="rotate(1.5, 50, 50)"
-      >
-        {data.titleJa}
-      </text>
+      <defs>
+        <filter id="art-dada-paper"><feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="5" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="gray"/><feBlend mode="multiply" in="SourceGraphic" in2="gray"/></filter>
+        <filter id="art-dada-shadow"><feGaussianBlur in="SourceAlpha" stdDeviation="0.35" result="blur"/><feOffset dx="0.12" dy="0.18" result="shifted"/><feFlood floodColor="#000" floodOpacity="0.1" result="color"/><feComposite in="color" in2="shifted" operator="in" result="shadow"/><feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <rect width="91" height="55" fill="#F2EDE4" filter="url(#art-dada-paper)" />
+      <rect x="12" y="5" width="35" height="14" fill="#D4380D" opacity="0.12" transform="rotate(-3, 29.5, 12)" />
+      <rect x="50" y="30" width="30" height="18" fill="#2B5EA7" opacity="0.08" transform="rotate(5, 65, 39)" />
+      <line x1="0" y1="25" x2="91" y2="22" stroke="#D4380D" strokeWidth="0.3" opacity="0.35" />
+      <line x1="60" y1="0" x2="55" y2="55" stroke="#2B5EA7" strokeWidth="0.2" opacity="0.15" />
+      <circle cx="82" cy="8" r="2.5" fill="none" stroke="#D4380D" strokeWidth="0.3" opacity="0.25" />
+      <rect x="5" y="42" width="8" height="8" fill="none" stroke="#2B5EA7" strokeWidth="0.25" opacity="0.18" transform="rotate(-8, 9, 46)" />
+      <text x="12" y="18" fontFamily={JA} fontWeight="700" fontSize="7" fill="#1A1A1A" filter="url(#art-dada-shadow)" transform="rotate(-2, 12, 18)">{data.nameJa}</text>
+      <text x="14" y="28" fontFamily={EN} fontWeight="600" fontSize="2.2" letterSpacing="0.5" fill="#D4380D" transform="rotate(1, 14, 28)">{data.nameEn.toUpperCase()}</text>
+      <text x="10" y="37" fontFamily={JA} fontWeight="300" fontSize="1.8" fill="#666666" transform="rotate(-1, 10, 37)">{data.titleJa}</text>
+      <text x="10" y="41" fontFamily={EN} fontWeight="200" fontSize="1.4" fill="#888888">{data.titleEn}</text>
+      <text x="60" y="50" fontFamily={JA} fontWeight="400" fontSize="1.3" fill="#999999" transform="rotate(2, 60, 50)">{data.companyJa}</text>
+      {data.logo && <image href={data.logo} x="76" y="38" width="7" height="7" preserveAspectRatio="xMidYMid meet" opacity="0.45" />}
     </g>
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#F2EDE4" />
-      {/* Chaotic overlapping rectangles */}
-      <rect x="40" y="0" width="20" height="55" fill="#2B2B2B" opacity="0.08" />
-      <rect x="10" y="5" width="35" height="8" fill="#D4380D" opacity="0.7" transform="rotate(-1, 27, 9)" />
-      <rect x="50" y="25" width="30" height="10" fill="#C4A35A" opacity="0.5" transform="rotate(2, 65, 30)" />
-      <rect x="5" y="35" width="22" height="8" fill="#3D6B50" opacity="0.4" transform="rotate(-2, 16, 39)" />
-      {/* Company tilted */}
-      <text
-        x="14"
-        y="11"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="700"
-        fontSize="3"
-        fill="#FFFFFF"
-        transform="rotate(-1, 14, 11)"
-      >
-        {data.companyJa}
-      </text>
-      {/* Contact info at various angles */}
-      <text
-        x="12"
-        y="24"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="500"
-        fontSize="1.8"
-        fill="#1A1A1A"
-        transform="rotate(1, 12, 24)"
-      >
-        {data.tel}
-      </text>
-      <text
-        x="55"
-        y="32"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="500"
-        fontSize="1.7"
-        fill="#1A1A1A"
-        transform="rotate(2, 55, 32)"
-      >
-        {data.email}
-      </text>
-      <text
-        x="10"
-        y="40"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="400"
-        fontSize="1.5"
-        fill="#3D6B50"
-        transform="rotate(-2, 10, 40)"
-      >
-        {data.website}
-      </text>
-      <text
-        x="20"
-        y="50"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.3"
-        fill="#888888"
-        transform="rotate(0.5, 20, 50)"
-      >
-        〒{data.zipCode} {data.addressJa}
-      </text>
+      <defs>
+        <filter id="art-dada-paper-b"><feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="5" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="gray"/><feBlend mode="multiply" in="SourceGraphic" in2="gray"/></filter>
+      </defs>
+      <rect width="91" height="55" fill="#F2EDE4" filter="url(#art-dada-paper-b)" />
+      <rect x="5" y="3" width="40" height="10" fill="#D4380D" opacity="0.1" transform="rotate(2, 25, 8)" />
+      <rect x="40" y="35" width="35" height="12" fill="#2B5EA7" opacity="0.08" transform="rotate(-3, 57, 41)" />
+      <circle cx="15" cy="45" r="3" fill="none" stroke="#D4380D" strokeWidth="0.25" opacity="0.2" />
+      <line x1="30" y1="0" x2="28" y2="55" stroke="#D4380D" strokeWidth="0.15" opacity="0.12" />
+      <text x="8" y="10" fontFamily={JA} fontWeight="600" fontSize="2.2" fill="#1A1A1A" transform="rotate(-1, 8, 10)">{data.companyJa}</text>
+      <text x="8" y="15" fontFamily={EN} fontWeight="400" fontSize="1.5" letterSpacing="0.3" fill="#D4380D" transform="rotate(1, 8, 15)">{data.companyEn}</text>
+      <text x="8" y="19" fontFamily={JA} fontWeight="300" fontSize="1.3" fill="#999999">{data.titleJa}</text>
+      <line x1="8" y1="22" x2="83" y2="21" stroke="#1A1A1A" strokeWidth="0.2" />
+      <text x="8" y="27" fontFamily={EN} fontWeight="400" fontSize="1.5" fill="#444444" transform="rotate(-0.5, 8, 27)">TEL {data.tel}</text>
+      <text x="8" y="31" fontFamily={EN} fontWeight="400" fontSize="1.5" fill="#444444">{data.email}</text>
+      <text x="8" y="35" fontFamily={EN} fontWeight="400" fontSize="1.5" fill="#444444" transform="rotate(0.5, 8, 35)">{data.website}</text>
+      <line x1="8" y1="38" x2="83" y2="38.5" stroke="#D4380D" strokeWidth="0.2" />
+      <text x="8" y="43" fontFamily={JA} fontWeight="300" fontSize="1.2" fill="#777777">〒{data.zipCode}</text>
+      <text x="8" y="46.5" fontFamily={JA} fontWeight="300" fontSize="1.2" fill="#777777">{data.addressJa}</text>
+      <text x="8" y="50" fontFamily={EN} fontWeight="300" fontSize="1.1" fill="#999999">{data.addressEn}</text>
+      {data.logo && <image href={data.logo} x="74" y="5" width="7" height="7" preserveAspectRatio="xMidYMid meet" opacity="0.4" />}
     </g>
   ),
 };
 
 // ============================================================
 // 3. POP (弾) — Andy Warhol inspired
-// Bold flat colors, thick outlines, comic-like energy
+// Bold colors, halftone dots, graphic outlines
 // ============================================================
 const popTemplate: TemplateDefinition = {
   id: 'artistic-pop',
@@ -322,159 +139,60 @@ const popTemplate: TemplateDefinition = {
   accentColor: '#FF1493',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#FFE135" />
-      {/* Bold background shapes */}
-      <circle cx="75" cy="15" r="12" fill="#FF1493" />
-      <circle cx="75" cy="15" r="8" fill="#FFE135" />
-      <circle cx="75" cy="15" r="5" fill="#FF1493" />
-      {/* Thick border */}
-      <rect x="2" y="2" width="87" height="51" fill="none" stroke="#1A1A1A" strokeWidth="1.5" />
-      {/* Name with outline effect */}
-      <text
-        x="8"
-        y="24"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="900"
-        fontSize="9"
-        fill="#1A1A1A"
-        stroke="#1A1A1A"
-        strokeWidth="0.3"
-      >
-        {data.nameJa}
-      </text>
-      <text
-        x="8"
-        y="32"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="800"
-        fontSize="3"
-        letterSpacing="0.5"
-        fill="#FF1493"
-        stroke="#1A1A1A"
-        strokeWidth="0.15"
-      >
-        {data.nameEn.toUpperCase()}
-      </text>
-      {/* Title in bold bar */}
-      <rect x="6" y="36" width="50" height="5" fill="#1A1A1A" />
-      <text
-        x="8"
-        y="39.8"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="700"
-        fontSize="2.2"
-        fill="#FFE135"
-      >
-        {data.titleJa}
-      </text>
-      {/* Pop dots */}
-      <circle cx="10" cy="48" r="1.5" fill="#FF1493" stroke="#1A1A1A" strokeWidth="0.3" />
-      <circle cx="16" cy="48" r="1.5" fill="#00BFFF" stroke="#1A1A1A" strokeWidth="0.3" />
-      <circle cx="22" cy="48" r="1.5" fill="#32CD32" stroke="#1A1A1A" strokeWidth="0.3" />
+      <defs>
+        <filter id="art-pop-paper"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="gray"/><feBlend mode="multiply" in="SourceGraphic" in2="gray"/></filter>
+        <filter id="art-pop-shadow"><feGaussianBlur in="SourceAlpha" stdDeviation="0.35" result="blur"/><feOffset dx="0.15" dy="0.2" result="shifted"/><feFlood floodColor="#000" floodOpacity="0.1" result="color"/><feComposite in="color" in2="shifted" operator="in" result="shadow"/><feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <pattern id="art-pop-halftone" width="2" height="2" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.35" fill="#FF1493" opacity="0.06" /></pattern>
+        <linearGradient id="art-pop-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#FFE500"/><stop offset="100%" stopColor="#FFD000"/></linearGradient>
+      </defs>
+      <rect width="91" height="55" fill="url(#art-pop-grad)" filter="url(#art-pop-paper)" />
+      <rect width="91" height="55" fill="url(#art-pop-halftone)" />
+      <rect x="0" y="0" width="91" height="3" fill="#FF1493" />
+      <rect x="0" y="52" width="91" height="3" fill="#FF1493" />
+      <circle cx="78" cy="12" r="5" fill="#00BFFF" opacity="0.35" />
+      <circle cx="78" cy="12" r="5" fill="none" stroke="#FF1493" strokeWidth="0.4" opacity="0.5" />
+      <rect x="65" y="38" width="20" height="10" rx="1" fill="#FF1493" opacity="0.08" />
+      <text x="8" y="20" fontFamily={JA} fontWeight="900" fontSize="7" fill="#FF1493" filter="url(#art-pop-shadow)">{data.nameJa}</text>
+      <text x="8" y="20" fontFamily={JA} fontWeight="900" fontSize="7" fill="none" stroke="#1A1A1A" strokeWidth="0.15">{data.nameJa}</text>
+      <text x="8" y="27" fontFamily={EN} fontWeight="700" fontSize="2.5" letterSpacing="0.3" fill="#1A1A1A">{data.nameEn.toUpperCase()}</text>
+      <text x="8" y="33" fontFamily={JA} fontWeight="400" fontSize="2" fill="#CC1177">{data.titleJa}</text>
+      <text x="8" y="37" fontFamily={EN} fontWeight="300" fontSize="1.5" fill="#CC1177">{data.titleEn}</text>
+      <rect x="8" y="42" width="25" height="0.4" fill="#FF1493" opacity="0.4" />
+      <text x="8" y="48" fontFamily={JA} fontWeight="500" fontSize="1.3" fill="#1A1A1A">{data.companyJa}</text>
+      <text x="8" y="51.5" fontFamily={EN} fontWeight="300" fontSize="1.2" fill="#666666">{data.companyEn}</text>
+      {data.logo && <image href={data.logo} x="76" y="40" width="7" height="7" preserveAspectRatio="xMidYMid meet" opacity="0.5" />}
     </g>
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#FF1493" />
-      <rect x="2" y="2" width="87" height="51" fill="none" stroke="#1A1A1A" strokeWidth="1.5" />
-      {/* Company in bold */}
-      <rect x="6" y="5" width="79" height="9" fill="#FFE135" stroke="#1A1A1A" strokeWidth="0.5" />
-      <text
-        x="45.5"
-        y="11.5"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="900"
-        fontSize="4"
-        fill="#1A1A1A"
-      >
-        {data.companyJa}
-      </text>
-      {/* Contact info with pop styling */}
-      <text
-        x="10"
-        y="22"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="800"
-        fontSize="1.8"
-        fill="#FFE135"
-      >
-        TEL
-      </text>
-      <text
-        x="22"
-        y="22"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="600"
-        fontSize="1.8"
-        fill="#FFFFFF"
-      >
-        {data.tel}
-      </text>
-      <text
-        x="10"
-        y="27"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="800"
-        fontSize="1.8"
-        fill="#FFE135"
-      >
-        MAIL
-      </text>
-      <text
-        x="22"
-        y="27"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="600"
-        fontSize="1.8"
-        fill="#FFFFFF"
-      >
-        {data.email}
-      </text>
-      <text
-        x="10"
-        y="32"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="800"
-        fontSize="1.8"
-        fill="#FFE135"
-      >
-        WEB
-      </text>
-      <text
-        x="22"
-        y="32"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="600"
-        fontSize="1.8"
-        fill="#FFFFFF"
-      >
-        {data.website}
-      </text>
-      {/* Address bar */}
-      <rect x="6" y="37" width="79" height="5" fill="#1A1A1A" />
-      <text
-        x="45.5"
-        y="40.8"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="500"
-        fontSize="1.5"
-        fill="#FFE135"
-      >
-        〒{data.zipCode} {data.addressJa}
-      </text>
-      {/* Bottom pop dots row */}
-      <circle cx="30" cy="48" r="2" fill="#FFE135" stroke="#1A1A1A" strokeWidth="0.4" />
-      <circle cx="45.5" cy="48" r="2" fill="#00BFFF" stroke="#1A1A1A" strokeWidth="0.4" />
-      <circle cx="61" cy="48" r="2" fill="#32CD32" stroke="#1A1A1A" strokeWidth="0.4" />
+      <defs>
+        <filter id="art-pop-paper-b"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="gray"/><feBlend mode="multiply" in="SourceGraphic" in2="gray"/></filter>
+        <pattern id="art-pop-halftone-b" width="2.5" height="2.5" patternUnits="userSpaceOnUse"><circle cx="1.25" cy="1.25" r="0.4" fill="#FF1493" opacity="0.05" /></pattern>
+      </defs>
+      <rect width="91" height="55" fill="#FFE500" filter="url(#art-pop-paper-b)" />
+      <rect width="91" height="55" fill="url(#art-pop-halftone-b)" />
+      <rect x="0" y="0" width="91" height="3" fill="#FF1493" />
+      <rect x="0" y="52" width="91" height="3" fill="#FF1493" />
+      <circle cx="15" cy="12" r="4" fill="#00BFFF" opacity="0.25" />
+      <circle cx="80" cy="44" r="3" fill="#FF1493" opacity="0.12" />
+      <text x="45.5" y="14" textAnchor="middle" fontFamily={JA} fontWeight="700" fontSize="2.8" fill="#FF1493">{data.companyJa}</text>
+      <text x="45.5" y="19" textAnchor="middle" fontFamily={EN} fontWeight="600" fontSize="1.8" letterSpacing="0.3" fill="#1A1A1A">{data.companyEn.toUpperCase()}</text>
+      <text x="45.5" y="23" textAnchor="middle" fontFamily={JA} fontWeight="300" fontSize="1.4" fill="#CC1177">{data.titleJa}</text>
+      <line x1="15" y1="26" x2="76" y2="26" stroke="#FF1493" strokeWidth="0.3" />
+      <text x="45.5" y="31" textAnchor="middle" fontFamily={EN} fontWeight="500" fontSize="1.5" fill="#1A1A1A">TEL {data.tel}</text>
+      <text x="45.5" y="35" textAnchor="middle" fontFamily={EN} fontWeight="500" fontSize="1.5" fill="#1A1A1A">{data.email}</text>
+      <text x="45.5" y="39" textAnchor="middle" fontFamily={EN} fontWeight="500" fontSize="1.5" fill="#1A1A1A">{data.website}</text>
+      <line x1="15" y1="42" x2="76" y2="42" stroke="#FF1493" strokeWidth="0.3" />
+      <text x="45.5" y="46.5" textAnchor="middle" fontFamily={JA} fontWeight="300" fontSize="1.2" fill="#666666">〒{data.zipCode}</text>
+      <text x="45.5" y="49.5" textAnchor="middle" fontFamily={JA} fontWeight="300" fontSize="1.2" fill="#666666">{data.addressJa}</text>
+      {data.logo && <image href={data.logo} x="74" y="6" width="7" height="7" preserveAspectRatio="xMidYMid meet" opacity="0.45" />}
     </g>
   ),
 };
 
 // ============================================================
 // 4. ABSTRACT (象) — Kandinsky inspired
-// Abstract colored shapes as decoration
+// Free-form shapes, warm & cool contrasts
 // ============================================================
 const abstractTemplate: TemplateDefinition = {
   id: 'artistic-abstract',
@@ -486,134 +204,59 @@ const abstractTemplate: TemplateDefinition = {
   accentColor: '#1B4D8E',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#FDF8EF" />
-      {/* Kandinsky-style abstract shapes */}
-      <circle cx="18" cy="14" r="8" fill="#1B4D8E" opacity="0.8" />
-      <circle cx="22" cy="18" r="4" fill="#D4380D" opacity="0.7" />
-      <polygon points="70,5 80,20 60,20" fill="#FFD700" opacity="0.75" />
-      <circle cx="76" cy="42" r="6" fill="none" stroke="#1B4D8E" strokeWidth="0.6" />
-      <circle cx="76" cy="42" r="3" fill="#D4380D" opacity="0.5" />
-      <line x1="10" y1="28" x2="35" y2="22" stroke="#1A1A1A" strokeWidth="0.3" />
-      <line x1="60" y1="25" x2="80" y2="30" stroke="#D4380D" strokeWidth="0.3" />
-      {/* Small decorative triangle */}
-      <polygon points="5,45 12,45 8.5,39" fill="#FFD700" opacity="0.6" />
-      {/* Name */}
-      <text
-        x="20"
-        y="36"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="500"
-        fontSize="6"
-        fill="#1A1A1A"
-      >
-        {data.nameJa}
-      </text>
-      <text
-        x="20"
-        y="42"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="400"
-        fontSize="2"
-        letterSpacing="0.3"
-        fill="#555555"
-      >
-        {data.nameEn}
-      </text>
-      <text
-        x="20"
-        y="47"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.6"
-        fill="#888888"
-      >
-        {data.titleJa}
-      </text>
+      <defs>
+        <filter id="art-abstract-paper"><feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="4" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="gray"/><feBlend mode="multiply" in="SourceGraphic" in2="gray"/></filter>
+        <filter id="art-abstract-shadow"><feGaussianBlur in="SourceAlpha" stdDeviation="0.25" result="blur"/><feOffset dx="0.08" dy="0.12" result="shifted"/><feFlood floodColor="#000" floodOpacity="0.07" result="color"/><feComposite in="color" in2="shifted" operator="in" result="shadow"/><feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <radialGradient id="art-abstract-warm" cx="20%" cy="30%" r="40%"><stop offset="0%" stopColor="#E8A040" stopOpacity="0.25"/><stop offset="100%" stopColor="#E8A040" stopOpacity="0"/></radialGradient>
+      </defs>
+      <rect width="91" height="55" fill="#FDF8F0" filter="url(#art-abstract-paper)" />
+      <rect width="91" height="55" fill="url(#art-abstract-warm)" />
+      <circle cx="72" cy="14" r="8" fill="#1B4D8E" opacity="0.15" />
+      <circle cx="72" cy="14" r="4.5" fill="#1B4D8E" opacity="0.12" />
+      <circle cx="72" cy="14" r="1.5" fill="#1B4D8E" opacity="0.3" />
+      <polygon points="15,5 22,5 18.5,12" fill="#E8A040" opacity="0.3" />
+      <line x1="6" y1="42" x2="35" y2="42" stroke="#C0392B" strokeWidth="0.3" opacity="0.3" />
+      <line x1="28" y1="38" x2="28" y2="48" stroke="#1B4D8E" strokeWidth="0.2" opacity="0.2" />
+      <circle cx="84" cy="45" r="2" fill="#C0392B" opacity="0.12" />
+      <rect x="80" y="5" width="5" height="3" fill="#E8A040" opacity="0.15" rx="0.3" />
+      <text x="8" y="24" fontFamily={JA} fontWeight="500" fontSize="6" letterSpacing="0.3" fill="#2C1810" filter="url(#art-abstract-shadow)">{data.nameJa}</text>
+      <text x="8" y="30" fontFamily={EN} fontWeight="300" fontSize="2" letterSpacing="0.3" fill="#1B4D8E">{data.nameEn}</text>
+      <text x="8" y="36" fontFamily={JA} fontWeight="300" fontSize="1.8" fill="#8B7355">{data.titleJa}</text>
+      <text x="8" y="40" fontFamily={EN} fontWeight="200" fontSize="1.4" fill="#8B7355">{data.titleEn}</text>
+      <text x="8" y="49" fontFamily={JA} fontWeight="400" fontSize="1.3" fill="#C0392B" opacity="0.6">{data.companyJa}</text>
+      {data.logo && <image href={data.logo} x="76" y="40" width="7" height="7" preserveAspectRatio="xMidYMid meet" opacity="0.45" />}
     </g>
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#FDF8EF" />
-      {/* Abstract composition */}
-      <circle cx="80" cy="10" r="7" fill="#1B4D8E" opacity="0.15" />
-      <polygon points="5,50 15,50 10,42" fill="#FFD700" opacity="0.4" />
-      <circle cx="75" cy="45" r="5" fill="#D4380D" opacity="0.12" />
-      <line x1="0" y1="15" x2="91" y2="15" stroke="#1B4D8E" strokeWidth="0.15" />
-      {/* Company */}
-      <text
-        x="10"
-        y="12"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="600"
-        fontSize="2.8"
-        fill="#1A1A1A"
-      >
-        {data.companyJa}
-      </text>
-      <text
-        x="10"
-        y="12"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="400"
-        fontSize="1.4"
-        fill="#888888"
-        dy="4"
-      >
-        {data.companyEn}
-      </text>
-      {/* Contact info */}
-      <circle cx="10" cy="25" r="0.8" fill="#D4380D" />
-      <text
-        x="14"
-        y="26"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="400"
-        fontSize="1.6"
-        fill="#333333"
-      >
-        {data.tel}
-      </text>
-      <circle cx="10" cy="30" r="0.8" fill="#1B4D8E" />
-      <text
-        x="14"
-        y="31"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="400"
-        fontSize="1.6"
-        fill="#333333"
-      >
-        {data.email}
-      </text>
-      <circle cx="10" cy="35" r="0.8" fill="#FFD700" />
-      <text
-        x="14"
-        y="36"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="400"
-        fontSize="1.6"
-        fill="#333333"
-      >
-        {data.website}
-      </text>
-      {/* Address */}
-      <line x1="10" y1="40" x2="80" y2="40" stroke="#1B4D8E" strokeWidth="0.15" />
-      <text
-        x="10"
-        y="45"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.3"
-        fill="#888888"
-      >
-        〒{data.zipCode} {data.addressJa}
-      </text>
+      <defs>
+        <filter id="art-abstract-paper-b"><feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="4" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="gray"/><feBlend mode="multiply" in="SourceGraphic" in2="gray"/></filter>
+        <radialGradient id="art-abstract-cool" cx="80%" cy="70%" r="50%"><stop offset="0%" stopColor="#1B4D8E" stopOpacity="0.12"/><stop offset="100%" stopColor="transparent"/></radialGradient>
+      </defs>
+      <rect width="91" height="55" fill="#FDF8F0" filter="url(#art-abstract-paper-b)" />
+      <rect width="91" height="55" fill="url(#art-abstract-cool)" />
+      <circle cx="78" cy="8" r="5" fill="#C0392B" opacity="0.08" />
+      <polygon points="8,3 15,3 11.5,9" fill="#1B4D8E" opacity="0.15" />
+      <circle cx="20" cy="48" r="2.5" fill="#E8A040" opacity="0.12" />
+      <text x="8" y="14" fontFamily={JA} fontWeight="500" fontSize="2.2" fill="#2C1810">{data.companyJa}</text>
+      <text x="8" y="18.5" fontFamily={EN} fontWeight="300" fontSize="1.5" letterSpacing="0.2" fill="#1B4D8E">{data.companyEn}</text>
+      <text x="8" y="22" fontFamily={JA} fontWeight="300" fontSize="1.3" fill="#8B7355">{data.titleJa}</text>
+      <line x1="8" y1="25" x2="60" y2="25" stroke="#C0392B" strokeWidth="0.15" opacity="0.3" />
+      <text x="8" y="30" fontFamily={EN} fontWeight="400" fontSize="1.5" fill="#4A3728">TEL {data.tel}</text>
+      <text x="8" y="34" fontFamily={EN} fontWeight="400" fontSize="1.5" fill="#4A3728">{data.email}</text>
+      <text x="8" y="38" fontFamily={EN} fontWeight="400" fontSize="1.5" fill="#4A3728">{data.website}</text>
+      <line x1="8" y1="41" x2="60" y2="41" stroke="#1B4D8E" strokeWidth="0.15" opacity="0.25" />
+      <text x="8" y="45.5" fontFamily={JA} fontWeight="300" fontSize="1.2" fill="#8B7355">〒{data.zipCode}</text>
+      <text x="8" y="49" fontFamily={JA} fontWeight="300" fontSize="1.2" fill="#8B7355">{data.addressJa}</text>
+      <text x="8" y="52" fontFamily={EN} fontWeight="300" fontSize="1.1" fill="#8B7355">{data.addressEn}</text>
+      {data.logo && <image href={data.logo} x="74" y="6" width="7" height="7" preserveAspectRatio="xMidYMid meet" opacity="0.4" />}
     </g>
   ),
 };
 
 // ============================================================
 // 5. CONSTRUCTIVIST (構) — El Lissitzky inspired
-// Red/black/white, diagonal bold bars, revolutionary energy
+// Red/black, diagonal compositions, bold geometric
 // ============================================================
 const constructivistTemplate: TemplateDefinition = {
   id: 'artistic-constructivist',
@@ -625,151 +268,55 @@ const constructivistTemplate: TemplateDefinition = {
   accentColor: '#CC0000',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#F0EADC" />
-      {/* Bold diagonal bars */}
-      <rect x="-5" y="20" width="101" height="6" fill="#CC0000" transform="rotate(-12, 45.5, 27.5)" />
-      <rect x="-5" y="34" width="101" height="4" fill="#1A1A1A" transform="rotate(-12, 45.5, 27.5)" />
-      {/* Red wedge/triangle */}
-      <polygon points="0,0 30,0 0,25" fill="#CC0000" opacity="0.9" />
-      {/* Black geometric block */}
-      <rect x="70" y="38" width="21" height="17" fill="#1A1A1A" />
-      {/* Name - bold, impactful */}
-      <text
-        x="8"
-        y="40"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="900"
-        fontSize="7"
-        fill="#1A1A1A"
-      >
-        {data.nameJa}
-      </text>
-      <text
-        x="8"
-        y="47"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="800"
-        fontSize="2.5"
-        letterSpacing="0.5"
-        fill="#CC0000"
-      >
-        {data.nameEn.toUpperCase()}
-      </text>
-      {/* Title in white on black block */}
-      <text
-        x="80"
-        y="48"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="500"
-        fontSize="1.4"
-        fill="#FFFFFF"
-      >
-        {data.titleJa}
-      </text>
-      {/* Small red circle accent */}
-      <circle cx="5" cy="8" r="2" fill="#FFFFFF" />
+      <defs>
+        <filter id="art-construct-paper"><feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="5" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="gray"/><feBlend mode="multiply" in="SourceGraphic" in2="gray"/></filter>
+        <filter id="art-construct-shadow"><feGaussianBlur in="SourceAlpha" stdDeviation="0.3" result="blur"/><feOffset dx="0.12" dy="0.15" result="shifted"/><feFlood floodColor="#000" floodOpacity="0.1" result="color"/><feComposite in="color" in2="shifted" operator="in" result="shadow"/><feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <rect width="91" height="55" fill="#F0E8D8" filter="url(#art-construct-paper)" />
+      <polygon points="0,0 45,0 25,55 0,55" fill="#CC0000" opacity="0.85" />
+      <polygon points="0,0 45,0 25,55 0,55" fill="none" stroke="#880000" strokeWidth="0.15" opacity="0.3" />
+      <rect x="48" y="15" width="35" height="0.6" fill="#1A1A1A" transform="rotate(-12, 65.5, 15.3)" />
+      <circle cx="82" cy="8" r="3.5" fill="#1A1A1A" opacity="0.8" />
+      <circle cx="82" cy="8" r="2.2" fill="#CC0000" opacity="0.4" />
+      <rect x="50" y="40" width="4" height="4" fill="#1A1A1A" opacity="0.15" transform="rotate(12, 52, 42)" />
+      <text x="5" y="22" fontFamily={JA} fontWeight="700" fontSize="6.5" fill="#FFFFFF" filter="url(#art-construct-shadow)">{data.nameJa}</text>
+      <text x="50" y="27" fontFamily={EN} fontWeight="700" fontSize="2.5" letterSpacing="0.4" fill="#1A1A1A">{data.nameEn.toUpperCase()}</text>
+      <text x="50" y="33" fontFamily={JA} fontWeight="400" fontSize="2" fill="#CC0000">{data.titleJa}</text>
+      <text x="50" y="37" fontFamily={EN} fontWeight="300" fontSize="1.5" fill="#555555">{data.titleEn}</text>
+      <text x="5" y="40" fontFamily={JA} fontWeight="300" fontSize="1.5" fill="rgba(255,255,255,0.7)">{data.companyJa}</text>
+      <text x="5" y="48" fontFamily={EN} fontWeight="300" fontSize="1.2" fill="rgba(255,255,255,0.5)">{data.companyEn}</text>
+      {data.logo && <image href={data.logo} x="76" y="42" width="7" height="7" preserveAspectRatio="xMidYMid meet" opacity="0.5" />}
     </g>
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#F0EADC" />
-      {/* Diagonal bar */}
-      <rect x="-5" y="6" width="101" height="5" fill="#CC0000" transform="rotate(-8, 45.5, 8.5)" />
-      <rect x="-5" y="12" width="101" height="2" fill="#1A1A1A" transform="rotate(-8, 45.5, 13)" />
-      {/* Black header block */}
-      <rect x="0" y="0" width="40" height="8" fill="#1A1A1A" />
-      <text
-        x="4"
-        y="5.5"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="700"
-        fontSize="2.8"
-        fill="#FFFFFF"
-      >
-        {data.companyJa}
-      </text>
-      {/* Contact info - stark, militant layout */}
-      <text
-        x="8"
-        y="26"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="700"
-        fontSize="1.5"
-        fill="#CC0000"
-      >
-        TEL
-      </text>
-      <text
-        x="18"
-        y="26"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="500"
-        fontSize="1.6"
-        fill="#1A1A1A"
-      >
-        {data.tel}
-      </text>
-      <text
-        x="8"
-        y="30"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="700"
-        fontSize="1.5"
-        fill="#CC0000"
-      >
-        MAIL
-      </text>
-      <text
-        x="18"
-        y="30"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="500"
-        fontSize="1.6"
-        fill="#1A1A1A"
-      >
-        {data.email}
-      </text>
-      <text
-        x="8"
-        y="34"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="700"
-        fontSize="1.5"
-        fill="#CC0000"
-      >
-        WEB
-      </text>
-      <text
-        x="18"
-        y="34"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="500"
-        fontSize="1.6"
-        fill="#1A1A1A"
-      >
-        {data.website}
-      </text>
-      {/* Bottom red bar with address */}
-      <rect x="0" y="43" width="91" height="12" fill="#1A1A1A" />
-      <rect x="0" y="43" width="91" height="3" fill="#CC0000" />
-      <text
-        x="8"
-        y="51"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="400"
-        fontSize="1.3"
-        fill="#FFFFFF"
-      >
-        〒{data.zipCode} {data.addressJa}
-      </text>
+      <defs>
+        <filter id="art-construct-paper-b"><feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="5" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="gray"/><feBlend mode="multiply" in="SourceGraphic" in2="gray"/></filter>
+      </defs>
+      <rect width="91" height="55" fill="#F0E8D8" filter="url(#art-construct-paper-b)" />
+      <polygon points="91,0 46,0 66,55 91,55" fill="#1A1A1A" opacity="0.85" />
+      <rect x="5" y="20" width="35" height="0.5" fill="#CC0000" transform="rotate(8, 22.5, 20)" />
+      <circle cx="10" cy="8" r="2.5" fill="#CC0000" opacity="0.2" />
+      <rect x="30" y="42" width="3" height="3" fill="#CC0000" opacity="0.12" transform="rotate(-10, 31.5, 43.5)" />
+      <text x="8" y="12" fontFamily={JA} fontWeight="600" fontSize="2.5" fill="#1A1A1A">{data.companyJa}</text>
+      <text x="8" y="17" fontFamily={EN} fontWeight="400" fontSize="1.5" letterSpacing="0.3" fill="#CC0000">{data.companyEn}</text>
+      <text x="8" y="21" fontFamily={JA} fontWeight="300" fontSize="1.3" fill="#888888">{data.titleJa}</text>
+      <line x1="8" y1="24" x2="42" y2="24" stroke="#CC0000" strokeWidth="0.25" />
+      <text x="8" y="29" fontFamily={EN} fontWeight="400" fontSize="1.5" fill="#444444">TEL {data.tel}</text>
+      <text x="8" y="33" fontFamily={EN} fontWeight="400" fontSize="1.5" fill="#444444">{data.email}</text>
+      <text x="8" y="37" fontFamily={EN} fontWeight="400" fontSize="1.5" fill="#444444">{data.website}</text>
+      <line x1="8" y1="40" x2="42" y2="40" stroke="#1A1A1A" strokeWidth="0.15" />
+      <text x="8" y="44.5" fontFamily={JA} fontWeight="300" fontSize="1.2" fill="#777777">〒{data.zipCode}</text>
+      <text x="8" y="48" fontFamily={JA} fontWeight="300" fontSize="1.2" fill="#777777">{data.addressJa}</text>
+      <text x="72" y="16" fontFamily={EN} fontWeight="300" fontSize="1.1" fill="rgba(255,255,255,0.5)">{data.addressEn}</text>
+      {data.logo && <image href={data.logo} x="73" y="38" width="7" height="7" preserveAspectRatio="xMidYMid meet" opacity="0.35" />}
     </g>
   ),
 };
 
 // ============================================================
 // 6. MEMPHIS (遊) — Ettore Sottsass inspired
-// Memphis Design squiggles, pastels, playful geometry
+// Pastel shapes, squiggly lines, playful geometry
 // ============================================================
 const memphisTemplate: TemplateDefinition = {
   id: 'artistic-memphis',
@@ -781,146 +328,57 @@ const memphisTemplate: TemplateDefinition = {
   accentColor: '#FF6B9D',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#FFF5E6" />
-      {/* Memphis geometric shapes */}
-      <circle cx="78" cy="12" r="8" fill="#FF6B9D" />
-      <circle cx="78" cy="12" r="4" fill="#FFF5E6" />
-      <rect x="3" y="3" width="10" height="10" fill="#7FD8BE" transform="rotate(15, 8, 8)" />
-      <polygon points="65,42 75,48 55,48" fill="#B088F9" opacity="0.8" />
-      {/* Squiggly line using simple path */}
-      <path
-        d="M5,30 Q12,25 19,30 Q26,35 33,30 Q40,25 47,30"
-        fill="none"
-        stroke="#FFD166"
-        strokeWidth="0.8"
-      />
-      <path
-        d="M60,38 Q65,34 70,38 Q75,42 80,38 Q85,34 90,38"
-        fill="none"
-        stroke="#FF6B9D"
-        strokeWidth="0.6"
-      />
-      {/* Dotted pattern */}
-      <circle cx="82" cy="28" r="0.6" fill="#B088F9" />
-      <circle cx="85" cy="31" r="0.6" fill="#B088F9" />
-      <circle cx="82" cy="34" r="0.6" fill="#B088F9" />
-      <circle cx="85" cy="37" r="0.6" fill="#B088F9" />
-      {/* Small zigzag */}
-      <path d="M3,42 L6,38 L9,42 L12,38 L15,42" fill="none" stroke="#7FD8BE" strokeWidth="0.5" />
-      {/* Name */}
-      <text
-        x="10"
-        y="22"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="700"
-        fontSize="6.5"
-        fill="#333333"
-      >
-        {data.nameJa}
-      </text>
-      <text
-        x="10"
-        y="37"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="600"
-        fontSize="2.2"
-        letterSpacing="0.3"
-        fill="#FF6B9D"
-      >
-        {data.nameEn}
-      </text>
-      <text
-        x="10"
-        y="48"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="400"
-        fontSize="1.6"
-        fill="#888888"
-      >
-        {data.titleJa}
-      </text>
+      <defs>
+        <filter id="art-memphis-paper"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="gray"/><feBlend mode="multiply" in="SourceGraphic" in2="gray"/></filter>
+        <filter id="art-memphis-shadow"><feGaussianBlur in="SourceAlpha" stdDeviation="0.25" result="blur"/><feOffset dx="0.1" dy="0.12" result="shifted"/><feFlood floodColor="#000" floodOpacity="0.06" result="color"/><feComposite in="color" in2="shifted" operator="in" result="shadow"/><feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <pattern id="art-memphis-confetti" width="8" height="8" patternUnits="userSpaceOnUse"><rect x="1" y="2" width="0.8" height="0.3" fill="#FF6B9D" opacity="0.15" transform="rotate(30, 1.4, 2.15)"/><rect x="5" y="5" width="0.8" height="0.3" fill="#50C4E8" opacity="0.15" transform="rotate(-20, 5.4, 5.15)"/><rect x="3" y="7" width="0.8" height="0.3" fill="#FFD700" opacity="0.12" transform="rotate(60, 3.4, 7.15)"/></pattern>
+      </defs>
+      <rect width="91" height="55" fill="#FFF5F8" filter="url(#art-memphis-paper)" />
+      <rect width="91" height="55" fill="url(#art-memphis-confetti)" />
+      <circle cx="78" cy="10" r="5" fill="#50C4E8" opacity="0.25" />
+      <circle cx="78" cy="10" r="5" fill="none" stroke="#50C4E8" strokeWidth="0.4" />
+      <polygon points="68,42 76,42 72,36" fill="#FFD700" opacity="0.35" />
+      <polygon points="68,42 76,42 72,36" fill="none" stroke="#E6C200" strokeWidth="0.3" />
+      <rect x="4" y="4" width="6" height="6" fill="#FF6B9D" opacity="0.18" rx="0.5" />
+      <path d="M 82 28 Q 85 25 88 28 Q 85 31 82 28" fill="none" stroke="#FF6B9D" strokeWidth="0.3" opacity="0.3" />
+      <text x="8" y="22" fontFamily={JA} fontWeight="600" fontSize="6" fill="#333333" filter="url(#art-memphis-shadow)">{data.nameJa}</text>
+      <text x="8" y="28" fontFamily={EN} fontWeight="500" fontSize="2.2" letterSpacing="0.3" fill="#FF6B9D">{data.nameEn}</text>
+      <text x="8" y="34" fontFamily={JA} fontWeight="300" fontSize="1.8" fill="#888888">{data.titleJa}</text>
+      <text x="8" y="38" fontFamily={EN} fontWeight="300" fontSize="1.4" fill="#888888">{data.titleEn}</text>
+      <text x="8" y="48" fontFamily={JA} fontWeight="400" fontSize="1.3" fill="#50C4E8">{data.companyJa}</text>
+      <text x="8" y="51.5" fontFamily={EN} fontWeight="300" fontSize="1.1" fill="#999999">{data.companyEn}</text>
+      {data.logo && <image href={data.logo} x="76" y="40" width="7" height="7" preserveAspectRatio="xMidYMid meet" opacity="0.45" />}
     </g>
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#FFF5E6" />
-      {/* Memphis shapes */}
-      <rect x="70" y="2" width="8" height="8" fill="#FFD166" transform="rotate(20, 74, 6)" />
-      <circle cx="12" cy="48" r="5" fill="#B088F9" opacity="0.4" />
-      <polygon points="78,40 85,48 71,48" fill="#7FD8BE" opacity="0.5" />
-      {/* Squiggle */}
-      <path
-        d="M2,20 Q8,16 14,20 Q20,24 26,20"
-        fill="none"
-        stroke="#FF6B9D"
-        strokeWidth="0.5"
-      />
-      {/* Company */}
-      <rect x="8" y="5" width="55" height="7" fill="#FF6B9D" rx="1" />
-      <text
-        x="35"
-        y="10.2"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="700"
-        fontSize="3"
-        fill="#FFFFFF"
-      >
-        {data.companyJa}
-      </text>
-      {/* Contact info */}
-      <circle cx="10" cy="21.5" r="1" fill="#FFD166" />
-      <text
-        x="14"
-        y="22.5"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="500"
-        fontSize="1.6"
-        fill="#333333"
-      >
-        {data.tel}
-      </text>
-      <circle cx="10" cy="27" r="1" fill="#7FD8BE" />
-      <text
-        x="14"
-        y="28"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="500"
-        fontSize="1.6"
-        fill="#333333"
-      >
-        {data.email}
-      </text>
-      <circle cx="10" cy="32.5" r="1" fill="#B088F9" />
-      <text
-        x="14"
-        y="33.5"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="500"
-        fontSize="1.6"
-        fill="#333333"
-      >
-        {data.website}
-      </text>
-      {/* Address with zigzag separator */}
-      <path d="M8,38 L12,35 L16,38 L20,35 L24,38 L28,35 L32,38" fill="none" stroke="#FFD166" strokeWidth="0.4" />
-      <text
-        x="8"
-        y="43"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.3"
-        fill="#888888"
-      >
-        〒{data.zipCode} {data.addressJa}
-      </text>
+      <defs>
+        <filter id="art-memphis-paper-b"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="gray"/><feBlend mode="multiply" in="SourceGraphic" in2="gray"/></filter>
+      </defs>
+      <rect width="91" height="55" fill="#FFF5F8" filter="url(#art-memphis-paper-b)" />
+      <circle cx="15" cy="8" r="4" fill="#FFD700" opacity="0.2" />
+      <polygon points="78,48 86,48 82,42" fill="#50C4E8" opacity="0.2" />
+      <rect x="70" y="4" width="5" height="5" fill="#FF6B9D" opacity="0.12" rx="0.5" />
+      <path d="M 5 45 Q 8 42 11 45 Q 8 48 5 45" fill="none" stroke="#FFD700" strokeWidth="0.25" opacity="0.3" />
+      <text x="8" y="12" fontFamily={JA} fontWeight="500" fontSize="2.2" fill="#333333">{data.companyJa}</text>
+      <text x="8" y="16.5" fontFamily={EN} fontWeight="400" fontSize="1.5" letterSpacing="0.15" fill="#FF6B9D">{data.companyEn}</text>
+      <text x="8" y="20" fontFamily={JA} fontWeight="300" fontSize="1.3" fill="#888888">{data.titleJa}</text>
+      <line x1="8" y1="23" x2="60" y2="23" stroke="#50C4E8" strokeWidth="0.2" />
+      <text x="8" y="28" fontFamily={EN} fontWeight="400" fontSize="1.5" fill="#555555">TEL {data.tel}</text>
+      <text x="8" y="32" fontFamily={EN} fontWeight="400" fontSize="1.5" fill="#555555">{data.email}</text>
+      <text x="8" y="36" fontFamily={EN} fontWeight="400" fontSize="1.5" fill="#555555">{data.website}</text>
+      <line x1="8" y1="39" x2="60" y2="39" stroke="#FF6B9D" strokeWidth="0.2" />
+      <text x="8" y="43.5" fontFamily={JA} fontWeight="300" fontSize="1.2" fill="#888888">〒{data.zipCode}</text>
+      <text x="8" y="47" fontFamily={JA} fontWeight="300" fontSize="1.2" fill="#888888">{data.addressJa}</text>
+      <text x="8" y="50.5" fontFamily={EN} fontWeight="300" fontSize="1.1" fill="#AAAAAA">{data.addressEn}</text>
+      {data.logo && <image href={data.logo} x="76" y="8" width="7" height="7" preserveAspectRatio="xMidYMid meet" opacity="0.4" />}
     </g>
   ),
 };
 
 // ============================================================
 // 7. NOUVEAU (麗) — Alphonse Mucha inspired
-// Art Nouveau curves, organic border, warm tones
+// Organic curves, warm tones, ornamental borders
 // ============================================================
 const nouveauTemplate: TemplateDefinition = {
   id: 'artistic-nouveau',
@@ -933,190 +391,54 @@ const nouveauTemplate: TemplateDefinition = {
   renderFront: (data: CardData) => (
     <g>
       <defs>
-        <linearGradient id="nouveau-grad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#F5E6C8" />
-          <stop offset="100%" stopColor="#EDD9A3" />
-        </linearGradient>
+        <filter id="art-nouveau-paper"><feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="5" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="gray"/><feBlend mode="multiply" in="SourceGraphic" in2="gray"/></filter>
+        <filter id="art-nouveau-shadow"><feGaussianBlur in="SourceAlpha" stdDeviation="0.3" result="blur"/><feOffset dx="0.1" dy="0.15" result="shifted"/><feFlood floodColor="#5A3A10" floodOpacity="0.1" result="color"/><feComposite in="color" in2="shifted" operator="in" result="shadow"/><feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <linearGradient id="art-nouveau-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#FDF6E8"/><stop offset="100%" stopColor="#F5E8D0"/></linearGradient>
+        <linearGradient id="art-nouveau-gold" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#8B6914" stopOpacity="0"/><stop offset="20%" stopColor="#B8860B"/><stop offset="50%" stopColor="#DAA520"/><stop offset="80%" stopColor="#B8860B"/><stop offset="100%" stopColor="#8B6914" stopOpacity="0"/></linearGradient>
       </defs>
-      <rect width="91" height="55" fill="url(#nouveau-grad)" />
-      {/* Art Nouveau organic border */}
-      <path
-        d="M5,5 Q20,2 45.5,3 Q70,2 86,5 Q89,15 88,27.5 Q89,40 86,50 Q70,53 45.5,52 Q20,53 5,50 Q2,40 3,27.5 Q2,15 5,5 Z"
-        fill="none"
-        stroke="#8B6914"
-        strokeWidth="0.5"
-      />
-      {/* Inner decorative frame */}
-      <path
-        d="M8,8 Q20,6 45.5,6.5 Q70,6 83,8 Q85,15 84.5,27.5 Q85,40 83,47 Q70,49 45.5,48.5 Q20,49 8,47 Q6,40 6.5,27.5 Q6,15 8,8 Z"
-        fill="none"
-        stroke="#8B6914"
-        strokeWidth="0.2"
-      />
-      {/* Corner floral curves */}
-      <path d="M5,5 Q10,10 8,18 Q6,12 5,5" fill="#8B6914" opacity="0.3" />
-      <path d="M86,5 Q81,10 83,18 Q85,12 86,5" fill="#8B6914" opacity="0.3" />
-      <path d="M5,50 Q10,45 8,37 Q6,43 5,50" fill="#8B6914" opacity="0.3" />
-      <path d="M86,50 Q81,45 83,37 Q85,43 86,50" fill="#8B6914" opacity="0.3" />
-      {/* Decorative vine at top */}
-      <path
-        d="M25,8 Q30,5 35,8 Q40,11 45.5,8 Q51,5 56,8 Q61,11 66,8"
-        fill="none"
-        stroke="#8B6914"
-        strokeWidth="0.3"
-      />
-      {/* Name */}
-      <text
-        x="45.5"
-        y="24"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="500"
-        fontSize="6"
-        letterSpacing="0.8"
-        fill="#5C4A1E"
-      >
-        {data.nameJa}
-      </text>
-      {/* Ornamental divider */}
-      <path d="M30,28 Q37,26 45.5,28 Q53,26 61,28" fill="none" stroke="#8B6914" strokeWidth="0.3" />
-      <circle cx="45.5" cy="28" r="0.6" fill="#8B6914" />
-      <text
-        x="45.5"
-        y="34"
-        textAnchor="middle"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="400"
-        fontSize="1.8"
-        letterSpacing="0.4"
-        fill="#8B6914"
-      >
-        {data.nameEn}
-      </text>
-      <text
-        x="45.5"
-        y="40"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.5"
-        fill="#A08030"
-      >
-        {data.titleJa}
-      </text>
+      <rect width="91" height="55" fill="url(#art-nouveau-bg)" filter="url(#art-nouveau-paper)" />
+      <path d="M 3,3 Q 3,0 6,0 L 85,0 Q 88,0 88,3 L 88,52 Q 88,55 85,55 L 6,55 Q 3,55 3,52 Z" fill="none" stroke="#B8860B" strokeWidth="0.3" opacity="0.4" />
+      <path d="M 5,5 Q 5,3 7,3 L 84,3 Q 86,3 86,5 L 86,50 Q 86,52 84,52 L 7,52 Q 5,52 5,50 Z" fill="none" stroke="#DAA520" strokeWidth="0.12" opacity="0.25" />
+      <path d="M 5 10 C 10 6, 15 14, 20 10 C 25 6, 30 14, 35 10" fill="none" stroke="#B8860B" strokeWidth="0.15" opacity="0.2" />
+      <path d="M 56 45 C 61 41, 66 49, 71 45 C 76 41, 81 49, 86 45" fill="none" stroke="#B8860B" strokeWidth="0.15" opacity="0.18" />
+      <circle cx="10" cy="10" r="1" fill="none" stroke="#8B6914" strokeWidth="0.1" opacity="0.2" />
+      <text x="45.5" y="22" textAnchor="middle" fontFamily={JA} fontWeight="500" fontSize="6" letterSpacing="0.8" fill="#5A3A10" filter="url(#art-nouveau-shadow)">{data.nameJa}</text>
+      <line x1="15" y1="26" x2="76" y2="26" stroke="url(#art-nouveau-gold)" strokeWidth="0.25" />
+      <text x="45.5" y="32" textAnchor="middle" fontFamily={EN} fontWeight="300" fontSize="2" letterSpacing="0.5" fill="#8B6914">{data.nameEn}</text>
+      <text x="45.5" y="38" textAnchor="middle" fontFamily={JA} fontWeight="300" fontSize="1.8" fill="#A08050">{data.titleJa}</text>
+      <text x="45.5" y="42" textAnchor="middle" fontFamily={EN} fontWeight="200" fontSize="1.4" fill="#A08050">{data.titleEn}</text>
+      <text x="45.5" y="48" textAnchor="middle" fontFamily={JA} fontWeight="300" fontSize="1.3" fill="#B8860B">{data.companyJa}</text>
+      {data.logo && <image href={data.logo} x="76" y="3" width="7" height="7" preserveAspectRatio="xMidYMid meet" opacity="0.35" />}
     </g>
   ),
   renderBack: (data: CardData) => (
     <g>
       <defs>
-        <linearGradient id="nouveau-grad-back" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#F5E6C8" />
-          <stop offset="100%" stopColor="#EDD9A3" />
-        </linearGradient>
+        <filter id="art-nouveau-paper-b"><feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="5" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="gray"/><feBlend mode="multiply" in="SourceGraphic" in2="gray"/></filter>
       </defs>
-      <rect width="91" height="55" fill="url(#nouveau-grad-back)" />
-      {/* Simplified organic border */}
-      <path
-        d="M5,5 Q20,2 45.5,3 Q70,2 86,5 Q89,15 88,27.5 Q89,40 86,50 Q70,53 45.5,52 Q20,53 5,50 Q2,40 3,27.5 Q2,15 5,5 Z"
-        fill="none"
-        stroke="#8B6914"
-        strokeWidth="0.4"
-      />
-      {/* Decorative top curve */}
-      <path
-        d="M30,6 Q37,4 45.5,6 Q53,4 61,6"
-        fill="none"
-        stroke="#8B6914"
-        strokeWidth="0.25"
-      />
-      {/* Company */}
-      <text
-        x="45.5"
-        y="14"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="500"
-        fontSize="2.5"
-        letterSpacing="0.5"
-        fill="#5C4A1E"
-      >
-        {data.companyJa}
-      </text>
-      <path d="M25,16 Q35,14.5 45.5,16 Q55,14.5 66,16" fill="none" stroke="#8B6914" strokeWidth="0.2" />
-      <circle cx="45.5" cy="16" r="0.4" fill="#8B6914" />
-      {/* Contact */}
-      <text
-        x="45.5"
-        y="24"
-        textAnchor="middle"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="400"
-        fontSize="1.5"
-        fill="#5C4A1E"
-      >
-        {data.tel}
-      </text>
-      <text
-        x="45.5"
-        y="28"
-        textAnchor="middle"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="400"
-        fontSize="1.5"
-        fill="#5C4A1E"
-      >
-        {data.email}
-      </text>
-      <text
-        x="45.5"
-        y="32"
-        textAnchor="middle"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="400"
-        fontSize="1.5"
-        fill="#5C4A1E"
-      >
-        {data.website}
-      </text>
-      {/* Divider */}
-      <path d="M30,35 Q37,33.5 45.5,35 Q53,33.5 61,35" fill="none" stroke="#8B6914" strokeWidth="0.2" />
-      {/* Address */}
-      <text
-        x="45.5"
-        y="40"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.2"
-        fill="#A08030"
-      >
-        〒{data.zipCode}
-      </text>
-      <text
-        x="45.5"
-        y="43.5"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.2"
-        fill="#A08030"
-      >
-        {data.addressJa}
-      </text>
-      {/* Bottom vine */}
-      <path
-        d="M30,49 Q37,47 45.5,49 Q53,47 61,49"
-        fill="none"
-        stroke="#8B6914"
-        strokeWidth="0.25"
-      />
+      <rect width="91" height="55" fill="#FDF6E8" filter="url(#art-nouveau-paper-b)" />
+      <path d="M 3,3 Q 3,0 6,0 L 85,0 Q 88,0 88,3 L 88,52 Q 88,55 85,55 L 6,55 Q 3,55 3,52 Z" fill="none" stroke="#B8860B" strokeWidth="0.3" opacity="0.35" />
+      <path d="M 56 4 C 61 0, 66 8, 71 4 C 76 0, 81 8, 86 4" fill="none" stroke="#B8860B" strokeWidth="0.12" opacity="0.18" />
+      <path d="M 5 51 C 10 47, 15 55, 20 51 C 25 47, 30 55, 35 51" fill="none" stroke="#B8860B" strokeWidth="0.12" opacity="0.15" />
+      <text x="45.5" y="13" textAnchor="middle" fontFamily={JA} fontWeight="400" fontSize="2.5" letterSpacing="0.5" fill="#5A3A10">{data.companyJa}</text>
+      <text x="45.5" y="18" textAnchor="middle" fontFamily={EN} fontWeight="300" fontSize="1.4" letterSpacing="0.4" fill="#8B6914">{data.companyEn}</text>
+      <text x="45.5" y="22" textAnchor="middle" fontFamily={JA} fontWeight="300" fontSize="1.3" fill="#A08050">{data.titleJa}</text>
+      <line x1="20" y1="25" x2="71" y2="25" stroke="#B8860B" strokeWidth="0.15" opacity="0.3" />
+      <text x="45.5" y="30" textAnchor="middle" fontFamily={EN} fontWeight="300" fontSize="1.5" fill="#5A3A10">TEL {data.tel}</text>
+      <text x="45.5" y="34" textAnchor="middle" fontFamily={EN} fontWeight="300" fontSize="1.5" fill="#5A3A10">{data.email}</text>
+      <text x="45.5" y="38" textAnchor="middle" fontFamily={EN} fontWeight="300" fontSize="1.5" fill="#5A3A10">{data.website}</text>
+      <line x1="20" y1="41" x2="71" y2="41" stroke="#B8860B" strokeWidth="0.15" opacity="0.3" />
+      <text x="45.5" y="45.5" textAnchor="middle" fontFamily={JA} fontWeight="300" fontSize="1.2" fill="#A08050">〒{data.zipCode}</text>
+      <text x="45.5" y="48.5" textAnchor="middle" fontFamily={JA} fontWeight="300" fontSize="1.2" fill="#A08050">{data.addressJa}</text>
+      <text x="45.5" y="52" textAnchor="middle" fontFamily={EN} fontWeight="300" fontSize="1.1" fill="#A08050">{data.addressEn}</text>
+      {data.logo && <image href={data.logo} x="76" y="3" width="7" height="7" preserveAspectRatio="xMidYMid meet" opacity="0.35" />}
     </g>
   ),
 };
 
 // ============================================================
 // 8. DE STIJL (風) — Mondrian inspired
-// Strict horizontal/vertical lines, grid cells, primary colors
+// Black grid, primary color blocks
 // ============================================================
 const destijlTemplate: TemplateDefinition = {
   id: 'artistic-destijl',
@@ -1128,138 +450,57 @@ const destijlTemplate: TemplateDefinition = {
   accentColor: '#E60012',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#FFFFFF" />
-      {/* Mondrian grid lines */}
-      <line x1="0" y1="18" x2="91" y2="18" stroke="#1A1A1A" strokeWidth="1.2" />
-      <line x1="0" y1="40" x2="91" y2="40" stroke="#1A1A1A" strokeWidth="1.2" />
-      <line x1="60" y1="0" x2="60" y2="55" stroke="#1A1A1A" strokeWidth="1.2" />
-      <line x1="25" y1="40" x2="25" y2="55" stroke="#1A1A1A" strokeWidth="1.2" />
-      <line x1="75" y1="18" x2="75" y2="40" stroke="#1A1A1A" strokeWidth="1.2" />
-      {/* Colored cells */}
-      <rect x="60.6" y="0" width="30.4" height="17.4" fill="#E60012" />
-      <rect x="0" y="40.6" width="24.4" height="14.4" fill="#0057B8" />
-      <rect x="60.6" y="40.6" width="30.4" height="14.4" fill="#FFD700" />
-      <rect x="75.6" y="18.6" width="15.4" height="20.8" fill="#1A1A1A" />
-      {/* Name in the large white cell */}
-      <text
-        x="8"
-        y="30"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="700"
-        fontSize="5.5"
-        fill="#1A1A1A"
-      >
-        {data.nameJa}
-      </text>
-      <text
-        x="8"
-        y="36"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="500"
-        fontSize="1.8"
-        letterSpacing="0.3"
-        fill="#555555"
-      >
-        {data.nameEn}
-      </text>
-      {/* Title in top-left cell */}
-      <text
-        x="8"
-        y="10"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="400"
-        fontSize="1.8"
-        fill="#555555"
-      >
-        {data.titleJa}
-      </text>
-      {/* Company in bottom-right yellow cell */}
-      <text
-        x="65"
-        y="50"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="500"
-        fontSize="1.3"
-        fill="#1A1A1A"
-      >
-        {data.companyJa}
-      </text>
+      <defs>
+        <filter id="art-destijl-paper"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="4" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="gray"/><feBlend mode="multiply" in="SourceGraphic" in2="gray"/></filter>
+        <filter id="art-destijl-shadow"><feGaussianBlur in="SourceAlpha" stdDeviation="0.25" result="blur"/><feOffset dx="0.08" dy="0.1" result="shifted"/><feFlood floodColor="#000" floodOpacity="0.08" result="color"/><feComposite in="color" in2="shifted" operator="in" result="shadow"/><feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <rect width="91" height="55" fill="#FFFFFF" filter="url(#art-destijl-paper)" />
+      <rect x="0" y="0" width="25" height="20" fill="#E60012" />
+      <rect x="72" y="0" width="19" height="20" fill="#FFD700" />
+      <rect x="72" y="38" width="19" height="17" fill="#0057B8" />
+      <line x1="25" y1="0" x2="25" y2="55" stroke="#1A1A1A" strokeWidth="0.8" />
+      <line x1="72" y1="0" x2="72" y2="55" stroke="#1A1A1A" strokeWidth="0.8" />
+      <line x1="0" y1="20" x2="91" y2="20" stroke="#1A1A1A" strokeWidth="0.8" />
+      <line x1="72" y1="38" x2="91" y2="38" stroke="#1A1A1A" strokeWidth="0.8" />
+      <text x="30" y="14" fontFamily={JA} fontWeight="700" fontSize="5.5" fill="#1A1A1A" filter="url(#art-destijl-shadow)">{data.nameJa}</text>
+      <text x="30" y="30" fontFamily={EN} fontWeight="400" fontSize="2" letterSpacing="0.3" fill="#333333">{data.nameEn}</text>
+      <text x="30" y="36" fontFamily={JA} fontWeight="300" fontSize="1.8" fill="#888888">{data.titleJa}</text>
+      <text x="30" y="40" fontFamily={EN} fontWeight="200" fontSize="1.4" fill="#888888">{data.titleEn}</text>
+      <text x="30" y="48" fontFamily={JA} fontWeight="400" fontSize="1.3" fill="#555555">{data.companyJa}</text>
+      <text x="30" y="52" fontFamily={EN} fontWeight="300" fontSize="1.1" fill="#888888">{data.companyEn}</text>
+      {data.logo && <image href={data.logo} x="76" y="24" width="7" height="7" preserveAspectRatio="xMidYMid meet" opacity="0.45" />}
     </g>
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#FFFFFF" />
-      {/* Mondrian grid */}
-      <line x1="0" y1="14" x2="91" y2="14" stroke="#1A1A1A" strokeWidth="1.2" />
-      <line x1="0" y1="42" x2="91" y2="42" stroke="#1A1A1A" strokeWidth="1.2" />
-      <line x1="35" y1="0" x2="35" y2="14" stroke="#1A1A1A" strokeWidth="1.2" />
-      <line x1="55" y1="14" x2="55" y2="42" stroke="#1A1A1A" strokeWidth="1.2" />
-      <line x1="70" y1="42" x2="70" y2="55" stroke="#1A1A1A" strokeWidth="1.2" />
-      {/* Colored cells */}
-      <rect x="0" y="0" width="34.4" height="13.4" fill="#E60012" />
-      <rect x="55.6" y="14.6" width="35.4" height="26.8" fill="#FFFFFF" />
-      <rect x="0" y="42.6" width="69.4" height="12.4" fill="#FFD700" />
-      <rect x="70.6" y="42.6" width="20.4" height="12.4" fill="#0057B8" />
-      {/* Company in red cell */}
-      <text
-        x="5"
-        y="9"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="700"
-        fontSize="2.8"
-        fill="#FFFFFF"
-      >
-        {data.companyJa}
-      </text>
-      {/* Contact in white main area */}
-      <text
-        x="8"
-        y="23"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="500"
-        fontSize="1.7"
-        fill="#1A1A1A"
-      >
-        {data.tel}
-      </text>
-      <text
-        x="8"
-        y="28"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="500"
-        fontSize="1.7"
-        fill="#1A1A1A"
-      >
-        {data.email}
-      </text>
-      <text
-        x="8"
-        y="33"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="500"
-        fontSize="1.7"
-        fill="#1A1A1A"
-      >
-        {data.website}
-      </text>
-      {/* Address in yellow cell */}
-      <text
-        x="5"
-        y="50"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="400"
-        fontSize="1.3"
-        fill="#1A1A1A"
-      >
-        〒{data.zipCode} {data.addressJa}
-      </text>
+      <defs>
+        <filter id="art-destijl-paper-b"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="4" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="gray"/><feBlend mode="multiply" in="SourceGraphic" in2="gray"/></filter>
+      </defs>
+      <rect width="91" height="55" fill="#FFFFFF" filter="url(#art-destijl-paper-b)" />
+      <rect x="0" y="0" width="20" height="15" fill="#0057B8" />
+      <rect x="0" y="42" width="20" height="13" fill="#FFD700" />
+      <rect x="75" y="0" width="16" height="15" fill="#E60012" />
+      <line x1="20" y1="0" x2="20" y2="55" stroke="#1A1A1A" strokeWidth="0.8" />
+      <line x1="75" y1="0" x2="75" y2="55" stroke="#1A1A1A" strokeWidth="0.8" />
+      <line x1="0" y1="15" x2="91" y2="15" stroke="#1A1A1A" strokeWidth="0.8" />
+      <line x1="0" y1="42" x2="20" y2="42" stroke="#1A1A1A" strokeWidth="0.8" />
+      <text x="25" y="11" fontFamily={JA} fontWeight="600" fontSize="2.2" fill="#1A1A1A">{data.companyJa}</text>
+      <text x="25" y="24" fontFamily={EN} fontWeight="400" fontSize="1.5" letterSpacing="0.2" fill="#333333">{data.companyEn}</text>
+      <text x="25" y="28" fontFamily={JA} fontWeight="300" fontSize="1.3" fill="#888888">{data.titleJa}</text>
+      <line x1="25" y1="31" x2="70" y2="31" stroke="#1A1A1A" strokeWidth="0.3" />
+      <text x="25" y="36" fontFamily={EN} fontWeight="400" fontSize="1.5" fill="#333333">TEL {data.tel}</text>
+      <text x="25" y="40" fontFamily={EN} fontWeight="400" fontSize="1.5" fill="#333333">{data.email}</text>
+      <text x="25" y="44" fontFamily={EN} fontWeight="400" fontSize="1.5" fill="#333333">{data.website}</text>
+      <text x="25" y="50" fontFamily={JA} fontWeight="300" fontSize="1.2" fill="#777777">〒{data.zipCode}</text>
+      <text x="25" y="53.5" fontFamily={JA} fontWeight="300" fontSize="1.2" fill="#777777">{data.addressJa}</text>
+      {data.logo && <image href={data.logo} x="77" y="20" width="7" height="7" preserveAspectRatio="xMidYMid meet" opacity="0.4" />}
     </g>
   ),
 };
 
 // ============================================================
-// 9. UKIYOE (浮) — Japanese Woodblock inspired
-// Layered color blocks, wave motif, printing technique
+// 9. UKIYOE (浮) — Katsushika Hokusai inspired
+// Wave patterns, traditional Japanese blue palette
 // ============================================================
 const ukiyoeTemplate: TemplateDefinition = {
   id: 'artistic-ukiyoe',
@@ -1271,184 +512,54 @@ const ukiyoeTemplate: TemplateDefinition = {
   accentColor: '#1B4B73',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#F5E6C8" />
-      {/* Layered color blocks evoking woodblock printing */}
-      <rect x="0" y="35" width="91" height="20" fill="#1B4B73" />
-      <rect x="0" y="38" width="91" height="17" fill="#2A6496" opacity="0.7" />
-      {/* Wave motif */}
-      <path
-        d="M0,35 Q6,31 12,35 Q18,39 24,35 Q30,31 36,35 Q42,39 48,35 Q54,31 60,35 Q66,39 72,35 Q78,31 84,35 Q90,39 96,35"
-        fill="none"
-        stroke="#F5E6C8"
-        strokeWidth="0.6"
-      />
-      <path
-        d="M-3,38 Q3,34 9,38 Q15,42 21,38 Q27,34 33,38 Q39,42 45,38 Q51,34 57,38 Q63,42 69,38 Q75,34 81,38 Q87,42 93,38"
-        fill="none"
-        stroke="#F5E6C8"
-        strokeWidth="0.4"
-        opacity="0.5"
-      />
-      {/* Foam dots on waves */}
-      <circle cx="12" cy="33" r="0.5" fill="#FFFFFF" opacity="0.6" />
-      <circle cx="36" cy="33" r="0.4" fill="#FFFFFF" opacity="0.5" />
-      <circle cx="60" cy="33" r="0.5" fill="#FFFFFF" opacity="0.6" />
-      <circle cx="84" cy="33" r="0.3" fill="#FFFFFF" opacity="0.4" />
-      {/* Red seal mark (hanko) */}
-      <rect x="73" y="8" width="10" height="12" fill="#C03030" rx="0.5" opacity="0.85" />
-      <text
-        x="78"
-        y="16"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="700"
-        fontSize="5"
-        fill="#F5E6C8"
-      >
-        {data.nameJa.charAt(0)}
-      </text>
-      {/* Name */}
-      <text
-        x="10"
-        y="16"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="600"
-        fontSize="6"
-        letterSpacing="1"
-        fill="#1B4B73"
-      >
-        {data.nameJa}
-      </text>
-      <text
-        x="10"
-        y="22"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="400"
-        fontSize="1.8"
-        letterSpacing="0.3"
-        fill="#8B6914"
-      >
-        {data.nameEn}
-      </text>
-      <text
-        x="10"
-        y="28"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.6"
-        fill="#8B7355"
-      >
-        {data.titleJa}
-      </text>
-      {/* Company at bottom in wave area */}
-      <text
-        x="10"
-        y="48"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="500"
-        fontSize="1.8"
-        fill="#F5E6C8"
-      >
-        {data.companyJa}
-      </text>
+      <defs>
+        <filter id="art-ukiyoe-paper"><feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="5" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="gray"/><feBlend mode="multiply" in="SourceGraphic" in2="gray"/></filter>
+        <filter id="art-ukiyoe-shadow"><feGaussianBlur in="SourceAlpha" stdDeviation="0.3" result="blur"/><feOffset dx="0.1" dy="0.12" result="shifted"/><feFlood floodColor="#0A2540" floodOpacity="0.08" result="color"/><feComposite in="color" in2="shifted" operator="in" result="shadow"/><feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <linearGradient id="art-ukiyoe-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#F5EDE0"/><stop offset="100%" stopColor="#EDE0CC"/></linearGradient>
+      </defs>
+      <rect width="91" height="55" fill="url(#art-ukiyoe-bg)" filter="url(#art-ukiyoe-paper)" />
+      <path d="M 0 42 Q 8 36, 16 42 Q 24 48, 32 42 Q 40 36, 48 42 Q 56 48, 64 42 Q 72 36, 80 42 Q 88 48, 96 42" fill="none" stroke="#1B4B73" strokeWidth="0.3" opacity="0.2" />
+      <path d="M 0 46 Q 10 40, 20 46 Q 30 52, 40 46 Q 50 40, 60 46 Q 70 52, 80 46 Q 90 40, 100 46" fill="none" stroke="#1B4B73" strokeWidth="0.2" opacity="0.12" />
+      <path d="M 0 50 Q 12 44, 24 50 Q 36 56, 48 50 Q 60 44, 72 50 Q 84 56, 96 50" fill="none" stroke="#1B4B73" strokeWidth="0.15" opacity="0.08" />
+      <circle cx="80" cy="10" r="5" fill="#C84031" opacity="0.08" />
+      <circle cx="80" cy="10" r="5" fill="none" stroke="#C84031" strokeWidth="0.2" opacity="0.12" />
+      <rect x="3" y="3" width="0.4" height="12" fill="#1B4B73" opacity="0.12" />
+      <text x="8" y="18" fontFamily={JA} fontWeight="500" fontSize="6" letterSpacing="1" fill="#1B4B73" filter="url(#art-ukiyoe-shadow)">{data.nameJa}</text>
+      <text x="8" y="24.5" fontFamily={EN} fontWeight="300" fontSize="2" letterSpacing="0.4" fill="#3A6B8E">{data.nameEn}</text>
+      <text x="8" y="30.5" fontFamily={JA} fontWeight="300" fontSize="1.8" fill="#8B7050">{data.titleJa}</text>
+      <text x="8" y="34.5" fontFamily={EN} fontWeight="200" fontSize="1.4" fill="#8B7050">{data.titleEn}</text>
+      <text x="83" y="52" textAnchor="end" fontFamily={JA} fontWeight="400" fontSize="1.3" fill="#C84031" opacity="0.5">{data.companyJa}</text>
+      {data.logo && <image href={data.logo} x="76" y="28" width="7" height="7" preserveAspectRatio="xMidYMid meet" opacity="0.4" />}
     </g>
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#F5E6C8" />
-      {/* Top color block */}
-      <rect x="0" y="0" width="91" height="14" fill="#1B4B73" />
-      <rect x="0" y="10" width="91" height="6" fill="#2A6496" opacity="0.6" />
-      {/* Wave at block edge */}
-      <path
-        d="M0,14 Q6,11 12,14 Q18,17 24,14 Q30,11 36,14 Q42,17 48,14 Q54,11 60,14 Q66,17 72,14 Q78,11 84,14 Q90,17 96,14"
-        fill="none"
-        stroke="#F5E6C8"
-        strokeWidth="0.5"
-      />
-      {/* Company in blue block */}
-      <text
-        x="10"
-        y="8"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="700"
-        fontSize="3.5"
-        fill="#F5E6C8"
-      >
-        {data.companyJa}
-      </text>
-      {/* Red seal */}
-      <rect x="75" y="3" width="8" height="8" fill="#C03030" rx="0.5" opacity="0.8" />
-      <text
-        x="79"
-        y="9"
-        textAnchor="middle"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="700"
-        fontSize="3.5"
-        fill="#F5E6C8"
-      >
-        印
-      </text>
-      {/* Contact info */}
-      <text
-        x="10"
-        y="24"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="400"
-        fontSize="1.6"
-        fill="#1B4B73"
-      >
-        {data.tel}
-      </text>
-      <text
-        x="10"
-        y="29"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="400"
-        fontSize="1.6"
-        fill="#1B4B73"
-      >
-        {data.email}
-      </text>
-      <text
-        x="10"
-        y="34"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="400"
-        fontSize="1.6"
-        fill="#1B4B73"
-      >
-        {data.website}
-      </text>
-      {/* Address with subtle divider */}
-      <line x1="10" y1="38" x2="80" y2="38" stroke="#C8B080" strokeWidth="0.2" />
-      <text
-        x="10"
-        y="43"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.3"
-        fill="#8B7355"
-      >
-        〒{data.zipCode} {data.addressJa}
-      </text>
-      {/* Bottom wave strip */}
-      <rect x="0" y="47" width="91" height="8" fill="#1B4B73" opacity="0.15" />
-      <path
-        d="M0,47 Q6,44 12,47 Q18,50 24,47 Q30,44 36,47 Q42,50 48,47 Q54,44 60,47 Q66,50 72,47 Q78,44 84,47 Q90,50 96,47"
-        fill="none"
-        stroke="#1B4B73"
-        strokeWidth="0.3"
-        opacity="0.4"
-      />
+      <defs>
+        <filter id="art-ukiyoe-paper-b"><feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="5" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="gray"/><feBlend mode="multiply" in="SourceGraphic" in2="gray"/></filter>
+      </defs>
+      <rect width="91" height="55" fill="#F5EDE0" filter="url(#art-ukiyoe-paper-b)" />
+      <path d="M 0 6 Q 10 0, 20 6 Q 30 12, 40 6 Q 50 0, 60 6 Q 70 12, 80 6 Q 90 0, 100 6" fill="none" stroke="#1B4B73" strokeWidth="0.2" opacity="0.12" />
+      <path d="M 0 10 Q 12 4, 24 10 Q 36 16, 48 10 Q 60 4, 72 10 Q 84 16, 96 10" fill="none" stroke="#1B4B73" strokeWidth="0.15" opacity="0.08" />
+      <circle cx="10" cy="48" r="3" fill="#C84031" opacity="0.06" />
+      <rect x="87" y="40" width="0.4" height="12" fill="#1B4B73" opacity="0.1" />
+      <text x="8" y="18" fontFamily={JA} fontWeight="500" fontSize="2.2" fill="#1B4B73">{data.companyJa}</text>
+      <text x="8" y="22.5" fontFamily={EN} fontWeight="300" fontSize="1.4" letterSpacing="0.3" fill="#3A6B8E">{data.companyEn}</text>
+      <text x="8" y="26" fontFamily={JA} fontWeight="300" fontSize="1.3" fill="#8B7050">{data.titleJa}</text>
+      <line x1="8" y1="29" x2="60" y2="29" stroke="#1B4B73" strokeWidth="0.12" opacity="0.2" />
+      <text x="8" y="33.5" fontFamily={EN} fontWeight="300" fontSize="1.5" fill="#4A3728">TEL {data.tel}</text>
+      <text x="8" y="37.5" fontFamily={EN} fontWeight="300" fontSize="1.5" fill="#4A3728">{data.email}</text>
+      <text x="8" y="41.5" fontFamily={EN} fontWeight="300" fontSize="1.5" fill="#4A3728">{data.website}</text>
+      <line x1="8" y1="44" x2="60" y2="44" stroke="#C84031" strokeWidth="0.12" opacity="0.15" />
+      <text x="8" y="48.5" fontFamily={JA} fontWeight="300" fontSize="1.2" fill="#8B7050">〒{data.zipCode}</text>
+      <text x="8" y="52" fontFamily={JA} fontWeight="300" fontSize="1.2" fill="#8B7050">{data.addressJa}</text>
+      {data.logo && <image href={data.logo} x="76" y="14" width="7" height="7" preserveAspectRatio="xMidYMid meet" opacity="0.35" />}
     </g>
   ),
 };
 
 // ============================================================
 // 10. OP ART (眩) — Bridget Riley inspired
-// Optical pattern with parallel lines, B&W hypnotic effect
+// Parallel lines creating optical illusion, monochrome
 // ============================================================
 const opartTemplate: TemplateDefinition = {
   id: 'artistic-opart',
@@ -1458,174 +569,68 @@ const opartTemplate: TemplateDefinition = {
   designer: 'Bridget Riley',
   description: '視覚の眩惑。平行線が生み出す催眠的パターン。',
   accentColor: '#000000',
-  renderFront: (data: CardData) => (
-    <g>
-      <rect width="91" height="55" fill="#FFFFFF" />
-      {/* Optical parallel lines with varying spacing - left side pattern */}
-      <defs>
-        <clipPath id="opart-front-clip">
-          <rect x="0" y="0" width="30" height="55" />
-        </clipPath>
-      </defs>
-      <g clipPath="url(#opart-front-clip)">
-        {/* Lines with varying spacing creating optical illusion */}
-        <line x1="2" y1="0" x2="2" y2="55" stroke="#1A1A1A" strokeWidth="1.2" />
-        <line x1="4.5" y1="0" x2="4.5" y2="55" stroke="#1A1A1A" strokeWidth="1" />
-        <line x1="6.5" y1="0" x2="6.5" y2="55" stroke="#1A1A1A" strokeWidth="0.8" />
-        <line x1="8.2" y1="0" x2="8.2" y2="55" stroke="#1A1A1A" strokeWidth="0.7" />
-        <line x1="9.8" y1="0" x2="9.8" y2="55" stroke="#1A1A1A" strokeWidth="1.0" />
-        <line x1="11.8" y1="0" x2="11.8" y2="55" stroke="#1A1A1A" strokeWidth="1.5" />
-        <line x1="14.2" y1="0" x2="14.2" y2="55" stroke="#1A1A1A" strokeWidth="1.8" />
-        <line x1="17" y1="0" x2="17" y2="55" stroke="#1A1A1A" strokeWidth="1.5" />
-        <line x1="19.2" y1="0" x2="19.2" y2="55" stroke="#1A1A1A" strokeWidth="1.0" />
-        <line x1="21" y1="0" x2="21" y2="55" stroke="#1A1A1A" strokeWidth="0.7" />
-        <line x1="22.5" y1="0" x2="22.5" y2="55" stroke="#1A1A1A" strokeWidth="0.5" />
-        <line x1="23.8" y1="0" x2="23.8" y2="55" stroke="#1A1A1A" strokeWidth="0.4" />
-        <line x1="25" y1="0" x2="25" y2="55" stroke="#1A1A1A" strokeWidth="0.3" />
-        <line x1="26.2" y1="0" x2="26.2" y2="55" stroke="#1A1A1A" strokeWidth="0.25" />
-        <line x1="27.3" y1="0" x2="27.3" y2="55" stroke="#1A1A1A" strokeWidth="0.2" />
-        <line x1="28.3" y1="0" x2="28.3" y2="55" stroke="#1A1A1A" strokeWidth="0.15" />
-      </g>
-      {/* Right side - bottom corner pattern */}
+  renderFront: (data: CardData) => {
+    const lines: React.ReactNode[] = [];
+    for (let i = 0; i < 55; i += 1.2) {
+      const wobble = Math.sin(i * 0.15) * 3;
+      lines.push(
+        <line key={`op-f-${i}`} x1={60 + wobble} y1={i} x2={91} y2={i} stroke="#000000" strokeWidth={0.2 + Math.sin(i * 0.25) * 0.1} opacity={0.08 + Math.sin(i * 0.2) * 0.04} />
+      );
+    }
+    return (
       <g>
-        <line x1="60" y1="42" x2="91" y2="42" stroke="#1A1A1A" strokeWidth="0.15" />
-        <line x1="60" y1="43.2" x2="91" y2="43.2" stroke="#1A1A1A" strokeWidth="0.2" />
-        <line x1="60" y1="44.5" x2="91" y2="44.5" stroke="#1A1A1A" strokeWidth="0.3" />
-        <line x1="60" y1="46" x2="91" y2="46" stroke="#1A1A1A" strokeWidth="0.5" />
-        <line x1="60" y1="47.8" x2="91" y2="47.8" stroke="#1A1A1A" strokeWidth="0.7" />
-        <line x1="60" y1="49.8" x2="91" y2="49.8" stroke="#1A1A1A" strokeWidth="1.0" />
-        <line x1="60" y1="52" x2="91" y2="52" stroke="#1A1A1A" strokeWidth="1.5" />
-        <line x1="60" y1="54.5" x2="91" y2="54.5" stroke="#1A1A1A" strokeWidth="1.2" />
+        <defs>
+          <filter id="art-opart-paper"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="gray"/><feBlend mode="multiply" in="SourceGraphic" in2="gray"/></filter>
+          <filter id="art-opart-shadow"><feGaussianBlur in="SourceAlpha" stdDeviation="0.25" result="blur"/><feOffset dx="0.08" dy="0.12" result="shifted"/><feFlood floodColor="#000" floodOpacity="0.06" result="color"/><feComposite in="color" in2="shifted" operator="in" result="shadow"/><feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <rect width="91" height="55" fill="#FFFFFF" filter="url(#art-opart-paper)" />
+        {lines}
+        <circle cx="75" cy="27.5" r="8" fill="none" stroke="#000000" strokeWidth="0.3" opacity="0.08" />
+        <circle cx="75" cy="27.5" r="5" fill="none" stroke="#000000" strokeWidth="0.2" opacity="0.06" />
+        <circle cx="75" cy="27.5" r="2" fill="none" stroke="#000000" strokeWidth="0.15" opacity="0.04" />
+        <text x="7" y="20" fontFamily={JA} fontWeight="700" fontSize="6.5" letterSpacing="0.3" fill="#000000" filter="url(#art-opart-shadow)">{data.nameJa}</text>
+        <text x="7" y="27" fontFamily={EN} fontWeight="400" fontSize="2.2" letterSpacing="0.3" fill="#333333">{data.nameEn}</text>
+        <text x="7" y="33" fontFamily={JA} fontWeight="300" fontSize="1.8" fill="#666666">{data.titleJa}</text>
+        <text x="7" y="37" fontFamily={EN} fontWeight="200" fontSize="1.4" fill="#888888">{data.titleEn}</text>
+        <line x1="7" y1="41" x2="50" y2="41" stroke="#000000" strokeWidth="0.15" opacity="0.2" />
+        <text x="7" y="47" fontFamily={JA} fontWeight="400" fontSize="1.3" fill="#444444">{data.companyJa}</text>
+        <text x="7" y="51" fontFamily={EN} fontWeight="300" fontSize="1.1" fill="#888888">{data.companyEn}</text>
+        {data.logo && <image href={data.logo} x="48" y="44" width="7" height="7" preserveAspectRatio="xMidYMid meet" opacity="0.4" />}
       </g>
-      {/* Name on clean white area */}
-      <text
-        x="38"
-        y="22"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="700"
-        fontSize="6"
-        fill="#1A1A1A"
-      >
-        {data.nameJa}
-      </text>
-      <text
-        x="38"
-        y="28"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="500"
-        fontSize="2"
-        letterSpacing="0.4"
-        fill="#1A1A1A"
-      >
-        {data.nameEn.toUpperCase()}
-      </text>
-      <text
-        x="38"
-        y="34"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.6"
-        fill="#666666"
-      >
-        {data.titleJa}
-      </text>
-    </g>
-  ),
-  renderBack: (data: CardData) => (
-    <g>
-      <rect width="91" height="55" fill="#FFFFFF" />
-      {/* Top optical stripe pattern */}
-      <defs>
-        <clipPath id="opart-back-clip">
-          <rect x="0" y="0" width="91" height="12" />
-        </clipPath>
-      </defs>
-      <g clipPath="url(#opart-back-clip)">
-        <line x1="0" y1="1" x2="91" y2="1" stroke="#1A1A1A" strokeWidth="1.5" />
-        <line x1="0" y1="3.2" x2="91" y2="3.2" stroke="#1A1A1A" strokeWidth="1.2" />
-        <line x1="0" y1="5" x2="91" y2="5" stroke="#1A1A1A" strokeWidth="0.8" />
-        <line x1="0" y1="6.4" x2="91" y2="6.4" stroke="#1A1A1A" strokeWidth="0.5" />
-        <line x1="0" y1="7.5" x2="91" y2="7.5" stroke="#1A1A1A" strokeWidth="0.3" />
-        <line x1="0" y1="8.3" x2="91" y2="8.3" stroke="#1A1A1A" strokeWidth="0.2" />
-        <line x1="0" y1="9" x2="91" y2="9" stroke="#1A1A1A" strokeWidth="0.15" />
-        <line x1="0" y1="9.6" x2="91" y2="9.6" stroke="#1A1A1A" strokeWidth="0.1" />
-      </g>
-      {/* Bottom optical pattern */}
+    );
+  },
+  renderBack: (data: CardData) => {
+    const lines: React.ReactNode[] = [];
+    for (let i = 0; i < 55; i += 1.2) {
+      const wobble = Math.sin(i * 0.15) * 3;
+      lines.push(
+        <line key={`op-b-${i}`} x1={0} y1={i} x2={28 + wobble} y2={i} stroke="#000000" strokeWidth={0.2 + Math.sin(i * 0.25) * 0.1} opacity={0.08 + Math.sin(i * 0.2) * 0.04} />
+      );
+    }
+    return (
       <g>
-        <line x1="0" y1="45" x2="91" y2="45" stroke="#1A1A1A" strokeWidth="0.1" />
-        <line x1="0" y1="45.8" x2="91" y2="45.8" stroke="#1A1A1A" strokeWidth="0.15" />
-        <line x1="0" y1="46.8" x2="91" y2="46.8" stroke="#1A1A1A" strokeWidth="0.2" />
-        <line x1="0" y1="48" x2="91" y2="48" stroke="#1A1A1A" strokeWidth="0.3" />
-        <line x1="0" y1="49.5" x2="91" y2="49.5" stroke="#1A1A1A" strokeWidth="0.5" />
-        <line x1="0" y1="51.2" x2="91" y2="51.2" stroke="#1A1A1A" strokeWidth="0.8" />
-        <line x1="0" y1="53" x2="91" y2="53" stroke="#1A1A1A" strokeWidth="1.2" />
-        <line x1="0" y1="55" x2="91" y2="55" stroke="#1A1A1A" strokeWidth="1.5" />
+        <defs>
+          <filter id="art-opart-paper-b"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="gray"/><feBlend mode="multiply" in="SourceGraphic" in2="gray"/></filter>
+        </defs>
+        <rect width="91" height="55" fill="#FFFFFF" filter="url(#art-opart-paper-b)" />
+        {lines}
+        <circle cx="16" cy="27.5" r="8" fill="none" stroke="#000000" strokeWidth="0.25" opacity="0.06" />
+        <circle cx="16" cy="27.5" r="4" fill="none" stroke="#000000" strokeWidth="0.15" opacity="0.04" />
+        <text x="35" y="12" fontFamily={JA} fontWeight="600" fontSize="2.2" fill="#000000">{data.companyJa}</text>
+        <text x="35" y="17" fontFamily={EN} fontWeight="400" fontSize="1.5" letterSpacing="0.2" fill="#333333">{data.companyEn}</text>
+        <text x="35" y="21" fontFamily={JA} fontWeight="300" fontSize="1.3" fill="#888888">{data.titleJa}</text>
+        <line x1="35" y1="24" x2="83" y2="24" stroke="#000000" strokeWidth="0.2" opacity="0.15" />
+        <text x="35" y="29" fontFamily={EN} fontWeight="400" fontSize="1.5" fill="#333333">TEL {data.tel}</text>
+        <text x="35" y="33" fontFamily={EN} fontWeight="400" fontSize="1.5" fill="#333333">{data.email}</text>
+        <text x="35" y="37" fontFamily={EN} fontWeight="400" fontSize="1.5" fill="#333333">{data.website}</text>
+        <line x1="35" y1="40" x2="83" y2="40" stroke="#000000" strokeWidth="0.15" opacity="0.15" />
+        <text x="35" y="44.5" fontFamily={JA} fontWeight="300" fontSize="1.2" fill="#666666">〒{data.zipCode}</text>
+        <text x="35" y="48" fontFamily={JA} fontWeight="300" fontSize="1.2" fill="#666666">{data.addressJa}</text>
+        <text x="35" y="51.5" fontFamily={EN} fontWeight="300" fontSize="1.1" fill="#999999">{data.addressEn}</text>
+        {data.logo && <image href={data.logo} x="76" y="6" width="7" height="7" preserveAspectRatio="xMidYMid meet" opacity="0.4" />}
       </g>
-      {/* Company */}
-      <text
-        x="10"
-        y="20"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="700"
-        fontSize="2.8"
-        fill="#1A1A1A"
-      >
-        {data.companyJa}
-      </text>
-      <text
-        x="10"
-        y="24"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="400"
-        fontSize="1.4"
-        fill="#666666"
-      >
-        {data.companyEn}
-      </text>
-      {/* Contact */}
-      <text
-        x="10"
-        y="30"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="500"
-        fontSize="1.6"
-        fill="#1A1A1A"
-      >
-        {data.tel}
-      </text>
-      <text
-        x="10"
-        y="34"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="500"
-        fontSize="1.6"
-        fill="#1A1A1A"
-      >
-        {data.email}
-      </text>
-      <text
-        x="10"
-        y="38"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="500"
-        fontSize="1.6"
-        fill="#1A1A1A"
-      >
-        {data.website}
-      </text>
-      {/* Address */}
-      <text
-        x="10"
-        y="43"
-        fontFamily="'Noto Sans JP', sans-serif"
-        fontWeight="300"
-        fontSize="1.3"
-        fill="#666666"
-      >
-        〒{data.zipCode} {data.addressJa}
-      </text>
-    </g>
-  ),
+    );
+  },
 };
 
 export const artisticTemplates: TemplateDefinition[] = [

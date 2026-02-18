@@ -14,41 +14,69 @@ const fjordTemplate: TemplateDefinition = {
   accentColor: '#5B7B94',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#F5F1EB" />
-      {/* Fjord water band */}
-      <rect x="0" y="35" width="91" height="20" fill="#5B7B94" opacity="0.12" />
-      <path d="M0,35 Q20,33 45.5,36 Q70,39 91,35 L91,55 L0,55 Z" fill="#5B7B94" opacity="0.08" />
-      {/* Mountain silhouette */}
-      <path d="M0,35 L15,22 L25,28 L40,18 L55,25 L65,20 L80,27 L91,22 L91,35 Z" fill="#5B7B94" opacity="0.06" />
+      <defs>
+        <linearGradient id="nordic-fjord-front-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#E8EDF2" />
+          <stop offset="40%" stopColor="#F0F3F7" />
+          <stop offset="100%" stopColor="#F5F1EB" />
+        </linearGradient>
+        <linearGradient id="nordic-fjord-front-water" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#5B7B94" stopOpacity="0.18" />
+          <stop offset="100%" stopColor="#3D5A6E" stopOpacity="0.06" />
+        </linearGradient>
+        <filter id="nordic-fjord-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" result="noise" />
+          <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+          <feBlend in="SourceGraphic" in2="gray" mode="multiply" />
+        </filter>
+        <filter id="nordic-fjord-shadow">
+          <feDropShadow dx="0" dy="0.3" stdDeviation="0.4" floodColor="#3D5A6E" floodOpacity="0.15" />
+        </filter>
+      </defs>
+      <rect width="91" height="55" fill="url(#nordic-fjord-front-sky)" />
+      {/* Fjord water surface */}
+      <rect x="0" y="33" width="91" height="22" fill="url(#nordic-fjord-front-water)" />
+      {/* Mountain range silhouettes - layered depth */}
+      <path d="M0,38 L8,28 L14,32 L22,22 L30,26 L38,18 L46,24 L54,20 L62,25 L70,19 L78,24 L86,21 L91,26 L91,38 Z" fill="#5B7B94" opacity="0.07" />
+      <path d="M0,40 L10,32 L18,35 L28,28 L36,33 L44,27 L52,31 L60,28 L68,33 L76,29 L84,32 L91,30 L91,40 Z" fill="#7A99AD" opacity="0.05" />
+      {/* Water ripple lines */}
+      <path d="M0,42 Q22,40 45.5,43 Q68,46 91,42" fill="none" stroke="#5B7B94" strokeWidth="0.12" opacity="0.15" />
+      <path d="M0,46 Q25,44 50,47 Q75,50 91,46" fill="none" stroke="#5B7B94" strokeWidth="0.08" opacity="0.10" />
+      <path d="M0,50 Q20,48 45,51 Q70,54 91,50" fill="none" stroke="#5B7B94" strokeWidth="0.06" opacity="0.07" />
+      {/* Cliff edge accent left */}
+      <line x1="6" y1="18" x2="6" y2="38" stroke="#3D5A6E" strokeWidth="0.15" opacity="0.12" />
+      {data.logo && <image href={data.logo} x="74" y="6" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
       <text
         x="10"
-        y="18"
+        y="16"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="400"
-        fontSize="6"
+        fontSize="6.5"
         letterSpacing="0.8"
         fill="#3D5A6E"
+        filter="url(#nordic-fjord-shadow)"
       >
         {data.nameJa}
       </text>
       <text
         x="10"
-        y="24"
+        y="22.5"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
-        fontSize="1.8"
-        letterSpacing="0.3"
+        fontSize="2"
+        letterSpacing="0.4"
         fill="#7A99AD"
       >
         {data.nameEn}
       </text>
+      <line x1="10" y1="26" x2="42" y2="26" stroke="#95AEC0" strokeWidth="0.15" opacity="0.4" />
       <text
         x="10"
-        y="32"
+        y="30.5"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
-        fontSize="1.5"
-        fill="#95AEC0"
+        fontSize="1.8"
+        fill="#7A99AD"
       >
         {data.titleJa}
       </text>
@@ -56,35 +84,68 @@ const fjordTemplate: TemplateDefinition = {
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#F5F1EB" />
-      <rect x="0" y="0" width="91" height="12" fill="#5B7B94" opacity="0.08" />
-      <path d="M0,12 Q30,10 45.5,13 Q65,16 91,12 L91,0 L0,0 Z" fill="#5B7B94" opacity="0.05" />
+      <defs>
+        <linearGradient id="nordic-fjord-back-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#F5F1EB" />
+          <stop offset="100%" stopColor="#E8EDF2" />
+        </linearGradient>
+        <filter id="nordic-fjord-back-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" result="noise" />
+          <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+          <feBlend in="SourceGraphic" in2="gray" mode="multiply" />
+        </filter>
+        <filter id="nordic-fjord-back-shadow">
+          <feDropShadow dx="0" dy="0.2" stdDeviation="0.3" floodColor="#3D5A6E" floodOpacity="0.12" />
+        </filter>
+      </defs>
+      <rect width="91" height="55" fill="url(#nordic-fjord-back-sky)" />
+      {/* Top mountain reflection */}
+      <path d="M0,4 L12,0 L20,3 L30,0 L42,5 L54,1 L66,4 L78,0 L91,3 L91,8 L0,8 Z" fill="#5B7B94" opacity="0.05" />
+      {/* Water band at bottom */}
+      <rect x="0" y="44" width="91" height="11" fill="#5B7B94" opacity="0.06" />
+      <path d="M0,44 Q22,42 45.5,45 Q68,48 91,44" fill="none" stroke="#5B7B94" strokeWidth="0.1" opacity="0.12" />
+      <path d="M0,48 Q25,46 50,49 Q75,52 91,48" fill="none" stroke="#5B7B94" strokeWidth="0.08" opacity="0.08" />
+      {/* Vertical cliff accent */}
+      <line x1="85" y1="10" x2="85" y2="44" stroke="#95AEC0" strokeWidth="0.1" opacity="0.15" />
+      {data.logo && <image href={data.logo} x="8" y="38" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
       <text
         x="81"
-        y="10"
+        y="13"
         textAnchor="end"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="400"
-        fontSize="2.2"
+        fontSize="2.5"
         fill="#3D5A6E"
+        filter="url(#nordic-fjord-back-shadow)"
       >
         {data.companyJa}
       </text>
       <text
         x="81"
-        y="18"
+        y="17.5"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
-        fontSize="1.4"
+        fontSize="1.5"
         fill="#7A99AD"
       >
         {data.companyEn}
       </text>
-      <line x1="40" y1="22" x2="81" y2="22" stroke="#C0D0DB" strokeWidth="0.12" />
       <text
         x="81"
-        y="28"
+        y="22"
+        textAnchor="end"
+        fontFamily="'Noto Sans JP', sans-serif"
+        fontWeight="200"
+        fontSize="1.6"
+        fill="#95AEC0"
+      >
+        {data.titleJa}
+      </text>
+      <line x1="38" y1="25" x2="81" y2="25" stroke="#C0D0DB" strokeWidth="0.12" opacity="0.5" />
+      <text
+        x="81"
+        y="30"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -95,7 +156,7 @@ const fjordTemplate: TemplateDefinition = {
       </text>
       <text
         x="81"
-        y="32"
+        y="34"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -106,7 +167,7 @@ const fjordTemplate: TemplateDefinition = {
       </text>
       <text
         x="81"
-        y="36"
+        y="38"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -117,7 +178,7 @@ const fjordTemplate: TemplateDefinition = {
       </text>
       <text
         x="81"
-        y="45"
+        y="47"
         textAnchor="end"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
@@ -144,11 +205,35 @@ const hyggeTemplate: TemplateDefinition = {
   accentColor: '#D4A5A5',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#FBF8F4" />
-      {/* Warm glow circle */}
-      <circle cx="75" cy="15" r="12" fill="#D4A5A5" opacity="0.08" />
-      <circle cx="75" cy="15" r="7" fill="#D4A5A5" opacity="0.06" />
-      <circle cx="75" cy="15" r="2" fill="#D4A5A5" opacity="0.12" />
+      <defs>
+        <radialGradient id="nordic-hygge-front-glow" cx="0.82" cy="0.25" r="0.45">
+          <stop offset="0%" stopColor="#F0D0C0" stopOpacity="0.25" />
+          <stop offset="50%" stopColor="#D4A5A5" stopOpacity="0.08" />
+          <stop offset="100%" stopColor="#FBF8F4" stopOpacity="0" />
+        </radialGradient>
+        <linearGradient id="nordic-hygge-front-bg" x1="0" y1="0" x2="0.3" y2="1">
+          <stop offset="0%" stopColor="#FBF8F4" />
+          <stop offset="100%" stopColor="#F5EDE5" />
+        </linearGradient>
+        <filter id="nordic-hygge-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" result="noise" />
+          <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+          <feBlend in="SourceGraphic" in2="gray" mode="multiply" />
+        </filter>
+        <filter id="nordic-hygge-shadow">
+          <feDropShadow dx="0" dy="0.2" stdDeviation="0.5" floodColor="#D4A5A5" floodOpacity="0.2" />
+        </filter>
+      </defs>
+      <rect width="91" height="55" fill="url(#nordic-hygge-front-bg)" />
+      <rect width="91" height="55" fill="url(#nordic-hygge-front-glow)" />
+      {/* Warm glow circles - candle effect */}
+      <circle cx="76" cy="14" r="14" fill="#D4A5A5" opacity="0.06" />
+      <circle cx="76" cy="14" r="8" fill="#E0B8A8" opacity="0.08" />
+      <circle cx="76" cy="14" r="3.5" fill="#F0D0C0" opacity="0.12" />
+      <circle cx="76" cy="14" r="1" fill="#F5E0D0" opacity="0.25" />
+      {/* Soft decorative arc */}
+      <path d="M0,52 Q45.5,44 91,52" fill="none" stroke="#D4A5A5" strokeWidth="0.15" opacity="0.2" />
+      {data.logo && <image href={data.logo} x="74" y="38" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
       <text
         x="12"
         y="22"
@@ -157,6 +242,7 @@ const hyggeTemplate: TemplateDefinition = {
         fontSize="6.5"
         letterSpacing="1"
         fill="#6B5050"
+        filter="url(#nordic-hygge-shadow)"
       >
         {data.nameJa}
       </text>
@@ -165,29 +251,29 @@ const hyggeTemplate: TemplateDefinition = {
         y="28.5"
         fontFamily="'Cormorant Garamond', serif"
         fontWeight="400"
-        fontSize="2"
-        letterSpacing="0.4"
+        fontSize="2.1"
+        letterSpacing="0.5"
         fill="#A08080"
       >
         {data.nameEn}
       </text>
-      <line x1="12" y1="33" x2="50" y2="33" stroke="#D4A5A5" strokeWidth="0.12" />
+      <line x1="12" y1="33" x2="50" y2="33" stroke="#D4A5A5" strokeWidth="0.12" opacity="0.5" />
       <text
         x="12"
-        y="39"
+        y="38"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
-        fontSize="1.5"
+        fontSize="1.8"
         fill="#B09090"
       >
         {data.titleJa}
       </text>
       <text
         x="12"
-        y="46"
+        y="45"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
-        fontSize="1.5"
+        fontSize="1.6"
         fill="#C0AAAA"
       >
         {data.companyJa}
@@ -196,17 +282,40 @@ const hyggeTemplate: TemplateDefinition = {
   ),
   renderBack: (data: CardData) => (
     <g>
+      <defs>
+        <radialGradient id="nordic-hygge-back-glow" cx="0.18" cy="0.75" r="0.4">
+          <stop offset="0%" stopColor="#F0D0C0" stopOpacity="0.18" />
+          <stop offset="100%" stopColor="#FBF8F4" stopOpacity="0" />
+        </radialGradient>
+        <filter id="nordic-hygge-back-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" result="noise" />
+          <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+          <feBlend in="SourceGraphic" in2="gray" mode="multiply" />
+        </filter>
+        <filter id="nordic-hygge-back-shadow">
+          <feDropShadow dx="0" dy="0.2" stdDeviation="0.3" floodColor="#6B5050" floodOpacity="0.1" />
+        </filter>
+      </defs>
       <rect width="91" height="55" fill="#FBF8F4" />
-      <circle cx="16" cy="40" r="10" fill="#D4A5A5" opacity="0.06" />
-      <circle cx="16" cy="40" r="5" fill="#D4A5A5" opacity="0.05" />
+      <rect width="91" height="55" fill="url(#nordic-hygge-back-glow)" />
+      {/* Warm glow on back */}
+      <circle cx="16" cy="42" r="12" fill="#D4A5A5" opacity="0.05" />
+      <circle cx="16" cy="42" r="6" fill="#E0B8A8" opacity="0.06" />
+      <circle cx="16" cy="42" r="2" fill="#F0D0C0" opacity="0.1" />
+      {/* Decorative top arc */}
+      <path d="M0,3 Q45.5,8 91,3" fill="none" stroke="#D4A5A5" strokeWidth="0.12" opacity="0.2" />
+      {/* Subtle diamond ornament */}
+      <path d="M79,4 L81,6 L79,8 L77,6 Z" fill="none" stroke="#D4A5A5" strokeWidth="0.1" opacity="0.2" />
+      {data.logo && <image href={data.logo} x="8" y="6" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
       <text
         x="79"
         y="14"
         textAnchor="end"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="300"
-        fontSize="2.2"
+        fontSize="2.5"
         fill="#6B5050"
+        filter="url(#nordic-hygge-back-shadow)"
       >
         {data.companyJa}
       </text>
@@ -216,15 +325,26 @@ const hyggeTemplate: TemplateDefinition = {
         textAnchor="end"
         fontFamily="'Cormorant Garamond', serif"
         fontWeight="400"
-        fontSize="1.4"
+        fontSize="1.5"
         fill="#A08080"
       >
         {data.companyEn}
       </text>
-      <line x1="40" y1="22" x2="79" y2="22" stroke="#D4A5A5" strokeWidth="0.1" />
       <text
         x="79"
-        y="28"
+        y="23"
+        textAnchor="end"
+        fontFamily="'Noto Sans JP', sans-serif"
+        fontWeight="200"
+        fontSize="1.6"
+        fill="#B09090"
+      >
+        {data.titleJa}
+      </text>
+      <line x1="38" y1="26" x2="79" y2="26" stroke="#D4A5A5" strokeWidth="0.1" opacity="0.4" />
+      <text
+        x="79"
+        y="31"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -235,7 +355,7 @@ const hyggeTemplate: TemplateDefinition = {
       </text>
       <text
         x="79"
-        y="32"
+        y="35"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -246,7 +366,7 @@ const hyggeTemplate: TemplateDefinition = {
       </text>
       <text
         x="79"
-        y="36"
+        y="39"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -257,7 +377,7 @@ const hyggeTemplate: TemplateDefinition = {
       </text>
       <text
         x="79"
-        y="45"
+        y="48"
         textAnchor="end"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
@@ -284,36 +404,56 @@ const birchTemplate: TemplateDefinition = {
   accentColor: '#7A9E7E',
   renderFront: (data: CardData) => (
     <g>
+      <defs>
+        <linearGradient id="nordic-birch-front-light" x1="0.4" y1="0" x2="0.7" y2="1">
+          <stop offset="0%" stopColor="#E8F0E0" stopOpacity="0.3" />
+          <stop offset="100%" stopColor="#F5F1EB" stopOpacity="0" />
+        </linearGradient>
+        <filter id="nordic-birch-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" result="noise" />
+          <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+          <feBlend in="SourceGraphic" in2="gray" mode="multiply" />
+        </filter>
+        <filter id="nordic-birch-shadow">
+          <feDropShadow dx="0.2" dy="0.3" stdDeviation="0.3" floodColor="#4A6A4E" floodOpacity="0.12" />
+        </filter>
+      </defs>
       <rect width="91" height="55" fill="#F5F1EB" />
-      {/* Birch trunk lines */}
-      <line x1="65" y1="0" x2="65" y2="55" stroke="#D0D8C8" strokeWidth="1.5" />
-      <line x1="72" y1="0" x2="72" y2="55" stroke="#D8DFD0" strokeWidth="1" />
-      <line x1="78" y1="0" x2="78" y2="55" stroke="#C8D0C0" strokeWidth="1.8" />
-      <line x1="84" y1="0" x2="84" y2="55" stroke="#D5DCD0" strokeWidth="0.8" />
-      {/* Birch bark marks */}
-      <line x1="64" y1="12" x2="66" y2="12" stroke="#A8B8A0" strokeWidth="0.3" />
-      <line x1="64.5" y1="28" x2="65.5" y2="28" stroke="#A8B8A0" strokeWidth="0.25" />
-      <line x1="77" y1="18" x2="79" y2="18" stroke="#A8B8A0" strokeWidth="0.3" />
-      <line x1="77.5" y1="38" x2="78.5" y2="38" stroke="#A8B8A0" strokeWidth="0.25" />
-      <line x1="71.5" y1="35" x2="72.5" y2="35" stroke="#A8B8A0" strokeWidth="0.2" />
-      <line x1="83.5" y1="22" x2="84.5" y2="22" stroke="#A8B8A0" strokeWidth="0.2" />
+      <rect width="91" height="55" fill="url(#nordic-birch-front-light)" />
+      {/* Birch trunks - varied thickness and tone */}
+      <rect x="63" y="0" width="1.8" height="55" fill="#D0D8C8" opacity="0.5" rx="0.4" />
+      <rect x="70" y="0" width="1.2" height="55" fill="#D8DFD0" opacity="0.4" rx="0.3" />
+      <rect x="76" y="0" width="2.2" height="55" fill="#C8D0C0" opacity="0.55" rx="0.5" />
+      <rect x="83" y="0" width="1" height="55" fill="#D5DCD0" opacity="0.35" rx="0.2" />
+      {/* Birch bark markings */}
+      <ellipse cx="63.9" cy="12" rx="0.8" ry="0.2" fill="#A8B8A0" opacity="0.3" />
+      <ellipse cx="63.9" cy="28" rx="0.6" ry="0.15" fill="#A8B8A0" opacity="0.25" />
+      <ellipse cx="77" cy="18" rx="1" ry="0.2" fill="#A8B8A0" opacity="0.3" />
+      <ellipse cx="77" cy="38" rx="0.7" ry="0.18" fill="#A8B8A0" opacity="0.25" />
+      <ellipse cx="70.6" cy="35" rx="0.5" ry="0.12" fill="#A8B8A0" opacity="0.2" />
+      <ellipse cx="83.5" cy="22" rx="0.4" ry="0.1" fill="#A8B8A0" opacity="0.2" />
+      {/* Dappled sunlight spots */}
+      <circle cx="50" cy="8" r="3" fill="#E8F0E0" opacity="0.15" />
+      <circle cx="58" cy="40" r="2" fill="#E8F0E0" opacity="0.1" />
+      {data.logo && <image href={data.logo} x="10" y="42" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
       <text
         x="10"
-        y="20"
+        y="18"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="400"
-        fontSize="5.5"
+        fontSize="6"
         letterSpacing="0.6"
         fill="#4A6A4E"
+        filter="url(#nordic-birch-shadow)"
       >
         {data.nameJa}
       </text>
       <text
         x="10"
-        y="26"
+        y="24"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
-        fontSize="1.8"
+        fontSize="2"
         letterSpacing="0.3"
         fill="#7A9E7E"
       >
@@ -321,20 +461,20 @@ const birchTemplate: TemplateDefinition = {
       </text>
       <text
         x="10"
-        y="34"
+        y="31"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
-        fontSize="1.5"
+        fontSize="1.8"
         fill="#90B090"
       >
         {data.titleJa}
       </text>
       <text
         x="10"
-        y="42"
+        y="37.5"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
-        fontSize="1.5"
+        fontSize="1.6"
         fill="#A8C0A8"
       >
         {data.companyJa}
@@ -343,23 +483,43 @@ const birchTemplate: TemplateDefinition = {
   ),
   renderBack: (data: CardData) => (
     <g>
+      <defs>
+        <linearGradient id="nordic-birch-back-light" x1="0.3" y1="0" x2="0.6" y2="1">
+          <stop offset="0%" stopColor="#E8F0E0" stopOpacity="0.2" />
+          <stop offset="100%" stopColor="#F5F1EB" stopOpacity="0" />
+        </linearGradient>
+        <filter id="nordic-birch-back-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" result="noise" />
+          <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+          <feBlend in="SourceGraphic" in2="gray" mode="multiply" />
+        </filter>
+        <filter id="nordic-birch-back-shadow">
+          <feDropShadow dx="0" dy="0.2" stdDeviation="0.3" floodColor="#4A6A4E" floodOpacity="0.1" />
+        </filter>
+      </defs>
       <rect width="91" height="55" fill="#F5F1EB" />
+      <rect width="91" height="55" fill="url(#nordic-birch-back-light)" />
       {/* Birch trunks on left */}
-      <line x1="7" y1="0" x2="7" y2="55" stroke="#D0D8C8" strokeWidth="1.5" />
-      <line x1="13" y1="0" x2="13" y2="55" stroke="#D8DFD0" strokeWidth="0.8" />
-      <line x1="19" y1="0" x2="19" y2="55" stroke="#C8D0C0" strokeWidth="1.8" />
-      <line x1="25" y1="0" x2="25" y2="55" stroke="#D5DCD0" strokeWidth="1" />
-      <line x1="6" y1="15" x2="8" y2="15" stroke="#A8B8A0" strokeWidth="0.3" />
-      <line x1="18" y1="30" x2="20" y2="30" stroke="#A8B8A0" strokeWidth="0.3" />
-      <line x1="12.5" y1="42" x2="13.5" y2="42" stroke="#A8B8A0" strokeWidth="0.2" />
+      <rect x="5" y="0" width="1.8" height="55" fill="#D0D8C8" opacity="0.5" rx="0.4" />
+      <rect x="11" y="0" width="1" height="55" fill="#D8DFD0" opacity="0.35" rx="0.2" />
+      <rect x="17" y="0" width="2.2" height="55" fill="#C8D0C0" opacity="0.55" rx="0.5" />
+      <rect x="24" y="0" width="1.2" height="55" fill="#D5DCD0" opacity="0.4" rx="0.3" />
+      {/* Bark markings */}
+      <ellipse cx="5.9" cy="15" rx="0.8" ry="0.2" fill="#A8B8A0" opacity="0.3" />
+      <ellipse cx="18" cy="30" rx="1" ry="0.2" fill="#A8B8A0" opacity="0.3" />
+      <ellipse cx="11.5" cy="42" rx="0.5" ry="0.12" fill="#A8B8A0" opacity="0.2" />
+      {/* Dappled light */}
+      <circle cx="35" cy="45" r="2.5" fill="#E8F0E0" opacity="0.12" />
+      {data.logo && <image href={data.logo} x="74" y="40" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
       <text
         x="81"
         y="12"
         textAnchor="end"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="400"
-        fontSize="2.2"
+        fontSize="2.5"
         fill="#4A6A4E"
+        filter="url(#nordic-birch-back-shadow)"
       >
         {data.companyJa}
       </text>
@@ -369,15 +529,26 @@ const birchTemplate: TemplateDefinition = {
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
-        fontSize="1.4"
+        fontSize="1.5"
         fill="#90B090"
       >
         {data.companyEn}
       </text>
-      <line x1="40" y1="20" x2="81" y2="20" stroke="#C0D0C0" strokeWidth="0.1" />
       <text
         x="81"
-        y="26"
+        y="21"
+        textAnchor="end"
+        fontFamily="'Noto Sans JP', sans-serif"
+        fontWeight="200"
+        fontSize="1.6"
+        fill="#7A9E7E"
+      >
+        {data.titleJa}
+      </text>
+      <line x1="38" y1="24" x2="81" y2="24" stroke="#C0D0C0" strokeWidth="0.1" opacity="0.4" />
+      <text
+        x="81"
+        y="29"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -388,7 +559,7 @@ const birchTemplate: TemplateDefinition = {
       </text>
       <text
         x="81"
-        y="30"
+        y="33"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -399,7 +570,7 @@ const birchTemplate: TemplateDefinition = {
       </text>
       <text
         x="81"
-        y="34"
+        y="37"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -410,7 +581,7 @@ const birchTemplate: TemplateDefinition = {
       </text>
       <text
         x="81"
-        y="45"
+        y="47"
         textAnchor="end"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
@@ -437,65 +608,93 @@ const frostTemplate: TemplateDefinition = {
   accentColor: '#8AAEC0',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#F0F4F8" />
-      {/* Frost crystal patterns */}
-      <g opacity="0.12">
-        {/* Crystal 1 */}
-        <line x1="75" y1="5" x2="75" y2="20" stroke="#8AAEC0" strokeWidth="0.3" />
-        <line x1="68" y1="12.5" x2="82" y2="12.5" stroke="#8AAEC0" strokeWidth="0.3" />
-        <line x1="70" y1="7" x2="80" y2="18" stroke="#8AAEC0" strokeWidth="0.2" />
-        <line x1="80" y1="7" x2="70" y2="18" stroke="#8AAEC0" strokeWidth="0.2" />
-        {/* Crystal branches */}
-        <line x1="72" y1="8" x2="70" y2="6" stroke="#8AAEC0" strokeWidth="0.15" />
-        <line x1="78" y1="8" x2="80" y2="6" stroke="#8AAEC0" strokeWidth="0.15" />
-        <line x1="72" y1="17" x2="70" y2="19" stroke="#8AAEC0" strokeWidth="0.15" />
-        <line x1="78" y1="17" x2="80" y2="19" stroke="#8AAEC0" strokeWidth="0.15" />
+      <defs>
+        <linearGradient id="nordic-frost-front-bg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#F0F4F8" />
+          <stop offset="50%" stopColor="#E8EFF5" />
+          <stop offset="100%" stopColor="#F0F4F8" />
+        </linearGradient>
+        <radialGradient id="nordic-frost-front-crystal" cx="0.8" cy="0.2" r="0.35">
+          <stop offset="0%" stopColor="#C8E0F0" stopOpacity="0.12" />
+          <stop offset="100%" stopColor="#F0F4F8" stopOpacity="0" />
+        </radialGradient>
+        <filter id="nordic-frost-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="4" result="noise" />
+          <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+          <feBlend in="SourceGraphic" in2="gray" mode="multiply" />
+        </filter>
+        <filter id="nordic-frost-shadow">
+          <feDropShadow dx="0" dy="0.2" stdDeviation="0.4" floodColor="#4A6A7E" floodOpacity="0.12" />
+        </filter>
+      </defs>
+      <rect width="91" height="55" fill="url(#nordic-frost-front-bg)" />
+      <rect width="91" height="55" fill="url(#nordic-frost-front-crystal)" />
+      {/* Frost crystal 1 - large, top right */}
+      <g opacity="0.14" transform="translate(75,12)">
+        <line x1="0" y1="-8" x2="0" y2="8" stroke="#8AAEC0" strokeWidth="0.3" />
+        <line x1="-7" y1="0" x2="7" y2="0" stroke="#8AAEC0" strokeWidth="0.3" />
+        <line x1="-5" y1="-5" x2="5" y2="5" stroke="#8AAEC0" strokeWidth="0.2" />
+        <line x1="5" y1="-5" x2="-5" y2="5" stroke="#8AAEC0" strokeWidth="0.2" />
+        <line x1="-2" y1="-6" x2="-4" y2="-8" stroke="#8AAEC0" strokeWidth="0.15" />
+        <line x1="2" y1="-6" x2="4" y2="-8" stroke="#8AAEC0" strokeWidth="0.15" />
+        <line x1="-2" y1="6" x2="-4" y2="8" stroke="#8AAEC0" strokeWidth="0.15" />
+        <line x1="2" y1="6" x2="4" y2="8" stroke="#8AAEC0" strokeWidth="0.15" />
+        <line x1="-6" y1="-2" x2="-8" y2="-4" stroke="#8AAEC0" strokeWidth="0.15" />
+        <line x1="6" y1="-2" x2="8" y2="-4" stroke="#8AAEC0" strokeWidth="0.15" />
+        <line x1="-6" y1="2" x2="-8" y2="4" stroke="#8AAEC0" strokeWidth="0.15" />
+        <line x1="6" y1="2" x2="8" y2="4" stroke="#8AAEC0" strokeWidth="0.15" />
       </g>
-      {/* Crystal 2 - smaller */}
-      <g opacity="0.08">
-        <line x1="60" y1="38" x2="60" y2="48" stroke="#8AAEC0" strokeWidth="0.25" />
-        <line x1="55" y1="43" x2="65" y2="43" stroke="#8AAEC0" strokeWidth="0.25" />
-        <line x1="57" y1="40" x2="63" y2="46" stroke="#8AAEC0" strokeWidth="0.15" />
-        <line x1="63" y1="40" x2="57" y2="46" stroke="#8AAEC0" strokeWidth="0.15" />
+      {/* Frost crystal 2 - smaller, bottom */}
+      <g opacity="0.09" transform="translate(60,44)">
+        <line x1="0" y1="-5" x2="0" y2="5" stroke="#8AAEC0" strokeWidth="0.25" />
+        <line x1="-5" y1="0" x2="5" y2="0" stroke="#8AAEC0" strokeWidth="0.25" />
+        <line x1="-3.5" y1="-3.5" x2="3.5" y2="3.5" stroke="#8AAEC0" strokeWidth="0.15" />
+        <line x1="3.5" y1="-3.5" x2="-3.5" y2="3.5" stroke="#8AAEC0" strokeWidth="0.15" />
       </g>
+      {/* Ice dust particles */}
+      <circle cx="85" cy="30" r="0.3" fill="#8AAEC0" opacity="0.15" />
+      <circle cx="55" cy="5" r="0.2" fill="#8AAEC0" opacity="0.12" />
+      <circle cx="42" cy="48" r="0.25" fill="#8AAEC0" opacity="0.1" />
+      {data.logo && <image href={data.logo} x="74" y="38" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
       <text
         x="10"
-        y="22"
+        y="20"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="300"
-        fontSize="6"
+        fontSize="6.5"
         letterSpacing="0.8"
         fill="#4A6A7E"
+        filter="url(#nordic-frost-shadow)"
       >
         {data.nameJa}
       </text>
       <text
         x="10"
-        y="28"
+        y="26"
         fontFamily="'Inter', sans-serif"
         fontWeight="200"
-        fontSize="1.8"
-        letterSpacing="0.3"
+        fontSize="2"
+        letterSpacing="0.4"
         fill="#8AAEC0"
       >
         {data.nameEn}
       </text>
       <text
         x="10"
-        y="36"
+        y="34"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
-        fontSize="1.5"
+        fontSize="1.8"
         fill="#A0BED0"
       >
         {data.titleJa}
       </text>
       <text
         x="10"
-        y="43"
+        y="41"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
-        fontSize="1.5"
+        fontSize="1.6"
         fill="#B8D0E0"
       >
         {data.companyJa}
@@ -504,21 +703,45 @@ const frostTemplate: TemplateDefinition = {
   ),
   renderBack: (data: CardData) => (
     <g>
+      <defs>
+        <radialGradient id="nordic-frost-back-crystal" cx="0.15" cy="0.8" r="0.3">
+          <stop offset="0%" stopColor="#C8E0F0" stopOpacity="0.1" />
+          <stop offset="100%" stopColor="#F0F4F8" stopOpacity="0" />
+        </radialGradient>
+        <filter id="nordic-frost-back-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="4" result="noise" />
+          <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+          <feBlend in="SourceGraphic" in2="gray" mode="multiply" />
+        </filter>
+        <filter id="nordic-frost-back-shadow">
+          <feDropShadow dx="0" dy="0.2" stdDeviation="0.3" floodColor="#4A6A7E" floodOpacity="0.1" />
+        </filter>
+      </defs>
       <rect width="91" height="55" fill="#F0F4F8" />
-      <g opacity="0.1">
-        <line x1="15" y1="35" x2="15" y2="50" stroke="#8AAEC0" strokeWidth="0.3" />
-        <line x1="8" y1="42.5" x2="22" y2="42.5" stroke="#8AAEC0" strokeWidth="0.3" />
-        <line x1="10" y1="37" x2="20" y2="48" stroke="#8AAEC0" strokeWidth="0.2" />
-        <line x1="20" y1="37" x2="10" y2="48" stroke="#8AAEC0" strokeWidth="0.2" />
+      <rect width="91" height="55" fill="url(#nordic-frost-back-crystal)" />
+      {/* Crystal on back - bottom left */}
+      <g opacity="0.1" transform="translate(15,42)">
+        <line x1="0" y1="-7" x2="0" y2="7" stroke="#8AAEC0" strokeWidth="0.3" />
+        <line x1="-7" y1="0" x2="7" y2="0" stroke="#8AAEC0" strokeWidth="0.3" />
+        <line x1="-5" y1="-5" x2="5" y2="5" stroke="#8AAEC0" strokeWidth="0.2" />
+        <line x1="5" y1="-5" x2="-5" y2="5" stroke="#8AAEC0" strokeWidth="0.2" />
+        <line x1="-2" y1="-5.5" x2="-3.5" y2="-7" stroke="#8AAEC0" strokeWidth="0.12" />
+        <line x1="2" y1="-5.5" x2="3.5" y2="-7" stroke="#8AAEC0" strokeWidth="0.12" />
       </g>
+      {/* Ice dust */}
+      <circle cx="5" cy="8" r="0.25" fill="#8AAEC0" opacity="0.12" />
+      <circle cx="82" cy="35" r="0.2" fill="#8AAEC0" opacity="0.1" />
+      <circle cx="45" cy="50" r="0.3" fill="#8AAEC0" opacity="0.08" />
+      {data.logo && <image href={data.logo} x="8" y="6" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
       <text
         x="81"
         y="12"
         textAnchor="end"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="300"
-        fontSize="2.2"
+        fontSize="2.5"
         fill="#4A6A7E"
+        filter="url(#nordic-frost-back-shadow)"
       >
         {data.companyJa}
       </text>
@@ -528,15 +751,26 @@ const frostTemplate: TemplateDefinition = {
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="200"
-        fontSize="1.4"
+        fontSize="1.5"
         fill="#A0BED0"
       >
         {data.companyEn}
       </text>
-      <line x1="40" y1="20" x2="81" y2="20" stroke="#C8D8E4" strokeWidth="0.1" />
       <text
         x="81"
-        y="26"
+        y="21"
+        textAnchor="end"
+        fontFamily="'Noto Sans JP', sans-serif"
+        fontWeight="200"
+        fontSize="1.6"
+        fill="#8AAEC0"
+      >
+        {data.titleJa}
+      </text>
+      <line x1="38" y1="24" x2="81" y2="24" stroke="#C8D8E4" strokeWidth="0.1" opacity="0.4" />
+      <text
+        x="81"
+        y="29"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -547,7 +781,7 @@ const frostTemplate: TemplateDefinition = {
       </text>
       <text
         x="81"
-        y="30"
+        y="33"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -558,7 +792,7 @@ const frostTemplate: TemplateDefinition = {
       </text>
       <text
         x="81"
-        y="34"
+        y="37"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -569,7 +803,7 @@ const frostTemplate: TemplateDefinition = {
       </text>
       <text
         x="81"
-        y="45"
+        y="47"
         textAnchor="end"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
@@ -596,33 +830,59 @@ const tundraTemplate: TemplateDefinition = {
   accentColor: '#8A9A7E',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#F5F1EB" />
-      {/* Tundra horizon layers */}
-      <rect x="0" y="38" width="91" height="4" fill="#D0C8B8" opacity="0.25" />
-      <rect x="0" y="42" width="91" height="4" fill="#C8C0B0" opacity="0.2" />
-      <rect x="0" y="46" width="91" height="4" fill="#C0B8A8" opacity="0.15" />
-      <rect x="0" y="50" width="91" height="5" fill="#B8B0A0" opacity="0.1" />
-      {/* Sky line */}
-      <line x1="0" y1="37" x2="91" y2="37" stroke="#8A9A7E" strokeWidth="0.2" opacity="0.3" />
+      <defs>
+        <linearGradient id="nordic-tundra-front-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#E8E4DC" />
+          <stop offset="60%" stopColor="#F0ECE4" />
+          <stop offset="100%" stopColor="#F5F1EB" />
+        </linearGradient>
+        <linearGradient id="nordic-tundra-front-earth" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#D0C8B8" stopOpacity="0.3" />
+          <stop offset="100%" stopColor="#B8B0A0" stopOpacity="0.08" />
+        </linearGradient>
+        <filter id="nordic-tundra-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="3" result="noise" />
+          <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+          <feBlend in="SourceGraphic" in2="gray" mode="multiply" />
+        </filter>
+        <filter id="nordic-tundra-shadow">
+          <feDropShadow dx="0" dy="0.3" stdDeviation="0.5" floodColor="#5A6A50" floodOpacity="0.1" />
+        </filter>
+      </defs>
+      <rect width="91" height="55" fill="url(#nordic-tundra-front-sky)" />
+      {/* Tundra horizon layers - gradual earth strata */}
+      <rect x="0" y="36" width="91" height="4" fill="#D0C8B8" opacity="0.25" />
+      <rect x="0" y="40" width="91" height="4" fill="#C8C0B0" opacity="0.2" />
+      <rect x="0" y="44" width="91" height="4" fill="#C0B8A8" opacity="0.15" />
+      <rect x="0" y="48" width="91" height="7" fill="url(#nordic-tundra-front-earth)" />
+      {/* Horizon line */}
+      <line x1="0" y1="35.5" x2="91" y2="35.5" stroke="#8A9A7E" strokeWidth="0.25" opacity="0.35" />
+      {/* Distant tundra bush dots */}
+      <circle cx="20" cy="35" r="0.4" fill="#8A9A7E" opacity="0.15" />
+      <circle cx="45" cy="34.8" r="0.3" fill="#8A9A7E" opacity="0.12" />
+      <circle cx="68" cy="35.2" r="0.35" fill="#8A9A7E" opacity="0.13" />
+      <circle cx="82" cy="34.5" r="0.25" fill="#8A9A7E" opacity="0.1" />
+      {data.logo && <image href={data.logo} x="78" y="4" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
       <text
         x="45.5"
-        y="16"
+        y="15"
         textAnchor="middle"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="300"
         fontSize="6.5"
         letterSpacing="2"
         fill="#5A6A50"
+        filter="url(#nordic-tundra-shadow)"
       >
         {data.nameJa}
       </text>
       <text
         x="45.5"
-        y="23"
+        y="22"
         textAnchor="middle"
         fontFamily="'Inter', sans-serif"
         fontWeight="200"
-        fontSize="1.8"
+        fontSize="2"
         letterSpacing="0.6"
         fill="#8A9A7E"
       >
@@ -630,11 +890,11 @@ const tundraTemplate: TemplateDefinition = {
       </text>
       <text
         x="45.5"
-        y="31"
+        y="29.5"
         textAnchor="middle"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
-        fontSize="1.5"
+        fontSize="1.8"
         fill="#A0B098"
       >
         {data.titleJa}
@@ -643,19 +903,40 @@ const tundraTemplate: TemplateDefinition = {
   ),
   renderBack: (data: CardData) => (
     <g>
+      <defs>
+        <linearGradient id="nordic-tundra-back-earth" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#D0C8B8" stopOpacity="0.25" />
+          <stop offset="100%" stopColor="#F5F1EB" stopOpacity="0" />
+        </linearGradient>
+        <filter id="nordic-tundra-back-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="3" result="noise" />
+          <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+          <feBlend in="SourceGraphic" in2="gray" mode="multiply" />
+        </filter>
+        <filter id="nordic-tundra-back-shadow">
+          <feDropShadow dx="0" dy="0.2" stdDeviation="0.3" floodColor="#5A6A50" floodOpacity="0.08" />
+        </filter>
+      </defs>
       <rect width="91" height="55" fill="#F5F1EB" />
+      {/* Top earth strata */}
       <rect x="0" y="0" width="91" height="4" fill="#D0C8B8" opacity="0.2" />
       <rect x="0" y="4" width="91" height="4" fill="#C8C0B0" opacity="0.15" />
-      <rect x="0" y="8" width="91" height="4" fill="#C0B8A8" opacity="0.1" />
-      <line x1="0" y1="12" x2="91" y2="12" stroke="#8A9A7E" strokeWidth="0.15" opacity="0.25" />
+      <rect x="0" y="8" width="91" height="4" fill="url(#nordic-tundra-back-earth)" />
+      <line x1="0" y1="12" x2="91" y2="12" stroke="#8A9A7E" strokeWidth="0.18" opacity="0.25" />
+      {/* Distant bush dots */}
+      <circle cx="15" cy="12.5" r="0.3" fill="#8A9A7E" opacity="0.12" />
+      <circle cx="50" cy="12.2" r="0.25" fill="#8A9A7E" opacity="0.1" />
+      <circle cx="75" cy="12.8" r="0.35" fill="#8A9A7E" opacity="0.11" />
+      {data.logo && <image href={data.logo} x="5" y="4" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
       <text
         x="45.5"
         y="21"
         textAnchor="middle"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="300"
-        fontSize="2.2"
+        fontSize="2.5"
         fill="#5A6A50"
+        filter="url(#nordic-tundra-back-shadow)"
       >
         {data.companyJa}
       </text>
@@ -665,14 +946,26 @@ const tundraTemplate: TemplateDefinition = {
         textAnchor="middle"
         fontFamily="'Inter', sans-serif"
         fontWeight="200"
-        fontSize="1.4"
+        fontSize="1.5"
         fill="#8A9A7E"
       >
         {data.companyEn}
       </text>
       <text
         x="45.5"
-        y="33"
+        y="30"
+        textAnchor="middle"
+        fontFamily="'Noto Sans JP', sans-serif"
+        fontWeight="200"
+        fontSize="1.6"
+        fill="#A0B098"
+      >
+        {data.titleJa}
+      </text>
+      <line x1="25" y1="33" x2="66" y2="33" stroke="#C0B8A8" strokeWidth="0.1" opacity="0.35" />
+      <text
+        x="45.5"
+        y="38"
         textAnchor="middle"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -683,7 +976,7 @@ const tundraTemplate: TemplateDefinition = {
       </text>
       <text
         x="45.5"
-        y="37"
+        y="42"
         textAnchor="middle"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -694,7 +987,7 @@ const tundraTemplate: TemplateDefinition = {
       </text>
       <text
         x="45.5"
-        y="41"
+        y="46"
         textAnchor="middle"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -705,7 +998,7 @@ const tundraTemplate: TemplateDefinition = {
       </text>
       <text
         x="45.5"
-        y="50"
+        y="52"
         textAnchor="middle"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
@@ -732,39 +1025,62 @@ const auroraNTemplate: TemplateDefinition = {
   accentColor: '#7A9E7E',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#1A2332" />
-      {/* Aurora curtain streaks */}
-      <rect x="15" y="0" width="2" height="25" fill="#7A9E7E" opacity="0.12" rx="1" />
-      <rect x="22" y="0" width="3" height="30" fill="#8AB88E" opacity="0.1" rx="1.5" />
-      <rect x="30" y="0" width="2.5" height="22" fill="#6A8E9E" opacity="0.08" rx="1.2" />
-      <rect x="38" y="0" width="2" height="28" fill="#7A9E7E" opacity="0.14" rx="1" />
-      <rect x="45" y="0" width="3" height="18" fill="#8E7AA0" opacity="0.1" rx="1.5" />
-      <rect x="53" y="0" width="2" height="26" fill="#7A9E7E" opacity="0.1" rx="1" />
-      <rect x="60" y="0" width="2.5" height="20" fill="#8AB88E" opacity="0.12" rx="1.2" />
-      <rect x="68" y="0" width="2" height="24" fill="#6A8E9E" opacity="0.09" rx="1" />
-      <rect x="75" y="0" width="3" height="16" fill="#8E7AA0" opacity="0.08" rx="1.5" />
+      <defs>
+        <linearGradient id="nordic-aurora-n-front-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#0D1620" />
+          <stop offset="50%" stopColor="#152030" />
+          <stop offset="100%" stopColor="#1A2332" />
+        </linearGradient>
+        <linearGradient id="nordic-aurora-n-front-curtain" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#7A9E7E" stopOpacity="0.2" />
+          <stop offset="40%" stopColor="#8AB88E" stopOpacity="0.12" />
+          <stop offset="70%" stopColor="#8E7AA0" stopOpacity="0.06" />
+          <stop offset="100%" stopColor="#1A2332" stopOpacity="0" />
+        </linearGradient>
+        <filter id="nordic-aurora-n-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="0.4" numOctaves="3" result="noise" />
+          <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+          <feBlend in="SourceGraphic" in2="gray" mode="screen" />
+        </filter>
+        <filter id="nordic-aurora-n-shadow">
+          <feDropShadow dx="0" dy="0.3" stdDeviation="0.6" floodColor="#7A9E7E" floodOpacity="0.3" />
+        </filter>
+      </defs>
+      <rect width="91" height="55" fill="url(#nordic-aurora-n-front-sky)" />
+      {/* Aurora curtain bands */}
+      <path d="M12,0 Q14,8 13,18 Q12,28 15,35" stroke="#7A9E7E" strokeWidth="2.5" fill="none" opacity="0.1" strokeLinecap="round" />
+      <path d="M22,0 Q24,10 21,22 Q20,32 24,40" stroke="#8AB88E" strokeWidth="3" fill="none" opacity="0.08" strokeLinecap="round" />
+      <path d="M33,0 Q35,6 32,16 Q30,26 34,32" stroke="#6A8E9E" strokeWidth="2" fill="none" opacity="0.09" strokeLinecap="round" />
+      <path d="M42,0 Q44,12 41,24 Q40,34 43,42" stroke="#7A9E7E" strokeWidth="2.8" fill="none" opacity="0.12" strokeLinecap="round" />
+      <path d="M52,0 Q50,8 53,16 Q55,24 51,30" stroke="#8E7AA0" strokeWidth="2" fill="none" opacity="0.08" strokeLinecap="round" />
+      <path d="M62,0 Q64,6 61,14 Q60,22 63,28" stroke="#8AB88E" strokeWidth="2.5" fill="none" opacity="0.1" strokeLinecap="round" />
+      <path d="M72,0 Q70,10 73,20 Q74,28 71,34" stroke="#6A8E9E" strokeWidth="2" fill="none" opacity="0.07" strokeLinecap="round" />
+      <path d="M80,0 Q82,5 79,12 Q78,20 81,26" stroke="#8E7AA0" strokeWidth="2.2" fill="none" opacity="0.06" strokeLinecap="round" />
       {/* Stars */}
-      <circle cx="10" cy="5" r="0.2" fill="#ffffff" opacity="0.4" />
-      <circle cx="50" cy="8" r="0.15" fill="#ffffff" opacity="0.3" />
-      <circle cx="85" cy="4" r="0.2" fill="#ffffff" opacity="0.35" />
-      <circle cx="35" cy="3" r="0.1" fill="#ffffff" opacity="0.25" />
+      <circle cx="8" cy="4" r="0.25" fill="#ffffff" opacity="0.5" />
+      <circle cx="48" cy="7" r="0.18" fill="#ffffff" opacity="0.35" />
+      <circle cx="86" cy="3" r="0.22" fill="#ffffff" opacity="0.45" />
+      <circle cx="30" cy="2" r="0.12" fill="#ffffff" opacity="0.3" />
+      <circle cx="70" cy="6" r="0.15" fill="#ffffff" opacity="0.28" />
+      {data.logo && <image href={data.logo} x="74" y="40" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
       <text
         x="10"
-        y="35"
+        y="36"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="300"
-        fontSize="6"
+        fontSize="6.5"
         letterSpacing="0.8"
         fill="#C0E0C8"
+        filter="url(#nordic-aurora-n-shadow)"
       >
         {data.nameJa}
       </text>
       <text
         x="10"
-        y="41"
+        y="42"
         fontFamily="'Inter', sans-serif"
         fontWeight="200"
-        fontSize="1.8"
+        fontSize="2"
         letterSpacing="0.3"
         fill="rgba(192,224,200,0.6)"
       >
@@ -772,10 +1088,10 @@ const auroraNTemplate: TemplateDefinition = {
       </text>
       <text
         x="10"
-        y="48"
+        y="49"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
-        fontSize="1.5"
+        fontSize="1.8"
         fill="rgba(192,224,200,0.4)"
       >
         {data.titleJa}
@@ -784,42 +1100,70 @@ const auroraNTemplate: TemplateDefinition = {
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#1A2332" />
-      <rect x="10" y="30" width="2" height="25" fill="#7A9E7E" opacity="0.1" rx="1" />
-      <rect x="20" y="28" width="2.5" height="27" fill="#8AB88E" opacity="0.08" rx="1.2" />
-      <rect x="30" y="32" width="2" height="23" fill="#6A8E9E" opacity="0.12" rx="1" />
-      <rect x="40" y="30" width="3" height="25" fill="#8E7AA0" opacity="0.08" rx="1.5" />
-      <rect x="55" y="28" width="2" height="27" fill="#7A9E7E" opacity="0.1" rx="1" />
-      <rect x="65" y="32" width="2.5" height="23" fill="#8AB88E" opacity="0.09" rx="1.2" />
-      <rect x="78" y="30" width="2" height="25" fill="#6A8E9E" opacity="0.1" rx="1" />
-      <circle cx="45" cy="5" r="0.2" fill="#ffffff" opacity="0.35" />
-      <circle cx="80" cy="8" r="0.15" fill="#ffffff" opacity="0.3" />
+      <defs>
+        <linearGradient id="nordic-aurora-n-back-sky" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stopColor="#0D1620" />
+          <stop offset="100%" stopColor="#1A2332" />
+        </linearGradient>
+        <filter id="nordic-aurora-n-back-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="0.4" numOctaves="3" result="noise" />
+          <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+          <feBlend in="SourceGraphic" in2="gray" mode="screen" />
+        </filter>
+        <filter id="nordic-aurora-n-back-shadow">
+          <feDropShadow dx="0" dy="0.2" stdDeviation="0.4" floodColor="#7A9E7E" floodOpacity="0.2" />
+        </filter>
+      </defs>
+      <rect width="91" height="55" fill="url(#nordic-aurora-n-back-sky)" />
+      {/* Aurora curtain from bottom */}
+      <path d="M8,55 Q10,45 8,35 Q7,28 10,22" stroke="#7A9E7E" strokeWidth="2" fill="none" opacity="0.08" strokeLinecap="round" />
+      <path d="M20,55 Q22,42 19,32 Q18,25 21,20" stroke="#8AB88E" strokeWidth="2.5" fill="none" opacity="0.07" strokeLinecap="round" />
+      <path d="M35,55 Q33,46 36,38 Q37,30 34,24" stroke="#6A8E9E" strokeWidth="2" fill="none" opacity="0.1" strokeLinecap="round" />
+      <path d="M55,55 Q57,44 54,34 Q53,26 56,20" stroke="#8E7AA0" strokeWidth="2.2" fill="none" opacity="0.06" strokeLinecap="round" />
+      <path d="M72,55 Q70,46 73,38 Q74,30 71,24" stroke="#7A9E7E" strokeWidth="2.5" fill="none" opacity="0.08" strokeLinecap="round" />
+      {/* Stars */}
+      <circle cx="42" cy="4" r="0.2" fill="#ffffff" opacity="0.4" />
+      <circle cx="78" cy="8" r="0.15" fill="#ffffff" opacity="0.3" />
+      <circle cx="12" cy="6" r="0.18" fill="#ffffff" opacity="0.35" />
+      {data.logo && <image href={data.logo} x="8" y="40" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
       <text
         x="81"
-        y="10"
+        y="12"
         textAnchor="end"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="300"
-        fontSize="2.2"
+        fontSize="2.5"
         fill="#C0E0C8"
+        filter="url(#nordic-aurora-n-back-shadow)"
       >
         {data.companyJa}
       </text>
       <text
         x="81"
-        y="14.5"
+        y="16.5"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="200"
-        fontSize="1.4"
+        fontSize="1.5"
         fill="rgba(192,224,200,0.5)"
       >
         {data.companyEn}
       </text>
-      <line x1="50" y1="18" x2="81" y2="18" stroke="rgba(122,158,126,0.2)" strokeWidth="0.12" />
       <text
         x="81"
-        y="24"
+        y="21"
+        textAnchor="end"
+        fontFamily="'Noto Sans JP', sans-serif"
+        fontWeight="200"
+        fontSize="1.6"
+        fill="rgba(192,224,200,0.45)"
+      >
+        {data.titleJa}
+      </text>
+      <line x1="48" y1="24" x2="81" y2="24" stroke="rgba(122,158,126,0.2)" strokeWidth="0.12" />
+      <text
+        x="81"
+        y="29"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -830,7 +1174,7 @@ const auroraNTemplate: TemplateDefinition = {
       </text>
       <text
         x="81"
-        y="28"
+        y="33"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -841,7 +1185,7 @@ const auroraNTemplate: TemplateDefinition = {
       </text>
       <text
         x="81"
-        y="32"
+        y="37"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -852,7 +1196,7 @@ const auroraNTemplate: TemplateDefinition = {
       </text>
       <text
         x="81"
-        y="45"
+        y="47"
         textAnchor="end"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
@@ -879,22 +1223,50 @@ const cabinTemplate: TemplateDefinition = {
   accentColor: '#A68B6B',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#F5EDE3" />
-      {/* Log cabin horizontal lines */}
-      <line x1="0" y1="4" x2="91" y2="4" stroke="#D4C4B0" strokeWidth="0.6" />
-      <line x1="0" y1="8.5" x2="91" y2="8.5" stroke="#DCCFC0" strokeWidth="0.5" />
-      <line x1="0" y1="13" x2="91" y2="13" stroke="#D0C0AD" strokeWidth="0.7" />
-      <line x1="0" y1="42" x2="91" y2="42" stroke="#D4C4B0" strokeWidth="0.5" />
-      <line x1="0" y1="46.5" x2="91" y2="46.5" stroke="#DCCFC0" strokeWidth="0.6" />
-      <line x1="0" y1="51" x2="91" y2="51" stroke="#D0C0AD" strokeWidth="0.5" />
+      <defs>
+        <linearGradient id="nordic-cabin-front-wood" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#F5EDE3" />
+          <stop offset="100%" stopColor="#EDE5D8" />
+        </linearGradient>
+        <linearGradient id="nordic-cabin-front-log" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#D4C4B0" stopOpacity="0.8" />
+          <stop offset="50%" stopColor="#C8B8A0" stopOpacity="0.6" />
+          <stop offset="100%" stopColor="#D4C4B0" stopOpacity="0.8" />
+        </linearGradient>
+        <filter id="nordic-cabin-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="4" result="noise" />
+          <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+          <feBlend in="SourceGraphic" in2="gray" mode="multiply" />
+        </filter>
+        <filter id="nordic-cabin-shadow">
+          <feDropShadow dx="0" dy="0.3" stdDeviation="0.4" floodColor="#6B5040" floodOpacity="0.15" />
+        </filter>
+      </defs>
+      <rect width="91" height="55" fill="url(#nordic-cabin-front-wood)" />
+      {/* Log cabin horizontal boards - top section */}
+      <rect x="0" y="3" width="91" height="3.5" fill="#D4C4B0" opacity="0.25" rx="0.3" />
+      <line x1="0" y1="3" x2="91" y2="3" stroke="#C0B0A0" strokeWidth="0.12" opacity="0.3" />
+      <rect x="0" y="7.5" width="91" height="3" fill="#DCCFC0" opacity="0.2" rx="0.3" />
+      <rect x="0" y="11.5" width="91" height="3.5" fill="#D0C0AD" opacity="0.28" rx="0.3" />
+      <line x1="0" y1="11.5" x2="91" y2="11.5" stroke="#C0B0A0" strokeWidth="0.12" opacity="0.25" />
+      {/* Log cabin horizontal boards - bottom section */}
+      <rect x="0" y="41" width="91" height="3" fill="#D4C4B0" opacity="0.2" rx="0.3" />
+      <rect x="0" y="45" width="91" height="3.5" fill="#DCCFC0" opacity="0.25" rx="0.3" />
+      <line x1="0" y1="45" x2="91" y2="45" stroke="#C0B0A0" strokeWidth="0.12" opacity="0.3" />
+      <rect x="0" y="49.5" width="91" height="3" fill="#D0C0AD" opacity="0.22" rx="0.3" />
+      {/* Wood grain hint */}
+      <path d="M15,5 Q30,4.5 50,5.2 Q70,5.8 91,5" fill="none" stroke="#C0B0A0" strokeWidth="0.06" opacity="0.2" />
+      <path d="M0,47 Q20,46.5 45,47.2 Q75,47.8 91,47" fill="none" stroke="#C0B0A0" strokeWidth="0.06" opacity="0.2" />
+      {data.logo && <image href={data.logo} x="74" y="22" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
       <text
         x="12"
         y="24"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="400"
-        fontSize="5.5"
+        fontSize="6"
         letterSpacing="0.5"
         fill="#6B5040"
+        filter="url(#nordic-cabin-shadow)"
       >
         {data.nameJa}
       </text>
@@ -903,8 +1275,8 @@ const cabinTemplate: TemplateDefinition = {
         y="30"
         fontFamily="'Cormorant Garamond', serif"
         fontWeight="400"
-        fontSize="1.8"
-        letterSpacing="0.3"
+        fontSize="2"
+        letterSpacing="0.4"
         fill="#A08060"
       >
         {data.nameEn}
@@ -914,7 +1286,7 @@ const cabinTemplate: TemplateDefinition = {
         y="37"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
-        fontSize="1.5"
+        fontSize="1.8"
         fill="#B09878"
       >
         {data.titleJa} | {data.companyJa}
@@ -923,19 +1295,40 @@ const cabinTemplate: TemplateDefinition = {
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#F5EDE3" />
-      <line x1="0" y1="4" x2="91" y2="4" stroke="#D4C4B0" strokeWidth="0.6" />
-      <line x1="0" y1="8.5" x2="91" y2="8.5" stroke="#DCCFC0" strokeWidth="0.5" />
-      <line x1="0" y1="46.5" x2="91" y2="46.5" stroke="#D4C4B0" strokeWidth="0.5" />
-      <line x1="0" y1="51" x2="91" y2="51" stroke="#DCCFC0" strokeWidth="0.6" />
+      <defs>
+        <linearGradient id="nordic-cabin-back-wood" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#EDE5D8" />
+          <stop offset="100%" stopColor="#F5EDE3" />
+        </linearGradient>
+        <filter id="nordic-cabin-back-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="4" result="noise" />
+          <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+          <feBlend in="SourceGraphic" in2="gray" mode="multiply" />
+        </filter>
+        <filter id="nordic-cabin-back-shadow">
+          <feDropShadow dx="0" dy="0.2" stdDeviation="0.3" floodColor="#6B5040" floodOpacity="0.1" />
+        </filter>
+      </defs>
+      <rect width="91" height="55" fill="url(#nordic-cabin-back-wood)" />
+      {/* Log boards */}
+      <rect x="0" y="3" width="91" height="3.5" fill="#D4C4B0" opacity="0.25" rx="0.3" />
+      <rect x="0" y="7.5" width="91" height="3" fill="#DCCFC0" opacity="0.2" rx="0.3" />
+      <line x1="0" y1="7.5" x2="91" y2="7.5" stroke="#C0B0A0" strokeWidth="0.1" opacity="0.25" />
+      <rect x="0" y="45" width="91" height="3" fill="#D4C4B0" opacity="0.2" rx="0.3" />
+      <rect x="0" y="49" width="91" height="3.5" fill="#DCCFC0" opacity="0.25" rx="0.3" />
+      <line x1="0" y1="49" x2="91" y2="49" stroke="#C0B0A0" strokeWidth="0.1" opacity="0.25" />
+      {/* Wood grain */}
+      <path d="M10,5 Q35,4.5 60,5.2 Q80,5.5 91,5" fill="none" stroke="#C0B0A0" strokeWidth="0.06" opacity="0.18" />
+      {data.logo && <image href={data.logo} x="5" y="14" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
       <text
         x="45.5"
         y="17"
         textAnchor="middle"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="400"
-        fontSize="2.2"
+        fontSize="2.5"
         fill="#6B5040"
+        filter="url(#nordic-cabin-back-shadow)"
       >
         {data.companyJa}
       </text>
@@ -945,15 +1338,26 @@ const cabinTemplate: TemplateDefinition = {
         textAnchor="middle"
         fontFamily="'Cormorant Garamond', serif"
         fontWeight="400"
-        fontSize="1.4"
+        fontSize="1.5"
         fill="#A08060"
       >
         {data.companyEn}
       </text>
-      <line x1="25" y1="25" x2="66" y2="25" stroke="#C8B8A0" strokeWidth="0.12" />
       <text
         x="45.5"
-        y="31"
+        y="26"
+        textAnchor="middle"
+        fontFamily="'Noto Sans JP', sans-serif"
+        fontWeight="200"
+        fontSize="1.6"
+        fill="#B09878"
+      >
+        {data.titleJa}
+      </text>
+      <line x1="22" y1="29" x2="69" y2="29" stroke="#C8B8A0" strokeWidth="0.12" opacity="0.4" />
+      <text
+        x="45.5"
+        y="34"
         textAnchor="middle"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -964,7 +1368,7 @@ const cabinTemplate: TemplateDefinition = {
       </text>
       <text
         x="45.5"
-        y="35"
+        y="38"
         textAnchor="middle"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -975,7 +1379,7 @@ const cabinTemplate: TemplateDefinition = {
       </text>
       <text
         x="45.5"
-        y="39"
+        y="42"
         textAnchor="middle"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -986,7 +1390,7 @@ const cabinTemplate: TemplateDefinition = {
       </text>
       <text
         x="45.5"
-        y="45"
+        y="48"
         textAnchor="middle"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
@@ -1013,34 +1417,59 @@ const pineTemplate: TemplateDefinition = {
   accentColor: '#3A5A40',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#F5F1EB" />
-      {/* Stylized pine tree silhouette */}
-      <g opacity="0.08">
-        <polygon points="80,45 76,45 78,38 74,38 78,30 75,30 78,22 81,22 84,30 81,30 85,38 81,38 83,45" fill="#3A5A40" />
-        <rect x="78.5" y="45" width="2" height="4" fill="#3A5A40" />
+      <defs>
+        <linearGradient id="nordic-pine-front-bg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#F5F1EB" />
+          <stop offset="100%" stopColor="#EDF0E8" />
+        </linearGradient>
+        <linearGradient id="nordic-pine-front-ground" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#3A5A40" stopOpacity="0.06" />
+          <stop offset="100%" stopColor="#3A5A40" stopOpacity="0.02" />
+        </linearGradient>
+        <filter id="nordic-pine-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" result="noise" />
+          <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+          <feBlend in="SourceGraphic" in2="gray" mode="multiply" />
+        </filter>
+        <filter id="nordic-pine-shadow">
+          <feDropShadow dx="0" dy="0.3" stdDeviation="0.4" floodColor="#2A4A30" floodOpacity="0.15" />
+        </filter>
+      </defs>
+      <rect width="91" height="55" fill="url(#nordic-pine-front-bg)" />
+      <rect x="0" y="48" width="91" height="7" fill="url(#nordic-pine-front-ground)" />
+      {/* Stylized pine tree 1 - large */}
+      <g opacity="0.09">
+        <polygon points="79,46 74,46 76.5,38 73,38 76,30 73.5,30 76.5,22 79.5,22 82.5,30 80,30 83,38 79.5,38 82,46" fill="#3A5A40" />
+        <rect x="78" y="46" width="2" height="4" fill="#5A3A28" opacity="0.5" rx="0.3" />
       </g>
-      <g opacity="0.05">
-        <polygon points="68,48 65,48 66.5,42 64,42 66.5,36 64.5,36 66.5,30 68.5,30 70.5,36 68.5,36 71,42 68.5,42 70,48" fill="#3A5A40" />
-        <rect x="67" y="48" width="1.5" height="3" fill="#3A5A40" />
+      {/* Stylized pine tree 2 - smaller */}
+      <g opacity="0.06">
+        <polygon points="67.5,49 64,49 65.5,42 63,42 65.5,35 63.5,35 66,28 69,28 71.5,35 69.5,35 72,42 69.5,42 71,49" fill="#3A5A40" />
+        <rect x="66.8" y="49" width="1.5" height="3" fill="#5A3A28" opacity="0.4" rx="0.2" />
       </g>
-      <rect x="0" y="50" width="91" height="5" fill="#3A5A40" opacity="0.04" />
+      {/* Pine needle scatter */}
+      <line x1="85" y1="20" x2="87" y2="19" stroke="#3A5A40" strokeWidth="0.08" opacity="0.1" />
+      <line x1="60" y1="48" x2="62" y2="47.5" stroke="#3A5A40" strokeWidth="0.06" opacity="0.08" />
+      <line x1="88" y1="35" x2="90" y2="34" stroke="#3A5A40" strokeWidth="0.07" opacity="0.09" />
+      {data.logo && <image href={data.logo} x="74" y="6" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
       <text
         x="10"
-        y="20"
+        y="18"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="500"
-        fontSize="6"
+        fontSize="6.5"
         letterSpacing="0.5"
         fill="#2A4A30"
+        filter="url(#nordic-pine-shadow)"
       >
         {data.nameJa}
       </text>
       <text
         x="10"
-        y="26"
+        y="24"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
-        fontSize="1.8"
+        fontSize="2"
         letterSpacing="0.3"
         fill="#5A7A60"
       >
@@ -1048,20 +1477,20 @@ const pineTemplate: TemplateDefinition = {
       </text>
       <text
         x="10"
-        y="34"
+        y="32"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
-        fontSize="1.5"
+        fontSize="1.8"
         fill="#7A9A80"
       >
         {data.titleJa}
       </text>
       <text
         x="10"
-        y="42"
+        y="39"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
-        fontSize="1.5"
+        fontSize="1.6"
         fill="#90AA90"
       >
         {data.companyJa}
@@ -1070,20 +1499,40 @@ const pineTemplate: TemplateDefinition = {
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#F5F1EB" />
-      <g opacity="0.06">
-        <polygon points="14,48 11,48 12.5,42 10,42 12.5,36 10.5,36 12.5,30 14.5,30 16.5,36 14.5,36 17,42 14.5,42 16,48" fill="#3A5A40" />
-        <rect x="13" y="48" width="1.5" height="3" fill="#3A5A40" />
+      <defs>
+        <linearGradient id="nordic-pine-back-bg" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stopColor="#F5F1EB" />
+          <stop offset="100%" stopColor="#EDF0E8" />
+        </linearGradient>
+        <filter id="nordic-pine-back-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" result="noise" />
+          <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+          <feBlend in="SourceGraphic" in2="gray" mode="multiply" />
+        </filter>
+        <filter id="nordic-pine-back-shadow">
+          <feDropShadow dx="0" dy="0.2" stdDeviation="0.3" floodColor="#2A4A30" floodOpacity="0.1" />
+        </filter>
+      </defs>
+      <rect width="91" height="55" fill="url(#nordic-pine-back-bg)" />
+      <rect x="0" y="48" width="91" height="7" fill="#3A5A40" opacity="0.03" />
+      {/* Pine tree on left */}
+      <g opacity="0.07">
+        <polygon points="14,49 10.5,49 12,42 9.5,42 12,35 10,35 12.5,28 15,28 17.5,35 15.5,35 18,42 15.5,42 17,49" fill="#3A5A40" />
+        <rect x="13" y="49" width="1.5" height="3" fill="#5A3A28" opacity="0.4" rx="0.2" />
       </g>
-      <rect x="0" y="50" width="91" height="5" fill="#3A5A40" opacity="0.03" />
+      {/* Needle scatter */}
+      <line x1="22" y1="46" x2="24" y2="45.5" stroke="#3A5A40" strokeWidth="0.06" opacity="0.08" />
+      <line x1="6" y1="26" x2="8" y2="25.5" stroke="#3A5A40" strokeWidth="0.07" opacity="0.09" />
+      {data.logo && <image href={data.logo} x="74" y="40" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
       <text
         x="81"
         y="12"
         textAnchor="end"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="400"
-        fontSize="2.2"
+        fontSize="2.5"
         fill="#2A4A30"
+        filter="url(#nordic-pine-back-shadow)"
       >
         {data.companyJa}
       </text>
@@ -1093,15 +1542,26 @@ const pineTemplate: TemplateDefinition = {
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
-        fontSize="1.4"
+        fontSize="1.5"
         fill="#7A9A80"
       >
         {data.companyEn}
       </text>
-      <line x1="40" y1="20" x2="81" y2="20" stroke="#A0B8A0" strokeWidth="0.1" />
       <text
         x="81"
-        y="26"
+        y="21"
+        textAnchor="end"
+        fontFamily="'Noto Sans JP', sans-serif"
+        fontWeight="200"
+        fontSize="1.6"
+        fill="#5A7A60"
+      >
+        {data.titleJa}
+      </text>
+      <line x1="38" y1="24" x2="81" y2="24" stroke="#A0B8A0" strokeWidth="0.1" opacity="0.35" />
+      <text
+        x="81"
+        y="29"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -1112,7 +1572,7 @@ const pineTemplate: TemplateDefinition = {
       </text>
       <text
         x="81"
-        y="30"
+        y="33"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -1123,7 +1583,7 @@ const pineTemplate: TemplateDefinition = {
       </text>
       <text
         x="81"
-        y="34"
+        y="37"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -1134,7 +1594,7 @@ const pineTemplate: TemplateDefinition = {
       </text>
       <text
         x="81"
-        y="45"
+        y="47"
         textAnchor="end"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
@@ -1161,24 +1621,45 @@ const lakeTemplate: TemplateDefinition = {
   accentColor: '#5B7B94',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#F5F1EB" />
-      {/* Lake - top half sky, bottom half water reflection */}
-      <rect x="0" y="28" width="91" height="27" fill="#5B7B94" opacity="0.06" />
-      <line x1="0" y1="27.5" x2="91" y2="27.5" stroke="#5B7B94" strokeWidth="0.3" opacity="0.15" />
-      {/* Ripple lines on water */}
-      <line x1="10" y1="34" x2="30" y2="34" stroke="#5B7B94" strokeWidth="0.08" opacity="0.12" />
-      <line x1="40" y1="38" x2="65" y2="38" stroke="#5B7B94" strokeWidth="0.08" opacity="0.1" />
-      <line x1="20" y1="42" x2="50" y2="42" stroke="#5B7B94" strokeWidth="0.08" opacity="0.08" />
-      <line x1="55" y1="46" x2="80" y2="46" stroke="#5B7B94" strokeWidth="0.08" opacity="0.06" />
+      <defs>
+        <linearGradient id="nordic-lake-front-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#E8EDF2" />
+          <stop offset="100%" stopColor="#F5F1EB" />
+        </linearGradient>
+        <linearGradient id="nordic-lake-front-water" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#5B7B94" stopOpacity="0.08" />
+          <stop offset="100%" stopColor="#3D5A6E" stopOpacity="0.04" />
+        </linearGradient>
+        <filter id="nordic-lake-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="0.3" numOctaves="2" result="noise" />
+          <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+          <feBlend in="SourceGraphic" in2="gray" mode="multiply" />
+        </filter>
+        <filter id="nordic-lake-shadow">
+          <feDropShadow dx="0" dy="0.2" stdDeviation="0.5" floodColor="#3D5A6E" floodOpacity="0.1" />
+        </filter>
+      </defs>
+      <rect width="91" height="55" fill="url(#nordic-lake-front-sky)" />
+      {/* Water surface - bottom half */}
+      <rect x="0" y="27.5" width="91" height="27.5" fill="url(#nordic-lake-front-water)" />
+      {/* Horizon line - the mirror edge */}
+      <line x1="0" y1="27.5" x2="91" y2="27.5" stroke="#5B7B94" strokeWidth="0.3" opacity="0.18" />
+      {/* Water ripple lines */}
+      <path d="M8,33 Q25,32 42,33.5 Q60,35 78,33" fill="none" stroke="#5B7B94" strokeWidth="0.08" opacity="0.12" />
+      <path d="M15,38 Q35,37 55,38.5 Q75,40 88,38" fill="none" stroke="#5B7B94" strokeWidth="0.06" opacity="0.1" />
+      <path d="M5,43 Q30,42 55,43.5 Q80,45 91,43" fill="none" stroke="#5B7B94" strokeWidth="0.06" opacity="0.08" />
+      <path d="M12,48 Q40,47 65,48.5 Q85,50 91,48" fill="none" stroke="#5B7B94" strokeWidth="0.05" opacity="0.06" />
+      {data.logo && <image href={data.logo} x="74" y="5" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
       <text
         x="45.5"
         y="14"
         textAnchor="middle"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="300"
-        fontSize="6"
+        fontSize="6.5"
         letterSpacing="1.2"
         fill="#3D5A6E"
+        filter="url(#nordic-lake-shadow)"
       >
         {data.nameJa}
       </text>
@@ -1188,13 +1669,13 @@ const lakeTemplate: TemplateDefinition = {
         textAnchor="middle"
         fontFamily="'Inter', sans-serif"
         fontWeight="200"
-        fontSize="1.8"
+        fontSize="2"
         letterSpacing="0.4"
         fill="#7A99AD"
       >
         {data.nameEn}
       </text>
-      {/* Reflected name (upside-down effect with lower opacity) */}
+      {/* Reflected name - mirrored in water */}
       <text
         x="45.5"
         y="36"
@@ -1205,6 +1686,7 @@ const lakeTemplate: TemplateDefinition = {
         letterSpacing="1.2"
         fill="#5B7B94"
         opacity="0.06"
+        transform="translate(0,0) scale(1,1)"
       >
         {data.nameJa}
       </text>
@@ -1212,18 +1694,35 @@ const lakeTemplate: TemplateDefinition = {
   ),
   renderBack: (data: CardData) => (
     <g>
+      <defs>
+        <linearGradient id="nordic-lake-back-water" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#5B7B94" stopOpacity="0.08" />
+          <stop offset="100%" stopColor="#3D5A6E" stopOpacity="0.03" />
+        </linearGradient>
+        <filter id="nordic-lake-back-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="0.3" numOctaves="2" result="noise" />
+          <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+          <feBlend in="SourceGraphic" in2="gray" mode="multiply" />
+        </filter>
+        <filter id="nordic-lake-back-shadow">
+          <feDropShadow dx="0" dy="0.2" stdDeviation="0.3" floodColor="#3D5A6E" floodOpacity="0.08" />
+        </filter>
+      </defs>
       <rect width="91" height="55" fill="#F5F1EB" />
-      <rect x="0" y="28" width="91" height="27" fill="#5B7B94" opacity="0.06" />
+      <rect x="0" y="27.5" width="91" height="27.5" fill="url(#nordic-lake-back-water)" />
       <line x1="0" y1="27.5" x2="91" y2="27.5" stroke="#5B7B94" strokeWidth="0.3" opacity="0.12" />
-      <line x1="15" y1="32" x2="40" y2="32" stroke="#5B7B94" strokeWidth="0.08" opacity="0.1" />
-      <line x1="50" y1="36" x2="75" y2="36" stroke="#5B7B94" strokeWidth="0.08" opacity="0.08" />
+      {/* Ripples */}
+      <path d="M10,32 Q32,31 54,32.5 Q76,34 88,32" fill="none" stroke="#5B7B94" strokeWidth="0.06" opacity="0.1" />
+      <path d="M18,37 Q42,36 66,37.5 Q82,39 91,37" fill="none" stroke="#5B7B94" strokeWidth="0.05" opacity="0.07" />
+      {data.logo && <image href={data.logo} x="74" y="40" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
       <text
         x="10"
         y="10"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="300"
-        fontSize="2.2"
+        fontSize="2.5"
         fill="#3D5A6E"
+        filter="url(#nordic-lake-back-shadow)"
       >
         {data.companyJa}
       </text>
@@ -1232,14 +1731,25 @@ const lakeTemplate: TemplateDefinition = {
         y="14.5"
         fontFamily="'Inter', sans-serif"
         fontWeight="200"
-        fontSize="1.4"
+        fontSize="1.5"
         fill="#7A99AD"
       >
         {data.companyEn}
       </text>
       <text
         x="10"
-        y="22"
+        y="19"
+        fontFamily="'Noto Sans JP', sans-serif"
+        fontWeight="200"
+        fontSize="1.6"
+        fill="#95AEC0"
+      >
+        {data.titleJa}
+      </text>
+      <line x1="10" y1="22" x2="50" y2="22" stroke="#C0D0DB" strokeWidth="0.1" opacity="0.35" />
+      <text
+        x="10"
+        y="32"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
         fontSize="1.5"
@@ -1249,7 +1759,7 @@ const lakeTemplate: TemplateDefinition = {
       </text>
       <text
         x="10"
-        y="26"
+        y="36"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
         fontSize="1.5"
@@ -1259,7 +1769,7 @@ const lakeTemplate: TemplateDefinition = {
       </text>
       <text
         x="81"
-        y="22"
+        y="32"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -1270,7 +1780,7 @@ const lakeTemplate: TemplateDefinition = {
       </text>
       <text
         x="10"
-        y="44"
+        y="47"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
         fontSize="1.2"
@@ -1296,48 +1806,43 @@ const woolTemplate: TemplateDefinition = {
   accentColor: '#D4A5A5',
   renderFront: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#F8F3ED" />
+      <defs>
+        <linearGradient id="nordic-wool-front-bg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#F8F3ED" />
+          <stop offset="100%" stopColor="#F5EFE8" />
+        </linearGradient>
+        <pattern id="nordic-wool-front-knit" x="0" y="0" width="6" height="8" patternUnits="userSpaceOnUse">
+          <path d="M1,0 L3,3.5 L5,0" fill="none" stroke="#D4A5A5" strokeWidth="0.25" opacity="0.12" />
+          <path d="M1,4 L3,7.5 L5,4" fill="none" stroke="#B09090" strokeWidth="0.25" opacity="0.1" />
+        </pattern>
+        <filter id="nordic-wool-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="1.5" numOctaves="5" result="noise" />
+          <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+          <feBlend in="SourceGraphic" in2="gray" mode="multiply" />
+        </filter>
+        <filter id="nordic-wool-shadow">
+          <feDropShadow dx="0" dy="0.2" stdDeviation="0.4" floodColor="#6B5050" floodOpacity="0.12" />
+        </filter>
+      </defs>
+      <rect width="91" height="55" fill="url(#nordic-wool-front-bg)" />
       {/* Knit pattern band at top */}
-      <g opacity="0.12">
-        {/* V-shaped knit stitches row 1 */}
-        <path d="M5,3 L7,6 L9,3" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M11,3 L13,6 L15,3" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M17,3 L19,6 L21,3" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M23,3 L25,6 L27,3" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M29,3 L31,6 L33,3" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M35,3 L37,6 L39,3" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M41,3 L43,6 L45,3" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M47,3 L49,6 L51,3" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M53,3 L55,6 L57,3" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M59,3 L61,6 L63,3" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M65,3 L67,6 L69,3" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M71,3 L73,6 L75,3" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M77,3 L79,6 L81,3" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M83,3 L85,6 L87,3" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        {/* V-shaped knit stitches row 2 */}
-        <path d="M5,7 L7,10 L9,7" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M11,7 L13,10 L15,7" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M17,7 L19,10 L21,7" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M23,7 L25,10 L27,7" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M29,7 L31,10 L33,7" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M35,7 L37,10 L39,7" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M41,7 L43,10 L45,7" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M47,7 L49,10 L51,7" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M53,7 L55,10 L57,7" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M59,7 L61,10 L63,7" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M65,7 L67,10 L69,7" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M71,7 L73,10 L75,7" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M77,7 L79,10 L81,7" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M83,7 L85,10 L87,7" fill="none" stroke="#B09090" strokeWidth="0.3" />
-      </g>
+      <rect x="0" y="0" width="91" height="12" fill="url(#nordic-wool-front-knit)" />
+      {/* Yarn accent line */}
+      <path d="M0,12.5 Q22,11 45.5,13 Q68,15 91,12.5" fill="none" stroke="#D4A5A5" strokeWidth="0.2" opacity="0.25" />
+      {/* Wool fiber dots */}
+      <circle cx="82" cy="25" r="0.3" fill="#D4A5A5" opacity="0.12" />
+      <circle cx="78" cy="42" r="0.25" fill="#B09090" opacity="0.1" />
+      <circle cx="85" cy="48" r="0.2" fill="#D4A5A5" opacity="0.08" />
+      {data.logo && <image href={data.logo} x="74" y="38" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
       <text
         x="12"
         y="24"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="400"
-        fontSize="5.5"
+        fontSize="6"
         letterSpacing="0.5"
         fill="#6B5050"
+        filter="url(#nordic-wool-shadow)"
       >
         {data.nameJa}
       </text>
@@ -1346,7 +1851,7 @@ const woolTemplate: TemplateDefinition = {
         y="30"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
-        fontSize="1.8"
+        fontSize="2"
         letterSpacing="0.25"
         fill="#A08080"
       >
@@ -1357,7 +1862,7 @@ const woolTemplate: TemplateDefinition = {
         y="38"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
-        fontSize="1.5"
+        fontSize="1.8"
         fill="#B09898"
       >
         {data.titleJa}
@@ -1367,7 +1872,7 @@ const woolTemplate: TemplateDefinition = {
         y="45"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
-        fontSize="1.5"
+        fontSize="1.6"
         fill="#C8B0B0"
       >
         {data.companyJa}
@@ -1376,46 +1881,42 @@ const woolTemplate: TemplateDefinition = {
   ),
   renderBack: (data: CardData) => (
     <g>
-      <rect width="91" height="55" fill="#F8F3ED" />
+      <defs>
+        <linearGradient id="nordic-wool-back-bg" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stopColor="#F8F3ED" />
+          <stop offset="100%" stopColor="#F5EFE8" />
+        </linearGradient>
+        <pattern id="nordic-wool-back-knit" x="0" y="0" width="6" height="8" patternUnits="userSpaceOnUse">
+          <path d="M1,0 L3,3.5 L5,0" fill="none" stroke="#D4A5A5" strokeWidth="0.25" opacity="0.1" />
+          <path d="M1,4 L3,7.5 L5,4" fill="none" stroke="#B09090" strokeWidth="0.25" opacity="0.08" />
+        </pattern>
+        <filter id="nordic-wool-back-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="1.5" numOctaves="5" result="noise" />
+          <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
+          <feBlend in="SourceGraphic" in2="gray" mode="multiply" />
+        </filter>
+        <filter id="nordic-wool-back-shadow">
+          <feDropShadow dx="0" dy="0.2" stdDeviation="0.3" floodColor="#6B5050" floodOpacity="0.1" />
+        </filter>
+      </defs>
+      <rect width="91" height="55" fill="url(#nordic-wool-back-bg)" />
       {/* Knit pattern band at bottom */}
-      <g opacity="0.1">
-        <path d="M5,45 L7,48 L9,45" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M11,45 L13,48 L15,45" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M17,45 L19,48 L21,45" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M23,45 L25,48 L27,45" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M29,45 L31,48 L33,45" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M35,45 L37,48 L39,45" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M41,45 L43,48 L45,45" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M47,45 L49,48 L51,45" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M53,45 L55,48 L57,45" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M59,45 L61,48 L63,45" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M65,45 L67,48 L69,45" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M71,45 L73,48 L75,45" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M77,45 L79,48 L81,45" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M83,45 L85,48 L87,45" fill="none" stroke="#D4A5A5" strokeWidth="0.3" />
-        <path d="M5,49 L7,52 L9,49" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M11,49 L13,52 L15,49" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M17,49 L19,52 L21,49" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M23,49 L25,52 L27,49" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M29,49 L31,52 L33,49" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M35,49 L37,52 L39,49" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M41,49 L43,52 L45,49" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M47,49 L49,52 L51,49" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M53,49 L55,52 L57,49" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M59,49 L61,52 L63,49" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M65,49 L67,52 L69,49" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M71,49 L73,52 L75,49" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M77,49 L79,52 L81,49" fill="none" stroke="#B09090" strokeWidth="0.3" />
-        <path d="M83,49 L85,52 L87,49" fill="none" stroke="#B09090" strokeWidth="0.3" />
-      </g>
+      <rect x="0" y="43" width="91" height="12" fill="url(#nordic-wool-back-knit)" />
+      {/* Yarn accent line */}
+      <path d="M0,42.5 Q22,44 45.5,42 Q68,40 91,42.5" fill="none" stroke="#D4A5A5" strokeWidth="0.2" opacity="0.2" />
+      {/* Wool fiber dots */}
+      <circle cx="8" cy="35" r="0.25" fill="#D4A5A5" opacity="0.1" />
+      <circle cx="5" cy="12" r="0.2" fill="#B09090" opacity="0.08" />
+      {data.logo && <image href={data.logo} x="8" y="6" width="8" height="8" preserveAspectRatio="xMidYMid meet" opacity="0.6" />}
       <text
         x="79"
         y="12"
         textAnchor="end"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="400"
-        fontSize="2.2"
+        fontSize="2.5"
         fill="#6B5050"
+        filter="url(#nordic-wool-back-shadow)"
       >
         {data.companyJa}
       </text>
@@ -1425,15 +1926,26 @@ const woolTemplate: TemplateDefinition = {
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
-        fontSize="1.4"
+        fontSize="1.5"
         fill="#A08080"
       >
         {data.companyEn}
       </text>
-      <line x1="35" y1="20" x2="79" y2="20" stroke="#D4C0C0" strokeWidth="0.1" />
       <text
         x="79"
-        y="26"
+        y="21"
+        textAnchor="end"
+        fontFamily="'Noto Sans JP', sans-serif"
+        fontWeight="200"
+        fontSize="1.6"
+        fill="#B09898"
+      >
+        {data.titleJa}
+      </text>
+      <line x1="35" y1="24" x2="79" y2="24" stroke="#D4C0C0" strokeWidth="0.1" opacity="0.4" />
+      <text
+        x="79"
+        y="29"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -1444,7 +1956,7 @@ const woolTemplate: TemplateDefinition = {
       </text>
       <text
         x="79"
-        y="30"
+        y="33"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -1455,7 +1967,7 @@ const woolTemplate: TemplateDefinition = {
       </text>
       <text
         x="79"
-        y="34"
+        y="37"
         textAnchor="end"
         fontFamily="'Inter', sans-serif"
         fontWeight="300"
@@ -1466,7 +1978,7 @@ const woolTemplate: TemplateDefinition = {
       </text>
       <text
         x="79"
-        y="42"
+        y="46"
         textAnchor="end"
         fontFamily="'Noto Sans JP', sans-serif"
         fontWeight="200"
